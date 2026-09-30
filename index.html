@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="看護師国家試験対策のゲームアプリ。ひよこのナースを育てながら、分野クエスト・必修チャレンジ・状況設定・計算ドリル・ミニ模試で学べます。">
+<meta name="theme-color" content="#FFF3F8">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ぴよナース国試クエスト">
+<meta property="og:description" content="看護師国家試験対策のゲームアプリ。ひよこのナースを育てながら、分野クエスト・必修チャレンジ・状況設定・計算ドリル・ミニ模試で学べます。">
+<meta name="apple-mobile-web-app-title" content="ぴよナース">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='38' r='22' fill='%23FFD54A' stroke='%233A2748' stroke-width='4'/%3E%3Cpath d='M20 22c0-8 5-12 12-12s12 4 12 12l-3 4H23z' fill='%23fff' stroke='%233A2748' stroke-width='3.5' stroke-linejoin='round'/%3E%3Cpath d='M30 13h4v3h3v4h-3v3h-4v-3h-3v-4h3z' fill='%23FF5C9A'/%3E%3Ccircle cx='25' cy='37' r='3' fill='%233A2748'/%3E%3Ccircle cx='39' cy='37' r='3' fill='%233A2748'/%3E%3Cpath d='M28 44l4-3 4 3-4 3z' fill='%23FF8A3D' stroke='%233A2748' stroke-width='2'/%3E%3C/svg%3E">
+<title>ぴよナース国試クエスト</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Mochiy+Pop+One&display=swap">
+<style>
+/* Layout: スマホ縦1カラム（最大540px）。ぶどう色の太フチ＋ずらし影の「シール」質感、下にタブバー */
+:root{
+  --bg:#FFF3F8; --dot:#FFDDEB; --card:#FFFFFF; --soft:#F8ECF7;
+  --ink:#3A2748; --sub:#7A6589; --line:#3A2748;
+  --pink:#FF5C9A; --pink-s:#FFD5E5;
+  --mint:#19BFA0; --mint-s:#CDF4EA;
+  --lemon:#FFBE2E; --lemon-s:#FFEFC0;
+  --sky:#3E9BFF; --sky-s:#D5EAFF;
+  --grape:#8A66FF; --grape-s:#E5DCFF;
+  --peach:#FF7F50; --peach-s:#FFE0D3;
+  --ok:#12B087; --ng:#FF4468; --on-accent:#FFFFFF; --on-lemon:#3A2748;
+  --shadow:0 4px 0 var(--line);
+  --shadow-s:0 2px 0 var(--line);
+  --f-pop:"Mochiy Pop One","M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Hiragino Sans",sans-serif;
+  --f-body:"M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
+  --r:20px;
+  --piyo:#FFD54A; --piyo-d:#F2B233; --beak:#FF8A3D; --blush:#FF8FB1; --egg:#FFF8EC; --gold:#FFC21A;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1D1527; --dot:#2A1E38; --card:#2B2040; --soft:#34284B;
+    --ink:#FFF0FA; --sub:#C9B6D9; --line:#0F0916;
+    --pink:#FF6FA8; --pink-s:#5B2442;
+    --mint:#2FD3B3; --mint-s:#16473F;
+    --lemon:#FFC940; --lemon-s:#4D3D12;
+    --sky:#5AAEFF; --sky-s:#1B3859;
+    --grape:#A184FF; --grape-s:#352A63;
+    --peach:#FF9068; --peach-s:#57301F;
+    --ok:#2ED3A2; --ng:#FF6683; --on-accent:#1D1527; --on-lemon:#1D1527;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1D1527; --dot:#2A1E38; --card:#2B2040; --soft:#34284B;
+  --ink:#FFF0FA; --sub:#C9B6D9; --line:#0F0916;
+  --pink:#FF6FA8; --pink-s:#5B2442;
+  --mint:#2FD3B3; --mint-s:#16473F;
+  --lemon:#FFC940; --lemon-s:#4D3D12;
+  --sky:#5AAEFF; --sky-s:#1B3859;
+  --grape:#A184FF; --grape-s:#352A63;
+  --peach:#FF9068; --peach-s:#57301F;
+  --ok:#2ED3A2; --ng:#FF6683; --on-accent:#1D1527; --on-lemon:#1D1527;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{min-height:100%}
+body{
+  margin:0;color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.65;
+  background-color:var(--bg);
+  background-image:radial-gradient(var(--dot) 2.2px,transparent 2.6px),radial-gradient(var(--dot) 2.2px,transparent 2.6px);
+  background-size:28px 28px;background-position:0 0,14px 14px;
+}
+[hidden]{display:none!important}
+button{font:inherit;color:inherit}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+.app{max-width:540px;margin:0 auto;padding-inline:16px;padding-block:10px 112px}
+h1,h2,h3{margin:0;font-family:var(--f-pop);font-weight:400;line-height:1.35;text-wrap:balance}
+p{margin:0}
+.num{font-variant-numeric:tabular-nums}
+.pop{font-family:var(--f-pop);font-weight:400}
+.sub{color:var(--sub)}
+.small{font-size:.8rem}
+.stack{display:flex;flex-direction:column;gap:14px}
+.row{display:flex;gap:10px;align-items:center}
+.grow{flex:1;min-width:0}
+
+/* ---------- ヘッダー ---------- */
+.top{display:flex;align-items:center;gap:8px;padding-block:6px 12px;position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:linear-gradient(var(--bg) 70%,transparent)}
+.logo{display:flex;align-items:center;gap:6px;font-family:var(--f-pop);font-size:1.12rem;letter-spacing:.02em;white-space:nowrap}
+.logo .cross{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:9px;background:var(--pink);border:2.5px solid var(--line);box-shadow:var(--shadow-s)}
+.logo .cross svg{width:14px;height:14px}
+.logo small{font-family:var(--f-body);font-weight:800;font-size:.62rem;color:var(--pink);display:block;line-height:1;letter-spacing:.08em}
+.chips{margin-left:auto;display:flex;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:3px 10px 3px 6px;border-radius:999px;background:var(--card);border:2.5px solid var(--line);font-weight:800;font-size:.82rem;box-shadow:var(--shadow-s);white-space:nowrap}
+.chip i{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;font-style:normal;font-size:.66rem;color:var(--on-accent)}
+.chip i svg{width:12px;height:12px}
+.chip .c-coin{background:var(--lemon);color:var(--on-lemon)}
+.chip .c-fire{background:var(--peach)}
+.sync{font-size:.66rem;color:var(--sub);text-align:right;margin-top:-6px;margin-bottom:6px}
+.sync[data-state="synced"]::before{content:"● ";color:var(--ok)}
+.sync[data-state="local"]::before{content:"● ";color:var(--sub)}
+.sync[data-state="saving"]::before,.sync[data-state="connecting"]::before{content:"● ";color:var(--lemon)}
+
+/* ---------- 共通パーツ ---------- */
+.card{background:var(--card);border:2.5px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px}
+.card.tint-pink{background:var(--pink-s)} .card.tint-mint{background:var(--mint-s)} .card.tint-lemon{background:var(--lemon-s)}
+.card.tint-sky{background:var(--sky-s)} .card.tint-grape{background:var(--grape-s)} .card.tint-peach{background:var(--peach-s)}
+.sec-t{display:flex;align-items:baseline;gap:8px;font-family:var(--f-pop);font-size:1rem;margin-top:6px}
+.sec-t .sub{font-family:var(--f-body);font-size:.76rem;font-weight:700}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:2.5px solid var(--line);border-radius:16px;background:var(--card);padding:11px 16px;font-weight:800;cursor:pointer;box-shadow:var(--shadow);transition:transform .08s,box-shadow .08s;user-select:none;text-align:center;line-height:1.35}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--line)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:var(--shadow)}
+.btn.block{width:100%}
+.btn.big{font-family:var(--f-pop);font-weight:400;font-size:1.08rem;padding:14px 18px;border-radius:18px}
+.btn.pink{background:var(--pink);color:var(--on-accent)} .btn.mint{background:var(--mint);color:var(--on-accent)}
+.btn.lemon{background:var(--lemon);color:var(--on-lemon)} .btn.sky{background:var(--sky);color:var(--on-accent)}
+.btn.grape{background:var(--grape);color:var(--on-accent)} .btn.peach{background:var(--peach);color:var(--on-accent)}
+.btn.ghost{background:transparent;box-shadow:none;border-style:dashed}
+.btn.sm{padding:7px 12px;font-size:.84rem;border-radius:12px;box-shadow:var(--shadow-s)}
+.bar{height:14px;border-radius:999px;background:var(--soft);border:2.5px solid var(--line);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:999px;background-color:var(--pink);background-image:repeating-linear-gradient(-45deg,transparent 0 7px,rgba(255,255,255,.28) 7px 14px);transition:width .6s cubic-bezier(.2,.9,.3,1)}
+.bar.thin{height:10px;border-width:2px}
+.tag{display:inline-flex;align-items:center;gap:4px;padding:1px 9px;border-radius:999px;border:2px solid var(--line);font-size:.7rem;font-weight:800;background:var(--card);white-space:nowrap}
+.empty{text-align:center;padding:22px 12px;color:var(--sub);font-size:.88rem}
+
+/* ---------- ホーム ---------- */
+.hero{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr);gap:12px;align-items:center;position:relative;overflow:hidden}
+.hero .pet{width:100%;aspect-ratio:1;max-width:150px;cursor:pointer}
+.hero .pet svg{width:100%;height:100%;display:block;overflow:visible}
+.bubble{position:relative;background:var(--card);border:2.5px solid var(--line);border-radius:16px;padding:8px 11px;font-size:.84rem;font-weight:700;box-shadow:var(--shadow-s)}
+.bubble::before{content:"";position:absolute;left:-10px;top:18px;border:8px solid transparent;border-right-color:var(--line);border-left:0}
+.bubble::after{content:"";position:absolute;left:-6px;top:20px;border:6px solid transparent;border-right-color:var(--card);border-left:0}
+.rank{font-family:var(--f-pop);font-size:1.02rem;margin-top:8px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 0}
+.rank .rn{white-space:nowrap}
+.lv{display:inline-grid;place-items:center;min-width:44px;padding:1px 8px;border-radius:10px;background:var(--grape);color:var(--on-accent);border:2.5px solid var(--line);font-family:var(--f-pop);font-size:.8rem;margin-right:6px}
+.xpline{display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;font-size:.72rem;font-weight:800;color:var(--sub);margin:6px 0 3px}
+.count{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center}
+.count .days{font-family:var(--f-pop);font-size:2.3rem;line-height:1;color:var(--pink)}
+.count .days small{font-size:.9rem;color:var(--ink)}
+.pass-line{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
+.pass-line div{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:6px 9px;font-size:.74rem;font-weight:700}
+.pass-line .sub{display:block;font-size:.66rem}
+.pass-line b{font-family:var(--f-pop);font-weight:400;font-size:1rem;color:var(--pink)}
+.missions{display:flex;flex-direction:column;gap:8px}
+.mission{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:10px;align-items:center;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:8px 10px}
+.mission .ck{width:26px;height:26px;border-radius:50%;border:2.5px solid var(--line);display:grid;place-items:center;background:var(--soft);font-weight:800;font-size:.8rem}
+.mission.done .ck{background:var(--mint);color:var(--on-accent)}
+.mission.done .mt{text-decoration:line-through;text-decoration-thickness:2px;color:var(--sub)}
+.mission .mt{font-weight:800;font-size:.86rem}
+.mission .mp{font-size:.72rem;color:var(--sub);font-weight:700}
+.modes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.mode{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;padding:13px 13px 12px;border:2.5px solid var(--line);border-radius:18px;box-shadow:var(--shadow);cursor:pointer;min-height:112px;transition:transform .08s,box-shadow .08s}
+.mode:active{transform:translateY(3px);box-shadow:0 1px 0 var(--line)}
+.mode .mi{width:40px;height:40px;border-radius:13px;border:2.5px solid var(--line);display:grid;place-items:center;background:var(--card);margin-bottom:2px}
+.mode .mi svg{width:24px;height:24px}
+.mode b{font-family:var(--f-pop);font-weight:400;font-size:.95rem;line-height:1.3}
+.mode span{font-size:.72rem;font-weight:700;color:var(--sub);line-height:1.45}
+.mode.wide{grid-column:1/-1;flex-direction:row;align-items:center;gap:12px;min-height:0}
+.mode.wide .mt2{display:flex;flex-direction:column;gap:2px}
+
+/* ---------- クエストマップ ---------- */
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.field{position:relative;display:flex;flex-direction:column;gap:6px;text-align:left;border:2.5px solid var(--line);border-radius:18px;background:var(--card);box-shadow:var(--shadow);padding:12px;cursor:pointer;transition:transform .08s,box-shadow .08s}
+.field:active{transform:translateY(3px);box-shadow:0 1px 0 var(--line)}
+.field .fh{display:flex;align-items:center;gap:8px}
+.field .fi{flex:none;width:36px;height:36px;border-radius:12px;border:2.5px solid var(--line);display:grid;place-items:center;font-family:var(--f-pop);font-size:.95rem;color:var(--on-accent)}
+.field .fn{font-weight:800;font-size:.84rem;line-height:1.3}
+.field .stars{display:flex;gap:2px}
+.field .stars svg{width:18px;height:18px}
+.field .fm{display:flex;justify-content:space-between;font-size:.68rem;font-weight:800;color:var(--sub)}
+.field.hitsu{grid-column:1/-1}
+
+/* ---------- クイズ ---------- */
+.qhead{display:flex;align-items:center;gap:10px}
+.qx{flex:none;width:40px;height:40px;border-radius:12px;border:2.5px solid var(--line);background:var(--card);box-shadow:var(--shadow-s);cursor:pointer;display:grid;place-items:center;font-weight:800}
+.qprog{flex:1}
+.qcount{font-family:var(--f-pop);font-size:.9rem;white-space:nowrap}
+.hearts{display:flex;gap:3px}
+.hearts svg{width:22px;height:22px}
+.timer{font-family:var(--f-pop);font-size:1.25rem;color:var(--peach);min-width:52px;text-align:right}
+.qcard{display:flex;flex-direction:column;gap:12px}
+.qmeta{display:flex;flex-wrap:wrap;gap:6px}
+.qtext{font-size:1.02rem;font-weight:700;line-height:1.75;white-space:pre-line}
+.story{background:var(--soft);border:2px dashed var(--line);border-radius:14px;padding:10px 12px;font-size:.88rem;line-height:1.75;white-space:pre-line}
+.story b{color:var(--pink)}
+.choices{display:flex;flex-direction:column;gap:10px}
+.choice{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;align-items:center;text-align:left;background:var(--card);border:2.5px solid var(--line);border-radius:16px;padding:10px 12px;box-shadow:var(--shadow-s);cursor:pointer;font-weight:700;line-height:1.5;transition:transform .08s,background .15s}
+.choice:active{transform:translateY(2px);box-shadow:none}
+.choice .k{width:32px;height:32px;border-radius:50%;border:2.5px solid var(--line);display:grid;place-items:center;font-family:var(--f-pop);font-size:.9rem;background:var(--soft)}
+.choice.sel{background:var(--sky-s)} .choice.sel .k{background:var(--sky);color:var(--on-accent)}
+.choice.ok{background:var(--mint-s)} .choice.ok .k{background:var(--ok);color:var(--on-accent)}
+.choice.ng{background:var(--pink-s)} .choice.ng .k{background:var(--ng);color:var(--on-accent)}
+.choice.dim{opacity:.55}
+.choice:disabled{cursor:default}
+.multi-hint{font-size:.76rem;font-weight:800;color:var(--grape)}
+.explain{border-radius:18px;border:2.5px solid var(--line);padding:12px 14px;background:var(--card);box-shadow:var(--shadow-s);font-size:.9rem;line-height:1.8}
+.explain h3{font-size:1.15rem;display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.explain.okx h3{color:var(--ok)} .explain.ngx h3{color:var(--ng)}
+.explain .ans{font-weight:800;margin-bottom:4px}
+.explain .point{margin-top:8px;padding:8px 10px;border-radius:12px;background:var(--lemon-s);font-size:.84rem}
+.combo{font-family:var(--f-pop);color:var(--peach);font-size:.9rem}
+.stamp{position:fixed;left:50%;top:38%;z-index:80;pointer-events:none;transform:translate(-50%,-50%) scale(.2);opacity:0;font-family:var(--f-pop);font-size:2.4rem;padding:10px 22px;border-radius:24px;border:3px solid var(--line);box-shadow:0 6px 0 var(--line);white-space:nowrap}
+.stamp.show{animation:stamp .9s cubic-bezier(.2,1.6,.4,1) forwards}
+.stamp.ok{background:var(--mint);color:var(--on-accent)} .stamp.ng{background:var(--pink);color:var(--on-accent)}
+@keyframes stamp{0%{opacity:0;transform:translate(-50%,-50%) scale(.2) rotate(-12deg)}35%{opacity:1;transform:translate(-50%,-50%) scale(1.1) rotate(4deg)}55%{transform:translate(-50%,-50%) scale(1) rotate(-2deg)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-62%) scale(1)}}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:79;overflow:hidden}
+.confetti i{position:absolute;top:-16px;width:10px;height:14px;border-radius:3px;border:2px solid var(--line);animation:fall linear forwards}
+@keyframes fall{to{transform:translate(var(--dx),110vh) rotate(var(--rot))}}
+
+/* ---------- 計算キーパッド ---------- */
+.calc-disp{display:flex;align-items:baseline;justify-content:center;gap:6px;background:var(--soft);border:2.5px solid var(--line);border-radius:16px;padding:10px;min-height:64px}
+.calc-disp b{font-family:var(--f-pop);font-weight:400;font-size:2rem;letter-spacing:.06em;min-width:1ch}
+.calc-disp span{font-weight:800;color:var(--sub)}
+.keypad{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.keypad .btn{font-family:var(--f-pop);font-weight:400;font-size:1.25rem;padding:10px 0}
+
+/* ---------- 結果・シート ---------- */
+.overlay{position:fixed;inset:0;z-index:90;background:rgba(29,21,39,.55);display:grid;place-items:center;padding:16px;animation:fade .2s}
+@keyframes fade{from{opacity:0}}
+.sheet{width:100%;max-width:420px;max-height:88vh;overflow:auto;background:var(--card);border:3px solid var(--line);border-radius:26px;box-shadow:0 6px 0 var(--line);padding:18px;animation:up .35s cubic-bezier(.2,1.4,.4,1)}
+@keyframes up{from{transform:translateY(30px) scale(.96);opacity:0}}
+.sheet h2{font-size:1.3rem;text-align:center}
+.bigscore{text-align:center;font-family:var(--f-pop);font-size:3rem;line-height:1.1;color:var(--pink)}
+.bigscore small{font-size:1rem;color:var(--ink)}
+.verdict{text-align:center;font-family:var(--f-pop);font-size:1.1rem;padding:6px 12px;border-radius:14px;border:2.5px solid var(--line);display:block;margin:6px auto 0;width:max-content;max-width:100%}
+.verdict.pass{background:var(--mint);color:var(--on-accent)} .verdict.fail{background:var(--soft)}
+.gain{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:8px}
+.review-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.review-item{display:grid;grid-template-columns:26px minmax(0,1fr);gap:8px;align-items:start;font-size:.8rem;padding:8px;border-radius:12px;background:var(--soft)}
+.review-item .mk{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:var(--on-accent);border:2px solid var(--line)}
+.lvup-pet{width:160px;height:160px;margin:4px auto}
+.lvup-pet svg{width:100%;height:100%}
+
+/* ---------- 状況設定 ---------- */
+.patient{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center}
+.patient .face{width:56px;height:56px;border-radius:18px;border:2.5px solid var(--line);background:var(--peach-s);display:grid;place-items:center}
+.patient .face svg{width:44px;height:44px}
+.genki{display:flex;align-items:center;gap:8px;font-size:.74rem;font-weight:800}
+.genki .bar{flex:1}
+.genki .bar i{background-color:var(--mint)}
+.cases{display:flex;flex-direction:column;gap:10px}
+.case-btn{display:grid;grid-template-columns:46px minmax(0,1fr) auto;gap:10px;align-items:center;text-align:left;background:var(--card);border:2.5px solid var(--line);border-radius:16px;box-shadow:var(--shadow-s);padding:10px 12px;cursor:pointer}
+.case-btn .ci{width:42px;height:42px;border-radius:13px;border:2.5px solid var(--line);display:grid;place-items:center;font-family:var(--f-pop);color:var(--on-accent)}
+.case-btn b{display:block;font-size:.88rem}
+.case-btn span{font-size:.72rem;color:var(--sub);font-weight:700}
+
+/* ---------- 復習・ずかん・記録 ---------- */
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{border:2.5px solid var(--line);border-radius:999px;background:var(--card);padding:5px 12px;font-weight:800;font-size:.8rem;cursor:pointer}
+.seg button.on{background:var(--ink);color:var(--bg)}
+.wrong-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 12px;border-radius:14px;border:2px solid var(--line);background:var(--card)}
+.wrong-item p{font-size:.84rem;font-weight:700;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.stickers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.sticker{aspect-ratio:1;border-radius:18px;border:2.5px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--card);box-shadow:var(--shadow-s);padding:4px;text-align:center;position:relative;max-width:100%}
+.sticker svg{width:62%;height:auto}
+.sticker small{font-size:.58rem;font-weight:800;line-height:1.2}
+.sticker.locked{background:var(--soft);box-shadow:none;border-style:dashed}
+.sticker.locked svg{opacity:.18;filter:grayscale(1)}
+.sticker .rar{position:absolute;top:-8px;right:-6px;font-size:.56rem;font-weight:800;padding:0 6px;border-radius:999px;border:2px solid var(--line);background:var(--lemon);color:var(--on-lemon)}
+.sticker .cnt{position:absolute;bottom:-7px;right:-5px;font-size:.6rem;font-weight:800;padding:0 6px;border-radius:999px;border:2px solid var(--line);background:var(--card)}
+.gacha{display:grid;place-items:center;gap:10px;text-align:center}
+.capsule{width:120px;height:120px;margin:0 auto}
+.capsule.shake{animation:shake .5s ease-in-out 2}
+@keyframes shake{25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}
+.statrow{display:grid;grid-template-columns:minmax(0,7.5em) minmax(0,1fr) 3.6em;gap:8px;align-items:center;font-size:.78rem;font-weight:800}
+.statrow .v{text-align:right}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tile{background:var(--card);border:2.5px solid var(--line);border-radius:16px;padding:9px 6px;text-align:center;box-shadow:var(--shadow-s)}
+.tile b{display:block;font-family:var(--f-pop);font-weight:400;font-size:1.3rem;line-height:1.2}
+.tile span{font-size:.66rem;font-weight:800;color:var(--sub)}
+.badges{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.badge{display:grid;grid-template-columns:38px minmax(0,1fr);gap:8px;align-items:center;padding:8px;border-radius:14px;border:2px solid var(--line);background:var(--card)}
+.badge .bi{width:36px;height:36px;border-radius:50%;border:2.5px solid var(--line);display:grid;place-items:center;background:var(--lemon);font-family:var(--f-pop);color:var(--on-lemon);font-size:.8rem}
+.badge b{font-size:.76rem;display:block;line-height:1.3}
+.badge span{font-size:.64rem;color:var(--sub);font-weight:700;line-height:1.3;display:block}
+.badge.locked{background:var(--soft);border-style:dashed}
+.badge.locked .bi{background:var(--card);color:var(--sub)}
+.field-set{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;font-size:.84rem;font-weight:700}
+.field-set input,.field-set select{font:inherit;border:2.5px solid var(--line);border-radius:12px;padding:6px 8px;background:var(--card);color:var(--ink)}
+.switch{position:relative;width:52px;height:30px;border-radius:999px;border:2.5px solid var(--line);background:var(--soft);cursor:pointer;padding:0}
+.switch::after{content:"";position:absolute;top:2px;left:2px;width:21px;height:21px;border-radius:50%;background:var(--card);border:2.5px solid var(--line);transition:left .15s}
+.switch[aria-checked="true"]{background:var(--mint)}
+.switch[aria-checked="true"]::after{left:23px}
+
+/* ---------- タブバー ---------- */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--card);border-top:2.5px solid var(--line);padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))}
+.tabbar .in{max-width:540px;margin:0 auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}
+.tab{display:flex;flex-direction:column;align-items:center;gap:1px;background:none;border:0;padding:4px 0;border-radius:14px;cursor:pointer;font-size:.66rem;font-weight:800;color:var(--sub)}
+.tab svg{width:26px;height:26px}
+.tab.on{color:var(--ink);background:var(--pink-s)}
+.tab .dotn{position:absolute;margin-left:22px;margin-top:-2px;min-width:16px;height:16px;border-radius:999px;background:var(--ng);color:var(--on-accent);font-size:.58rem;display:grid;place-items:center;padding:0 4px;border:2px solid var(--line)}
+.tab{position:relative}
+.toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);z-index:95;background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:999px;font-weight:800;font-size:.84rem;white-space:nowrap;max-width:calc(100% - 32px);overflow:hidden;text-overflow:ellipsis;animation:up .3s}
+.piyo-bob{animation:bob 2.6s ease-in-out infinite;transform-origin:50% 90%}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px) scale(1.01,.99)}}
+.piyo-jump{animation:jump .6s cubic-bezier(.3,1.6,.5,1)}
+@keyframes jump{30%{transform:translateY(-18px) scale(.95,1.06)}60%{transform:translateY(0) scale(1.06,.94)}}
+.piyo-sad{animation:sad .7s ease-in-out}
+@keyframes sad{30%{transform:rotate(-6deg)}60%{transform:rotate(5deg)}}
+.blink{animation:blink 4.2s infinite;transform-box:fill-box;transform-origin:center}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+@media (max-width:370px){
+  .modes,.fields{gap:10px}
+  .stickers{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .hero{grid-template-columns:minmax(0,110px) minmax(0,1fr)}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition:none!important}
+}
+</style>
+
+</head>
+<body>
+<div id="app" class="app"></div>
+<div id="tabbar-slot"></div>
+<script>
+const Q = [];
+/* ===== 必修問題（オリジナル問題：出題基準の必修項目に沿って作成） ===== */
+Q.push(
+{id:"h01",f:"hitsu",t:"人口動態統計",q:"令和5年（2023年）の人口動態統計で、日本人の死因の第1位はどれか。",c:["心疾患（高血圧性を除く）","老衰","悪性新生物〈腫瘍〉","脳血管疾患"],a:2,e:"第1位 悪性新生物、第2位 心疾患、第3位 老衰、第4位 脳血管疾患。老衰は高齢化とともに順位を上げている。"},
+{id:"h02",f:"hitsu",t:"人口統計",q:"合計特殊出生率の説明で正しいのはどれか。",c:["人口1,000人あたりの1年間の出生数","15〜49歳の女性の年齢別出生率を合計したもの","1人の女性が一生に産む女児の数の平均","出生数から死亡数を引いたもの"],a:1,e:"合計特殊出生率＝15〜49歳の女性の年齢別出生率の合計。「1人の女性が一生の間に産む子どもの数」に相当する。人口1,000対の出生数は出生率、女児のみを数えるのは総再生産率。"},
+{id:"h03",f:"hitsu",t:"保健師助産師看護師法",q:"看護師免許を与えるのは誰か。",c:["厚生労働大臣","都道府県知事","市町村長","日本看護協会長"],a:0,e:"保健師・助産師・看護師の免許は厚生労働大臣が与える。准看護師の免許は都道府県知事が与える。"},
+{id:"h04",f:"hitsu",t:"看護倫理と法",q:"看護師の守秘義務を定めている法律はどれか。",c:["医療法","保健師助産師看護師法","刑法","個人情報保護法"],a:1,e:"看護師の守秘義務は保健師助産師看護師法（第42条の2）に規定されている。助産師の守秘義務は刑法に規定されている点とセットで覚える。"},
+{id:"h05",f:"hitsu",t:"健康の定義",q:"WHO憲章の健康の定義で、身体的・精神的と並んで示されているのはどれか。",c:["経済的","社会的","文化的","宗教的"],a:1,e:"WHO憲章（1946年）では、健康とは「身体的・精神的・社会的に完全に良好な状態であり、単に病気や虚弱がないことではない」と定義されている。"},
+{id:"h06",f:"hitsu",t:"基本的欲求",q:"マズローの欲求階層説で、最も基本的な（低次の）欲求はどれか。",c:["安全の欲求","承認の欲求","生理的欲求","所属と愛の欲求"],a:2,e:"低次から、生理的欲求→安全の欲求→所属と愛の欲求→承認（自尊）の欲求→自己実現の欲求の5段階。"},
+{id:"h07",f:"hitsu",t:"バイタルサイン",q:"成人の安静時の呼吸数の基準範囲はどれか。",c:["5〜9回/分","12〜20回/分","24〜30回/分","32〜40回/分"],a:1,e:"成人の呼吸数は12〜20回/分が目安。25回/分以上は頻呼吸、12回/分未満は徐呼吸とされる。"},
+{id:"h08",f:"hitsu",t:"バイタルサイン",q:"成人で頻脈と判断される脈拍数はどれか。",c:["50回/分以上","70回/分以上","100回/分以上","150回/分以上"],a:2,e:"成人では100回/分以上を頻脈、60回/分未満（50回/分未満とする場合もある）を徐脈という。"},
+{id:"h09",f:"hitsu",t:"バイタルサイン",q:"日本高血圧学会の基準で、診察室血圧における高血圧の基準はどれか。",c:["120/80 mmHg以上","130/85 mmHg以上","140/90 mmHg以上","160/100 mmHg以上"],a:2,e:"診察室血圧で収縮期140 mmHg以上または拡張期90 mmHg以上が高血圧。家庭血圧では135/85 mmHg以上。"},
+{id:"h10",f:"hitsu",t:"体温測定",q:"腋窩で体温を測定するときの方法で正しいのはどれか。",c:["麻痺がある場合は麻痺側で測定する","発汗している場合は腋窩の汗を拭き取ってから測定する","測定直前まで腋窩を開いておく","体温計は後上方から挿入する"],a:1,e:"汗は気化熱で温度を下げるため拭き取る。麻痺側は血流が少なく低く出るため健側で測る。体温計は前下方から腋窩の最深部に向けて挿入し、腋窩は閉じておく。"},
+{id:"h11",f:"hitsu",t:"感染予防",q:"標準予防策〈スタンダードプリコーション〉で、感染性があるものとして扱わないのはどれか。",c:["血液","尿","汗","喀痰"],a:2,e:"標準予防策では、汗を除くすべての血液・体液・分泌物・排泄物、粘膜、損傷した皮膚を感染性があるものとして扱う。"},
+{id:"h12",f:"hitsu",t:"感染予防",q:"ケアの後に擦式アルコール製剤ではなく、流水と石けんによる手洗いが特に必要なのはどれか。",c:["インフルエンザ","ノロウイルス感染症","MRSA感染症","肺結核"],a:1,e:"ノロウイルスはアルコールが効きにくい。クロストリディオイデス・ディフィシル（芽胞）も同様。目に見える汚れがあるときも流水と石けんで洗う。"},
+{id:"h13",f:"hitsu",t:"栄養",q:"経鼻経管栄養法で栄養剤を注入するときの体位で適切なのはどれか。",c:["仰臥位","腹臥位","ファウラー位","トレンデレンブルグ位"],a:2,e:"逆流と誤嚥を防ぐため、上半身を30度以上挙上したファウラー位（半座位）で注入し、注入後もしばらく保つ。"},
+{id:"h14",f:"hitsu",t:"薬物の管理",q:"麻薬の取り扱いで正しいのはどれか。",c:["他の医薬品と同じ棚に保管する","施錠しない冷蔵庫で保管する","使用後の空アンプルは病棟で廃棄する","鍵をかけた堅固な設備内に保管する"],a:3,e:"麻薬は他の医薬品（覚醒剤を除く）と区別し、鍵をかけた堅固な設備内に保管する（麻薬及び向精神薬取締法）。使用後のアンプルや残液は廃棄せず薬剤部に返却する。"},
+{id:"h15",f:"hitsu",t:"輸血",q:"輸血の実施で正しいのはどれか。",c:["開始後5分間はベッドサイドで患者を観察する","赤血球製剤は冷凍保存する","輸血用血液は40℃程度に温めてから使う","輸血ルートから他の薬剤も同時に投与する"],a:0,e:"ABO不適合輸血などの重篤な反応は開始直後に起こりやすいため、最初の5分間はそばで観察し、15分後にも再確認する。赤血球製剤は2〜6℃で保存し、輸血ルートは単独で使う。"},
+{id:"h16",f:"hitsu",t:"意識レベル",q:"ジャパン・コーマ・スケール〈JCS〉で「痛み刺激に対し、はらいのけるような動作をする」のはどれか。",c:["I-3","II-20","III-100","III-300"],a:2,e:"III-100＝はらいのける動作、III-200＝少し手足を動かしたり顔をしかめる、III-300＝痛み刺激に全く反応しない。III桁は刺激しても覚醒しない状態。"},
+{id:"h17",f:"hitsu",t:"ショック",q:"出血性ショックでみられる徴候はどれか。",c:["徐脈","冷汗","皮膚の紅潮","血圧の上昇"],a:1,e:"ショックの5徴（5P）は蒼白、虚脱、冷汗、脈拍触知不能、呼吸不全。循環血液量の減少を代償するため頻脈となり、血圧は低下する。"},
+{id:"h18",f:"hitsu",t:"救命救急",q:"成人に対する一次救命処置で、胸骨圧迫の速さはどれか。",c:["60〜80回/分","80〜100回/分","100〜120回/分","120〜140回/分"],a:2,e:"胸骨圧迫は100〜120回/分、深さは約5cm（6cmを超えない）。圧迫のたびに胸壁を元の位置まで戻す。"},
+{id:"h19",f:"hitsu",t:"褥瘡",q:"仰臥位で最も褥瘡が発生しやすい部位はどれか。",c:["後頭部","肩甲骨部","仙骨部","踵骨部"],a:2,e:"仰臥位では体重が集中する仙骨部が最好発部位。側臥位では大転子部、座位では坐骨結節部が好発部位になる。"},
+{id:"h20",f:"hitsu",t:"成長発達",q:"乳児の定頸（首のすわり）がみられる時期はどれか。",c:["生後1か月ころ","生後3〜4か月ころ","生後7〜8か月ころ","生後10〜11か月ころ"],a:1,e:"定頸3〜4か月、寝返り5〜6か月、ひとり座り7か月、つかまり立ち9〜10か月、ひとり歩き1歳〜1歳3か月ころが目安。"},
+{id:"h21",f:"hitsu",t:"加齢変化",q:"加齢に伴って増加するのはどれか。",c:["肺活量","残気量","骨密度","腎血流量"],a:1,e:"肺の弾性が低下し、息を吐き切れなくなるため残気量は増加する。肺活量・骨密度・腎血流量はいずれも低下する。"},
+{id:"h22",f:"hitsu",t:"与薬の技術",q:"皮下注射の針の刺入角度で適切なのはどれか。",c:["10〜30度","45〜60度","70〜80度","90度"],a:0,e:"皮下注射は10〜30度、筋肉内注射は45〜90度、皮内注射はほぼ皮膚と平行（5〜15度程度）に刺入する。"},
+{id:"h23",f:"hitsu",t:"採血",q:"真空採血管を用いた静脈血採血で正しいのはどれか。",c:["駆血帯は穿刺部位の末梢側に巻く","駆血帯は穿刺部位から7〜10cm中枢側に巻く","駆血帯は3分以上巻いたままにする","抜針してから駆血帯を外す"],a:1,e:"駆血帯は穿刺部位の7〜10cm中枢側に巻き、1分以内を目安に外す。駆血帯を外してから抜針しないと、血液が噴き出したり内出血しやすい。"},
+{id:"h24",f:"hitsu",t:"呼吸を助ける技術",q:"鼻腔カニューレによる酸素投与で、流量の上限の目安はどれか。",c:["2 L/分","6 L/分","10 L/分","15 L/分"],a:1,e:"鼻腔カニューレは6 L/分程度まで。それ以上は鼻粘膜の乾燥や刺激が強く、吸入酸素濃度もほとんど上がらないため、マスクへの変更を検討する。"},
+{id:"h25",f:"hitsu",t:"死の徴候",q:"死の三徴候に含まれないのはどれか。",c:["呼吸停止","心拍停止","瞳孔散大（対光反射の消失）","体温の低下"],a:3,e:"死の三徴候は、呼吸停止・心拍停止・瞳孔散大（対光反射の消失）。"}
+);
+
+/* ===== 人体の構造と機能 ===== */
+Q.push(
+{id:"j01",f:"jintai",t:"循環器",q:"動脈血が流れているのはどれか。",c:["肺動脈","肺静脈","上大静脈","門脈"],a:1,e:"肺で酸素を受け取った血液は肺静脈を通って左心房へ戻るので、肺静脈には動脈血が流れる。肺動脈には静脈血が流れる。"},
+{id:"j02",f:"jintai",t:"循環器",q:"心臓の刺激伝導系で、最初に興奮が発生する部位はどれか。",c:["洞房結節","房室結節","ヒス束","プルキンエ線維"],a:0,e:"洞房結節（ペースメーカー）→房室結節→ヒス束→左右の脚→プルキンエ線維の順に興奮が伝わる。"},
+{id:"j03",f:"jintai",t:"消化器",q:"胆汁を産生する臓器はどれか。",c:["胆嚢","膵臓","肝臓","十二指腸"],a:2,e:"胆汁は肝臓でつくられ、胆嚢で濃縮・貯蔵されてから十二指腸へ分泌される。胆汁酸は脂肪を乳化して消化を助ける。"},
+{id:"j04",f:"jintai",t:"消化器",q:"脂肪を分解する消化酵素はどれか。",c:["ペプシン","アミラーゼ","リパーゼ","トリプシン"],a:2,e:"リパーゼ（膵液など）は脂肪を脂肪酸とモノグリセリドに分解する。ペプシン・トリプシンはたんぱく質、アミラーゼは糖質を分解する。"},
+{id:"j05",f:"jintai",t:"消化器",q:"ビタミンB12が主に吸収される部位はどれか。",c:["胃","十二指腸","空腸","回腸"],a:3,e:"ビタミンB12は胃の壁細胞から出る内因子と結合し、回腸（末端）で吸収される。胃全摘後は吸収できず、巨赤芽球性貧血の原因になる。"},
+{id:"j06",f:"jintai",t:"内分泌",q:"血糖値を低下させるホルモンはどれか。",c:["グルカゴン","インスリン","アドレナリン","コルチゾール"],a:1,e:"血糖値を下げるのは膵ランゲルハンス島β細胞のインスリンだけ。グルカゴン・アドレナリン・コルチゾール・成長ホルモンは血糖値を上げる。"},
+{id:"j07",f:"jintai",t:"内分泌",q:"抗利尿ホルモン〈ADH〉を分泌する部位はどれか。",c:["視床下部","下垂体前葉","下垂体後葉","副腎皮質"],a:2,e:"ADH（バソプレシン）は視床下部でつくられ、下垂体後葉から分泌される。腎臓の集合管で水の再吸収を促し、尿量を減らす。"},
+{id:"j08",f:"jintai",t:"血液",q:"赤血球の平均寿命はどれか。",c:["約7日","約30日","約120日","約1年"],a:2,e:"赤血球の寿命は約120日。古くなった赤血球は主に脾臓で壊され、ヘモグロビンはビリルビンへと代謝される。"},
+{id:"j09",f:"jintai",t:"血液",q:"血液凝固因子の合成に必要なビタミンはどれか。",c:["ビタミンA","ビタミンC","ビタミンD","ビタミンK"],a:3,e:"ビタミンKは肝臓でプロトロンビンなどの凝固因子（II・VII・IX・X）がつくられるときに必要。"},
+{id:"j10",f:"jintai",t:"呼吸器・神経",q:"呼吸中枢があるのはどれか。",c:["大脳皮質","小脳","延髄","脊髄"],a:2,e:"呼吸中枢は延髄（と橋）にある。延髄には心臓血管中枢や嚥下・嘔吐の中枢もある。"},
+{id:"j11",f:"jintai",t:"神経",q:"体温調節中枢があるのはどれか。",c:["視床下部","中脳","小脳","延髄"],a:0,e:"体温調節中枢は視床下部にある。視床下部は摂食・飲水・自律神経・内分泌の調節にも関わる。"},
+{id:"j12",f:"jintai",t:"筋・運動",q:"骨格筋の収縮に直接関わるイオンはどれか。",c:["Na⁺","K⁺","Ca²⁺","Cl⁻"],a:2,e:"筋小胞体から放出されたCa²⁺がトロポニンに結合すると、アクチンとミオシンが結合して筋が収縮する。"},
+{id:"j13",f:"jintai",t:"腎・泌尿器",q:"糸球体でろ過されたグルコースが主に再吸収される部位はどれか。",c:["近位尿細管","ヘンレループ","遠位尿細管","集合管"],a:0,e:"グルコースやアミノ酸は近位尿細管でほぼすべて再吸収される。血糖値が高すぎて再吸収の限界を超えると尿糖が出る。"},
+{id:"j14",f:"jintai",t:"自律神経",q:"副交感神経が優位なときにみられる反応はどれか。",c:["瞳孔の散大","心拍数の増加","気管支の拡張","消化管運動の促進"],a:3,e:"副交感神経は「休息と消化」。瞳孔は縮小、心拍数は減少、気管支は収縮、消化管運動と消化液の分泌は促進される。"}
+);
+
+/* ===== 疾病の成り立ちと回復の促進 ===== */
+Q.push(
+{id:"s01",f:"shippei",t:"代謝",q:"1型糖尿病の主な成因はどれか。",c:["インスリン抵抗性の増大","膵β細胞の破壊によるインスリンの欠乏","過食と運動不足","グルカゴンの過剰分泌"],a:1,e:"1型糖尿病は自己免疫などで膵β細胞が破壊され、インスリンが絶対的に不足する。インスリン療法が必須。生活習慣と関係が深いのは2型。"},
+{id:"s02",f:"shippei",t:"腎",q:"ネフローゼ症候群でみられるのはどれか。",c:["低コレステロール血症","低アルブミン血症","多血症","高カルシウム血症"],a:1,e:"大量の蛋白尿（3.5g/日以上）により低アルブミン血症（3.0g/dL以下）となり、膠質浸透圧が下がって浮腫が起こる。脂質異常症（高LDLコレステロール血症）も伴う。"},
+{id:"s03",f:"shippei",t:"循環器",q:"急性心筋梗塞の診断に有用な血液検査項目はどれか。",c:["トロポニンT","HbA1c","CRP","アミラーゼ"],a:0,e:"心筋が壊死すると心筋トロポニンT・IやCK-MBが血中に出てくる。HbA1cは糖尿病、アミラーゼは膵炎の指標。"},
+{id:"s04",f:"shippei",t:"消化器",q:"門脈圧亢進症でみられるのはどれか。",c:["食道静脈瘤","胃潰瘍","胆石","虫垂炎"],a:0,e:"肝硬変などで門脈圧が上がると側副血行路が発達し、食道・胃静脈瘤、腹壁静脈の怒張（メドゥーサの頭）、脾腫、腹水がみられる。"},
+{id:"s05",f:"shippei",t:"薬理",q:"ワルファリンカリウムの作用を弱める食品はどれか。",c:["グレープフルーツ","納豆","牛乳","緑茶"],a:1,e:"納豆はビタミンKを多く含み、さらに腸内でビタミンKを産生するため、ビタミンK拮抗薬であるワルファリンの効果を弱める。"},
+{id:"s06",f:"shippei",t:"薬理",q:"副腎皮質ステロイド薬の長期使用による副作用はどれか。",c:["低血糖","骨粗鬆症","体重減少","血圧低下"],a:1,e:"主な副作用は易感染性、高血糖（ステロイド糖尿病）、骨粗鬆症、満月様顔貌、消化性潰瘍、高血圧、精神症状など。自己判断で急に中止すると離脱症状が起こる。"},
+{id:"s07",f:"shippei",t:"薬理",q:"ジギタリス中毒でみられる症状はどれか。",c:["黄視","難聴","歯肉増殖","味覚障害"],a:0,e:"ジギタリス中毒では悪心・嘔吐、食欲不振、不整脈、黄視などの視覚異常がみられる。低カリウム血症で中毒が起こりやすくなる。"},
+{id:"s08",f:"shippei",t:"薬理",q:"抗コリン薬の投与が禁忌となる疾患はどれか。",c:["閉塞隅角緑内障","気管支喘息","胃潰瘍","低血圧"],a:0,e:"抗コリン薬は散瞳を起こして隅角をさらに狭め、眼圧を上げる。尿閉を悪化させるため前立腺肥大症にも注意が必要。"},
+{id:"s09",f:"shippei",t:"感染症",q:"空気感染する疾患はどれか。",c:["インフルエンザ","麻疹","風疹","流行性耳下腺炎"],a:1,e:"空気感染するのは結核・麻疹・水痘（播種性帯状疱疹を含む）。インフルエンザ・風疹・流行性耳下腺炎は飛沫感染。"},
+{id:"s10",f:"shippei",t:"病理",q:"炎症の徴候に含まれないのはどれか。",c:["発赤","熱感","腫脹","蒼白"],a:3,e:"炎症の4徴は発赤・熱感・腫脹・疼痛（ケルスス）。機能障害を加えて5徴（ガレノス）とする。"},
+{id:"s11",f:"shippei",t:"薬理",q:"アナフィラキシーショックで最初に投与される薬はどれか。",c:["アドレナリン","抗ヒスタミン薬","副腎皮質ステロイド薬","ニトログリセリン"],a:0,e:"第一選択はアドレナリンの筋肉内注射（大腿前外側部）。抗ヒスタミン薬やステロイドは補助的に使う。"},
+{id:"s12",f:"shippei",t:"腫瘍",q:"胃癌のウィルヒョウ転移がみられる部位はどれか。",c:["右腋窩リンパ節","左鎖骨上窩リンパ節","ダグラス窩","卵巣"],a:1,e:"ウィルヒョウ転移は左鎖骨上窩リンパ節への転移。ダグラス窩への転移はシュニッツラー転移、卵巣への転移はクルーケンベルグ腫瘍。"},
+{id:"s13",f:"shippei",t:"血液",q:"鉄欠乏性貧血でみられるのはどれか。",c:["さじ状爪","黄疸","ハンター舌炎","大球性の赤血球"],a:0,e:"鉄欠乏性貧血は小球性低色素性貧血で、さじ状爪（スプーンネイル）や異食症がみられる。ハンター舌炎や大球性は悪性貧血（ビタミンB12欠乏）の特徴。"},
+{id:"s14",f:"shippei",t:"電解質",q:"高カリウム血症で起こりやすいのはどれか。",c:["口渇","不整脈","テタニー","多尿"],a:1,e:"高カリウム血症では心電図でテント状T波がみられ、心室細動や心停止などの致死的不整脈が起こりうる。テタニーは低カルシウム血症の症状。"},
+{id:"s15",f:"shippei",t:"薬理",q:"ループ利尿薬の副作用で注意すべきなのはどれか。",c:["低カリウム血症","高ナトリウム血症","低血糖","徐脈"],a:0,e:"フロセミドなどのループ利尿薬はNa⁺とともにK⁺の排泄も増やすため低カリウム血症を起こしやすい。脱水や聴覚障害にも注意する。"}
+);
+
+/* ===== 健康支援と社会保障制度 ===== */
+Q.push(
+{id:"sh01",f:"shakai",t:"介護保険",q:"介護保険の保険者はどれか。",c:["国","都道府県","市町村及び特別区","健康保険組合"],a:2,e:"介護保険の保険者は市町村及び特別区。国と都道府県は財政面などで支える立場。"},
+{id:"sh02",f:"shakai",t:"介護保険",q:"介護保険の第2号被保険者はどれか。",c:["20歳以上40歳未満の医療保険加入者","40歳以上65歳未満の医療保険加入者","65歳以上75歳未満の者","75歳以上の者"],a:1,e:"第1号被保険者は65歳以上、第2号被保険者は40歳以上65歳未満の医療保険加入者。第2号は特定疾病（16疾病）による場合に給付を受けられる。"},
+{id:"sh03",f:"shakai",t:"介護保険",q:"要介護状態区分の審査・判定を行うのはどれか。",c:["介護認定審査会","地域包括支援センター","居宅介護支援事業所","保健所"],a:0,e:"市町村に置かれる介護認定審査会が、一次判定の結果と主治医意見書をもとに二次判定を行う。"},
+{id:"sh04",f:"shakai",t:"医療保険",q:"後期高齢者医療制度の対象となるのは原則として何歳以上か。",c:["60歳以上","65歳以上","70歳以上","75歳以上"],a:3,e:"原則75歳以上（一定の障害がある場合は65歳以上）が対象。運営主体は都道府県ごとの後期高齢者医療広域連合。"},
+{id:"sh05",f:"shakai",t:"生活保護",q:"生活保護の扶助のうち、原則として現物給付で行われるのはどれか。",c:["生活扶助","教育扶助","医療扶助","住宅扶助"],a:2,e:"医療扶助と介護扶助は原則として現物給付、その他の扶助は原則として金銭給付。"},
+{id:"sh06",f:"shakai",t:"労働と健康",q:"労働基準法に定められている産後休業はどれか。",c:["産後4週間","産後6週間","産後8週間","産後12週間"],a:2,e:"産後8週間は就業させてはならない（6週間を過ぎ、本人が請求して医師が支障ないと認めた業務は可）。産前休業は出産予定日の6週間前（多胎は14週間前）から請求できる。"},
+{id:"sh07",f:"shakai",t:"感染症法",q:"感染症法で1類感染症に分類されるのはどれか。",c:["結核","エボラ出血熱","腸管出血性大腸菌感染症","麻疹"],a:1,e:"1類はエボラ出血熱・ペスト・ラッサ熱など。結核は2類、腸管出血性大腸菌感染症は3類、麻疹は5類。"},
+{id:"sh08",f:"shakai",t:"地域保健",q:"市町村保健センターの設置根拠となる法律はどれか。",c:["医療法","地域保健法","健康増進法","母子保健法"],a:1,e:"保健所と市町村保健センターはどちらも地域保健法に基づいて設置される。"},
+{id:"sh09",f:"shakai",t:"健康増進",q:"特定健康診査の対象年齢はどれか。",c:["20〜64歳","30〜69歳","40〜74歳","65歳以上"],a:2,e:"特定健康診査（メタボ健診）は医療保険者が40〜74歳の加入者に行う。結果に応じて特定保健指導につなげる。"},
+{id:"sh10",f:"shakai",t:"社会保障の理念",q:"「すべて国民は、健康で文化的な最低限度の生活を営む権利を有する」と規定しているのはどれか。",c:["日本国憲法第13条","日本国憲法第25条","社会福祉法","生活保護法第1条"],a:1,e:"日本国憲法第25条（生存権）。社会保障制度や生活保護法の根拠となっている。"},
+{id:"sh11",f:"shakai",t:"医療法",q:"医療法で「病院」とされる入院施設の規模はどれか。",c:["10床以上","20床以上","50床以上","100床以上"],a:1,e:"患者20人以上の入院施設をもつものが病院、19床以下（または無床）が診療所。"},
+{id:"sh12",f:"shakai",t:"国民医療費",q:"国民医療費に含まれるのはどれか。",c:["正常な妊娠・分娩の費用","健康診断の費用","薬局調剤医療費","予防接種の費用"],a:2,e:"国民医療費は傷病の治療費が対象で、薬局調剤医療費や訪問看護医療費を含む。正常な妊娠・分娩、健康診断、予防接種、差額ベッド代などは含まれない。"}
+);
+
+/* ===== 基礎看護学 ===== */
+Q.push(
+{id:"k01",f:"kiso",t:"看護理論",q:"看護の基本となる14の構成要素（基本的欲求）を示したのは誰か。",c:["ナイチンゲール","ヘンダーソン","オレム","ペプロウ"],a:1,e:"ヘンダーソンは『看護の基本となるもの』で、呼吸・飲食・排泄など14の基本的看護の構成要素を示した。"},
+{id:"k02",f:"kiso",t:"看護理論",q:"セルフケア不足理論を提唱したのは誰か。",c:["オレム","ロイ","キング","レイニンガー"],a:0,e:"オレムはセルフケア不足理論を提唱。ロイは適応モデル、キングは目標達成理論、レイニンガーは文化ケア理論。"},
+{id:"k03",f:"kiso",t:"看護過程",q:"看護過程で最初に行う段階はどれか。",c:["看護計画の立案","アセスメント","実施","評価"],a:1,e:"アセスメント→看護問題の明確化（看護診断）→計画→実施→評価の順に進み、評価をもとに再びアセスメントに戻る。"},
+{id:"k04",f:"kiso",t:"看護記録",q:"SOAP形式の経過記録で「O」に記載する内容はどれか。",c:["「頭が痛い」と話す","体温38.2℃","発熱による苦痛がある","2時間後に再検温する"],a:1,e:"S＝主観的情報（患者の言葉）、O＝客観的情報（観察・測定値）、A＝アセスメント、P＝計画。"},
+{id:"k05",f:"kiso",t:"ボディメカニクス",q:"ボディメカニクスの原則で正しいのはどれか。",c:["支持基底面を狭くする","重心を高くする","患者と看護師の重心を離す","支持基底面を広くとる"],a:3,e:"足を開いて支持基底面を広くとり、重心を低くし、患者に近づいて重心を近づける。大きな筋群を使い、てこの原理を活用する。"},
+{id:"k06",f:"kiso",t:"清潔ケア",q:"全身清拭でウォッシュクロスを浸す湯の温度で適切なのはどれか。",c:["30〜35℃","38〜40℃","50〜55℃","70〜75℃"],a:2,e:"清拭の湯は50〜55℃程度を準備する。クロスを絞って皮膚に当てるまでに温度が下がるため、皮膚に触れるときは40〜45℃程度になる。"},
+{id:"k07",f:"kiso",t:"無菌操作",q:"滅菌鑷子（ピンセット）の取り扱いで正しいのはどれか。",c:["先端を常に上向きに保つ","先端を常に下向きに保つ","滅菌物と未滅菌物を同じ鑷子でつかむ","使用前に先端を手で整える"],a:1,e:"先端を上に向けると、持ち手側の汚染された水分が先端に流れ込む。先端は腰より上・水平より下向きに保つ。"},
+{id:"k08",f:"kiso",t:"罨法",q:"冷罨法が適しているのはどれか。",c:["捻挫直後の患部","慢性的な腰痛","腸蠕動を促したいとき","末梢循環が悪い四肢"],a:0,e:"冷罨法は血管を収縮させ、炎症・腫脹・疼痛を抑える。急性炎症の初期に適する。慢性痛や腸蠕動の促進、末梢循環の改善には温罨法を用いる。"},
+{id:"k09",f:"kiso",t:"排泄援助",q:"成人女性に一時的導尿を行うとき、カテーテルを挿入する長さで適切なのはどれか。",c:["1〜2 cm","4〜6 cm","10〜12 cm","18〜20 cm"],a:1,e:"成人女性の尿道は約3〜4cmなので、4〜6cm挿入し尿の流出を確認する。成人男性の尿道は約16〜20cmで、18〜20cm挿入する。"},
+{id:"k10",f:"kiso",t:"排泄援助",q:"グリセリン浣腸を実施するときの体位で適切なのはどれか。",c:["左側臥位","右側臥位","立位","腹臥位"],a:0,e:"直腸からS状結腸は左側にあるので左側臥位で行う。立位は肛門管の角度が変わり、直腸穿孔の危険があるため避ける。液温は40℃前後。"},
+{id:"k11",f:"kiso",t:"与薬の技術",q:"点滴静脈内注射の準備で、点滴筒に満たす薬液の量で適切なのはどれか。",c:["点滴筒の1/10程度","点滴筒の1/3〜1/2程度","点滴筒の8割程度","点滴筒いっぱい"],a:1,e:"1/3〜1/2程度満たすと滴下が観察しやすい。満たしすぎると滴下数が数えられず、少なすぎるとルートに空気が入りやすい。"},
+{id:"k12",f:"kiso",t:"口腔ケア",q:"意識障害のある患者の口腔ケアで正しいのはどれか。",c:["仰臥位で顔を正面に向けて行う","側臥位または顔を横に向けて行う","うがいを促す","多量の水で口腔内を洗い流す"],a:1,e:"誤嚥を防ぐため側臥位や顔を横に向けた姿勢で行い、水は少量にして吸引しながら行う。"},
+{id:"k13",f:"kiso",t:"活動と休息",q:"肘関節の良肢位はどれか。",c:["伸展0度","屈曲30度","屈曲90度","屈曲150度"],a:2,e:"肘関節の良肢位は屈曲90度。良肢位は、その関節が動かなくなっても日常生活への支障が最も少ない肢位。"},
+{id:"k14",f:"kiso",t:"倫理",q:"インフォームド・コンセントの説明で正しいのはどれか。",c:["医師が治療方針を決めて患者に伝えること","家族の同意があれば本人への説明は不要である","十分な説明を受けて理解したうえで、患者が自らの意思で同意すること","一度同意したら撤回できない"],a:2,e:"説明・理解・自己決定がそろって成り立つ。同意はいつでも撤回できる。看護師は患者が理解できているかを確かめ、意思決定を支える。"}
+);
+
+/* ===== 成人看護学 ===== */
+Q.push(
+{id:"se01",f:"seijin",t:"周術期",q:"術後の初回歩行時に特に注意すべき合併症はどれか。",c:["縫合不全","肺血栓塞栓症","麻痺性イレウス","術後せん妄"],a:1,e:"臥床中に下肢の深部静脈にできた血栓が、歩行開始で遊離して肺動脈を詰まらせることがある。初回歩行時は呼吸困難・胸痛・SpO₂低下に注意する。"},
+{id:"se02",f:"seijin",t:"消化器",q:"胃切除後の早期ダンピング症候群を予防する指導で適切なのはどれか。",c:["炭水化物を中心にした食事にする","食事中に水分を多くとる","1回の食事量を減らし、回数を増やす","食後すぐに散歩する"],a:2,e:"早期ダンピングは食べ物が急に小腸へ流れ込むことで食後30分以内に起こる（冷汗・動悸・めまい）。少量頻回食・よく噛む・食事中の水分を控える・食後は少し横になるのが基本。"},
+{id:"se03",f:"seijin",t:"代謝",q:"インスリン療法中の患者にみられる低血糖の症状はどれか。",c:["口渇","多尿","冷汗","クスマウル呼吸"],a:2,e:"低血糖では交感神経症状（冷汗・手指のふるえ・動悸）が出て、さらに下がると意識障害に至る。口渇・多尿・クスマウル呼吸は高血糖（ケトアシドーシス）の症状。"},
+{id:"se04",f:"seijin",t:"呼吸器",q:"慢性閉塞性肺疾患〈COPD〉の患者に指導する呼吸法はどれか。",c:["口すぼめ呼吸","胸式の浅い呼吸","息止め呼吸","過換気呼吸"],a:0,e:"口をすぼめてゆっくり息を吐くと気道内圧が保たれ、細い気道がつぶれにくくなり、息を吐き切りやすくなる。腹式呼吸と組み合わせる。"},
+{id:"se05",f:"seijin",t:"呼吸器",q:"II型呼吸不全のあるCOPD患者に高濃度の酸素を投与したときに起こりやすいのはどれか。",c:["CO₂ナルコーシス","低カリウム血症","過換気症候群","高血糖"],a:0,e:"慢性的な高CO₂血症の患者は低酸素が呼吸の刺激になっている。高濃度酸素で呼吸が抑制されるとCO₂がさらに貯留し、意識障害を起こす（CO₂ナルコーシス）。低流量から投与する。"},
+{id:"se06",f:"seijin",t:"循環器",q:"左心不全でみられる症状はどれか。",c:["起座呼吸","下肢の浮腫","頸静脈怒張","肝腫大"],a:0,e:"左心不全では肺うっ血が起こり、呼吸困難・起座呼吸・発作性夜間呼吸困難がみられる。下肢浮腫・頸静脈怒張・肝腫大は右心不全（体循環のうっ血）の症状。"},
+{id:"se07",f:"seijin",t:"ストーマ",q:"ストーマ装具の面板の穴の大きさで適切なのはどれか。",c:["ストーマと同じ大きさ","ストーマより2〜3 mm大きい","ストーマより1 cm大きい","ストーマより2〜3 mm小さい"],a:1,e:"穴が小さいとストーマを傷つけ、大きすぎると露出した皮膚に排泄物が付いて皮膚障害が起こる。ストーマのサイズは術後しばらく変化するので毎回測る。"},
+{id:"se08",f:"seijin",t:"脳神経",q:"脳梗塞に対するrt-PA静注療法（血栓溶解療法）の適応となる、発症からの時間はどれか。",c:["1時間以内","4.5時間以内","12時間以内","24時間以内"],a:1,e:"rt-PA静注療法は発症から4.5時間以内が適応。症状に気づいた時刻と最終健常確認時刻の把握が重要になる。"},
+{id:"se09",f:"seijin",t:"脳神経",q:"半側空間無視が起こりやすい障害部位はどれか。",c:["右大脳半球","左大脳半球","小脳","脳幹"],a:0,e:"右大脳半球（多くの人で劣位半球）の頭頂葉障害で左半側空間無視が起こりやすい。左大脳半球の障害では失語が起こりやすい。"},
+{id:"se10",f:"seijin",t:"乳がん",q:"腋窩リンパ節郭清を受けた患者への指導で適切なのはどれか。",c:["患側の腕で重い荷物を持つ","患側の腕で血圧を測定しない","患側の腕を日焼けさせる","患側の腕は動かさずに安静にする"],a:1,e:"リンパ浮腫と感染（蜂窩織炎）を防ぐため、患側での採血・血圧測定・注射、けが、日焼け、締めつけを避ける。適度な運動はリンパの流れを助ける。"},
+{id:"se11",f:"seijin",t:"がん化学療法",q:"一般的な殺細胞性抗がん薬の投与後、好中球数が最も減少する時期はどれか。",c:["投与当日","投与後2〜3日","投与後7〜14日","投与後1か月以降"],a:2,e:"骨髄抑制による好中球数の最低値（ナディア）は投与後7〜14日ごろ。この時期は手洗い・うがい・人混みを避けるなど感染予防を強化する。"},
+{id:"se12",f:"seijin",t:"内分泌",q:"甲状腺機能亢進症でみられる症状はどれか。",c:["徐脈","体重増加","頻脈","寒がり"],a:2,e:"代謝が亢進し、頻脈・体重減少・発汗過多・暑がり・手指振戦がみられる。バセドウ病では眼球突出や甲状腺腫も。徐脈・体重増加・寒がりは機能低下症の症状。"},
+{id:"se13",f:"seijin",t:"腎",q:"保存期の慢性腎臓病〈CKD〉患者の食事で適切なのはどれか。",c:["高たんぱく質の食事にする","食塩を1日6g未満にする","生野菜や果物を増やしてカリウムを多くとる","エネルギー摂取量を大きく減らす"],a:1,e:"CKDでは食塩3g以上6g未満/日が基本。病期に応じてたんぱく質を制限し、高カリウム血症があればカリウムを制限する。エネルギーは十分にとり、体のたんぱく質の分解を防ぐ。"},
+{id:"se14",f:"seijin",t:"腎",q:"血液透析のための内シャントがある腕の管理で適切なのはどれか。",c:["シャント側の腕で血圧を測る","シャント音やスリルを毎日確認する","シャント側の腕に腕時計をきつく着ける","シャント側の腕を枕にして寝る"],a:1,e:"シャント閉塞に早く気づくため、シャント音（ザーザー音）やスリル（振動）を毎日確かめる。圧迫（血圧測定・きつい時計や衣服・腕枕）は避ける。"},
+{id:"se15",f:"seijin",t:"肝",q:"肝性脳症でみられる症状はどれか。",c:["羽ばたき振戦","安静時振戦","口すぼめ呼吸","満月様顔貌"],a:0,e:"肝臓で処理できなくなったアンモニアなどが脳に作用し、羽ばたき振戦・意識障害・見当識障害が起こる。便秘は腸でのアンモニア産生を増やすため排便コントロールが大切。"}
+);
+
+/* ===== 老年看護学 ===== */
+Q.push(
+{id:"r01",f:"rounen",t:"食事援助",q:"高齢者の誤嚥を防ぐ食事の姿勢で適切なのはどれか。",c:["頸部を後屈させる","頸部を軽く前屈させる","仰臥位で食べる","上体を後ろに倒して食べる"],a:1,e:"顎を軽く引いた頸部前屈位では気道の入口が狭まり、誤嚥しにくくなる。座位では足底を床につけ、体幹を安定させる。"},
+{id:"r02",f:"rounen",t:"認知症",q:"認知症の中核症状はどれか。",c:["徘徊","見当識障害","物盗られ妄想","暴言"],a:1,e:"中核症状は記憶障害・見当識障害・実行機能障害・失語・失行・失認など脳の障害そのものによる症状。徘徊・妄想・暴言などは行動・心理症状（BPSD）。"},
+{id:"r03",f:"rounen",t:"認知症",q:"具体的でありありとした幻視が特徴的な認知症はどれか。",c:["アルツハイマー型認知症","血管性認知症","レビー小体型認知症","前頭側頭型認知症"],a:2,e:"レビー小体型認知症は幻視・パーキンソン症状・認知機能の変動が特徴。前頭側頭型は人格変化や常同行動、血管性はまだら認知症が特徴。"},
+{id:"r04",f:"rounen",t:"加齢変化",q:"高齢者が脱水を起こしやすい理由はどれか。",c:["体内の水分量が増えるため","口渇を感じにくいため","腎臓の尿濃縮力が高まるため","細胞内液が増えるため"],a:1,e:"高齢者は口渇を感じにくく、体内の水分量（特に細胞内液）が少なく、腎臓の尿濃縮力も低下しているため脱水になりやすい。"},
+{id:"r05",f:"rounen",t:"転倒予防",q:"高齢者の転倒の危険性を高める薬物はどれか。",c:["睡眠薬","整腸薬","ビタミン剤","点眼薬"],a:0,e:"睡眠薬（特にベンゾジアゼピン系）はふらつきや筋弛緩、夜間の覚醒不良を起こし転倒の原因になる。降圧薬・利尿薬・抗精神病薬なども注意する。"},
+{id:"r06",f:"rounen",t:"加齢変化",q:"老人性難聴の特徴はどれか。",c:["低音域から聞こえにくくなる","高音域から聞こえにくくなる","伝音性難聴である","片耳だけに起こることが多い"],a:1,e:"老人性難聴は両側性の感音性難聴で、高音域から聞こえにくくなる。正面から、やや低めの声で、ゆっくりはっきり話すとよい。"},
+{id:"r07",f:"rounen",t:"加齢変化",q:"加齢に伴う視覚の変化で正しいのはどれか。",c:["近くのものが見やすくなる","明暗順応が低下する","青色が識別しやすくなる","視野が広がる"],a:1,e:"加齢で明るさの変化に目が慣れるのが遅くなる。水晶体の黄変で青・緑系が見分けにくくなり、老視で近くが見えにくくなり、視野は狭くなる。"},
+{id:"r08",f:"rounen",t:"せん妄",q:"せん妄の特徴はどれか。",c:["数年かけてゆっくり進行する","急激に発症し、症状が1日のうちで変動する","意識は清明である","一度発症すると回復しない"],a:1,e:"せん妄は軽い意識障害を基盤に急に発症し、夕方から夜間に悪化するなど日内変動がある。原因（脱水・薬剤・感染・環境の変化など）を取り除けば回復が期待できる。"},
+{id:"r09",f:"rounen",t:"骨折",q:"高齢者が転倒したときに起こりやすい骨折はどれか。",c:["鎖骨骨折","大腿骨近位部骨折","膝蓋骨骨折","肋軟骨骨折"],a:1,e:"骨粗鬆症のある高齢者に多いのは大腿骨近位部骨折・橈骨遠位端骨折・脊椎圧迫骨折・上腕骨近位端骨折。大腿骨近位部骨折は寝たきりの原因になりやすい。"},
+{id:"r10",f:"rounen",t:"高齢者の権利",q:"高齢者虐待防止法で、養護者による虐待を受けたと思われる高齢者を発見した者が通報する先はどれか。",c:["警察署","保健所","市町村","家庭裁判所"],a:2,e:"通報先は市町村。生命や身体に重大な危険がある場合は速やかに通報する義務がある。"},
+{id:"r11",f:"rounen",t:"薬物療法",q:"高齢者の薬物動態の特徴で正しいのはどれか。",c:["薬物の排泄が速くなる","肝臓での代謝が高まる","血中濃度が高くなりやすい","脂溶性薬物の作用時間が短くなる"],a:2,e:"腎機能・肝機能の低下で排泄と代謝が遅れ、血中濃度が上がって副作用が出やすい。体脂肪の割合が増えるため脂溶性薬物は体内にたまりやすく、作用が長引く。"},
+{id:"r12",f:"rounen",t:"廃用症候群",q:"長期臥床による廃用症候群でみられるのはどれか。",c:["骨密度の増加","起立性低血圧","筋力の増強","心肺機能の向上"],a:1,e:"長期臥床で起立性低血圧・筋萎縮・関節拘縮・骨萎縮・褥瘡・深部静脈血栓症・便秘・抑うつなどが起こる。早期離床が予防の基本。"},
+{id:"r13",f:"rounen",t:"排泄",q:"咳やくしゃみをしたときに尿が漏れる尿失禁はどれか。",c:["切迫性尿失禁","腹圧性尿失禁","溢流性尿失禁","機能性尿失禁"],a:1,e:"腹圧性尿失禁は骨盤底筋の弱まりが原因で、女性に多い。骨盤底筋訓練が有効。急な強い尿意で漏れるのは切迫性、残尿があふれるのは溢流性、ADLや認知機能の低下によるものは機能性。"},
+{id:"r14",f:"rounen",t:"発達課題",q:"エリクソンの発達理論で、老年期の発達課題はどれか。",c:["勤勉性 対 劣等感","親密性 対 孤立","生殖性 対 停滞","統合 対 絶望"],a:3,e:"老年期は「統合 対 絶望」。自分の人生を振り返って受け入れることが課題。勤勉性は学童期、親密性は成人前期、生殖性（世代性）は成人期（壮年期）。"}
+);
+
+/* ===== 小児看護学 ===== */
+Q.push(
+{id:"sn01",f:"shouni",t:"成長",q:"体重が出生時の約3倍になる時期はどれか。",c:["生後3か月ころ","生後6か月ころ","1歳ころ","2歳ころ"],a:2,e:"体重は生後3〜4か月で出生時の約2倍、1歳で約3倍になる。身長は1歳で出生時の約1.5倍。"},
+{id:"sn02",f:"shouni",t:"成長",q:"大泉門が閉鎖する時期はどれか。",c:["生後1〜2か月","生後6か月","1歳6か月ころ","3歳ころ"],a:2,e:"大泉門は1歳6か月ころまでに閉鎖する。小泉門は生後1〜2か月ころに閉鎖する。大泉門の膨隆は頭蓋内圧亢進、陥没は脱水のサイン。"},
+{id:"sn03",f:"shouni",t:"発達",q:"生後4か月ころに消失する原始反射はどれか。",c:["モロー反射","バビンスキー反射","パラシュート反射","足底把握反射"],a:0,e:"モロー反射は生後4か月ころに消失する。足底把握反射は10〜12か月ころ、バビンスキー反射は1〜2歳ころに消える。パラシュート反射は生後9〜10か月ころに出現し、生涯続く。"},
+{id:"sn04",f:"shouni",t:"バイタルサイン",q:"新生児の呼吸数の基準範囲はどれか。",c:["12〜20回/分","20〜30回/分","40〜50回/分","70〜80回/分"],a:2,e:"新生児の呼吸数は40〜50回/分程度で、腹式呼吸。成長とともに少なくなり、成人では12〜20回/分になる。"},
+{id:"sn05",f:"shouni",t:"予防接種",q:"生ワクチンはどれか。",c:["BCG","五種混合ワクチン","日本脳炎ワクチン","インフルエンザHAワクチン"],a:0,e:"生ワクチンはBCG・麻しん風しん混合（MR）・水痘・おたふくかぜ・ロタウイルスなど。五種混合・日本脳炎・インフルエンザは不活化ワクチン。"},
+{id:"sn06",f:"shouni",t:"循環器",q:"川崎病で特に注意すべき合併症はどれか。",c:["冠動脈瘤","腎不全","脳出血","難聴"],a:0,e:"川崎病は5日以上続く発熱、眼球結膜の充血、いちご舌、手足の硬性浮腫、不定形発疹、頸部リンパ節腫脹が主症状。冠動脈瘤を防ぐため免疫グロブリン療法とアスピリンで治療する。"},
+{id:"sn07",f:"shouni",t:"体液",q:"乳児の体重に占める体内水分量の割合に最も近いのはどれか。",c:["約50%","約60%","約70%","約90%"],a:2,e:"体内水分量は新生児で約80%、乳児で約70%、成人で約60%。乳児は体重あたりの水分必要量が多く、不感蒸泄も多いため脱水になりやすい。"},
+{id:"sn08",f:"shouni",t:"発達",q:"人見知りが始まる時期はどれか。",c:["生後1〜2か月","生後6〜8か月","1歳6か月","3歳"],a:1,e:"生後6〜8か月ころ、親しい人とそうでない人を区別できるようになり人見知りが始まる。愛着形成の表れでもある。"},
+{id:"sn09",f:"shouni",t:"発達理論",q:"ピアジェの認知発達理論で、前操作期の特徴はどれか。",c:["自己中心性","抽象的な思考","保存の概念の獲得","仮説を立てて考える"],a:0,e:"前操作期（2〜7歳ころ）は自己中心性やアニミズムが特徴。保存の概念の獲得は具体的操作期（7〜11歳ころ）、抽象的・仮説演繹的思考は形式的操作期（11歳ころ〜）。"},
+{id:"sn10",f:"shouni",t:"事故防止",q:"0歳児の不慮の事故による死亡の原因で最も多いのはどれか。",c:["交通事故","溺死","窒息","転落"],a:2,e:"0歳児の不慮の事故死は窒息が大部分を占める。寝具による窒息や誤嚥を防ぐため、うつぶせ寝を避け、柔らかすぎる寝具や口に入る小さな物を周囲に置かない。"},
+{id:"sn11",f:"shouni",t:"けいれん",q:"熱性けいれんを起こした子どもへの対応で適切なのはどれか。",c:["舌をかまないよう口にタオルを入れる","体を強く揺すって呼びかける","衣服をゆるめ、けいれんの持続時間を観察する","すぐに水分を飲ませる"],a:2,e:"顔を横に向けて気道を確保し、衣服をゆるめ、持続時間やけいれんの様子を観察する。口に物を入れたり、揺すったりしない。5分以上続く場合は救急要請を考える。"},
+{id:"sn12",f:"shouni",t:"循環器",q:"ファロー四徴症の子どもが呼吸を楽にするためにとる特徴的な姿勢はどれか。",c:["起座位","蹲踞（しゃがみこみ）","腹臥位","側臥位"],a:1,e:"しゃがみこむと体血管抵抗が上がり、右左短絡が減って肺血流が増えるため、チアノーゼや息苦しさが和らぐ。"},
+{id:"sn13",f:"shouni",t:"与薬",q:"乳児に散剤を与薬する方法で適切なのはどれか。",c:["ミルクに混ぜて飲ませる","少量の水で練り、頬の内側に塗る","お粥に混ぜて全量食べさせる","そのまま舌の奥に入れる"],a:1,e:"少量の水で練ってペースト状にし、頬の内側や上あごに塗ってから水や湯冷ましを飲ませる。ミルクに混ぜると味が変わってミルク嫌いの原因になり、飲み残すと全量を投与できない。"}
+);
+
+/* ===== 母性看護学 ===== */
+Q.push(
+{id:"b01",f:"bosei",t:"妊娠",q:"正期産の期間はどれか。",c:["妊娠36週0日〜40週6日","妊娠37週0日〜41週6日","妊娠38週0日〜42週6日","妊娠40週0日〜42週0日"],a:1,e:"正期産は妊娠37週0日〜41週6日。22週0日〜36週6日は早産、42週0日以降は過期産。"},
+{id:"b02",f:"bosei",t:"妊娠",q:"最終月経の開始日が2026年4月10日の場合、ネーゲレ概算法による分娩予定日はどれか。",c:["2026年12月17日","2027年1月3日","2027年1月17日","2027年2月10日"],a:2,e:"ネーゲレ概算法は「月−3（または＋9）、日＋7」。4月−3＝1月（翌年）、10日＋7＝17日で、2027年1月17日。"},
+{id:"b03",f:"bosei",t:"妊娠",q:"市販の妊娠検査薬で検出するホルモンはどれか。",c:["エストロゲン","プロゲステロン","ヒト絨毛性ゴナドトロピン〈hCG〉","プロラクチン"],a:2,e:"hCGは受精卵の絨毛から分泌され、尿中のhCGを検出して妊娠を判定する。妊娠8〜10週ころに分泌のピークを迎える。"},
+{id:"b04",f:"bosei",t:"妊娠の異常",q:"妊娠高血圧症候群の高血圧の基準はどれか。",c:["120/80 mmHg以上","130/85 mmHg以上","140/90 mmHg以上","160/110 mmHg以上"],a:2,e:"妊娠時に収縮期140 mmHg以上または拡張期90 mmHg以上の高血圧を認めるもの。妊娠高血圧腎症・妊娠高血圧・加重型妊娠高血圧腎症・高血圧合併妊娠に分類される。収縮期160 mmHg以上または拡張期110 mmHg以上は重症。"},
+{id:"b05",f:"bosei",t:"産褥",q:"分娩後12時間ころの子宮底の高さはどれか。",c:["恥骨結合上縁","臍下3横指","臍高","剣状突起下2横指"],a:2,e:"分娩直後は臍下2〜3横指、12時間後は臍高〜臍上1横指まで上がり、その後は1日約1横指ずつ下がる。産褥10日ころには腹壁の上から触れなくなる。"},
+{id:"b06",f:"bosei",t:"産褥",q:"産褥4〜8日ころの悪露はどれか。",c:["赤色悪露","褐色悪露","黄色悪露","白色悪露"],a:1,e:"赤色悪露（〜3日ころ）→褐色悪露（4〜8日ころ）→黄色悪露（2〜3週ころ）→白色悪露（4〜6週ころ）と変化する。"},
+{id:"b07",f:"bosei",t:"新生児",q:"新生児の生理的体重減少で正しいのはどれか。",c:["生後24時間以内に最も減少する","出生体重の5〜10%程度減少する","出生体重の20%程度減少する","生後1か月ころに出生体重に戻る"],a:1,e:"生後3〜5日ころに出生体重の5〜10%程度減少し、生後7〜10日ころに出生体重に戻る。10%を超える減少は哺乳不足などを疑う。"},
+{id:"b08",f:"bosei",t:"新生児",q:"病的黄疸を疑う所見はどれか。",c:["生後24時間以内に出現する黄疸","生後2〜3日に出現する黄疸","生後4〜5日にピークになる黄疸","生後1〜2週で消える黄疸"],a:0,e:"生理的黄疸は生後2〜3日に現れ、4〜5日でピーク、1〜2週で消える。生後24時間以内の早発黄疸や、急速に進む・長引く黄疸は病的黄疸を疑う。"},
+{id:"b09",f:"bosei",t:"新生児",q:"アプガースコアの評価項目に含まれないのはどれか。",c:["心拍数","呼吸","筋緊張","体温"],a:3,e:"アプガースコアは心拍数・呼吸・筋緊張・反射（刺激への反応）・皮膚色の5項目を各0〜2点で評価する。生後1分と5分に判定する。"},
+{id:"b10",f:"bosei",t:"授乳",q:"乳汁の産生を促すホルモンはどれか。",c:["オキシトシン","プロラクチン","エストロゲン","hCG"],a:1,e:"プロラクチンは乳汁を産生し、オキシトシンは射乳（乳汁を押し出す）と子宮収縮を促す。乳頭への吸啜刺激で両方の分泌が増える。"},
+{id:"b11",f:"bosei",t:"妊娠と栄養",q:"胎児の神経管閉鎖障害のリスクを減らすため、妊娠前から十分な摂取がすすめられる栄養素はどれか。",c:["ビタミンA","葉酸","ビタミンD","ナトリウム"],a:1,e:"妊娠前から妊娠初期に葉酸を十分にとると神経管閉鎖障害（二分脊椎など）のリスクが下がる。ビタミンAのとりすぎは胎児の奇形の原因になりうる。"},
+{id:"b12",f:"bosei",t:"妊娠",q:"妊娠後期の仰臥位低血圧症候群への対応で適切なのはどれか。",c:["左側臥位にする","両下肢を下げる","頭部を低くする","腹臥位にする"],a:0,e:"仰向けになると大きくなった子宮が下大静脈を圧迫し、心臓に戻る血液が減って血圧が下がる。左側臥位にすると圧迫が解除される。"},
+{id:"b13",f:"bosei",t:"産褥",q:"マタニティブルーズの特徴はどれか。",c:["産後数日以内に始まり、多くは2週間以内に軽快する","産後3か月以降に発症する","幻覚や妄想を伴う","治療しないと必ずうつ病に移行する"],a:0,e:"マタニティブルーズは産後3〜10日ころに涙もろさや不安が現れる一過性の状態で、多くは2週間以内に改善する。2週間以上続く場合は産後うつ病を疑う。"}
+);
+
+/* ===== 精神看護学 ===== */
+Q.push(
+{id:"ps01",f:"seishin",t:"統合失調症",q:"統合失調症の陽性症状はどれか。",c:["感情の平板化","意欲の低下","幻聴","自閉"],a:2,e:"陽性症状は幻覚（特に幻聴）・妄想・思考の混乱など、本来ないものが現れる症状。感情の平板化・意欲低下・自閉は陰性症状。"},
+{id:"ps02",f:"seishin",t:"薬物療法",q:"抗精神病薬による悪性症候群でみられるのはどれか。",c:["低体温","高熱と筋強剛","血圧の安定","CK〈クレアチンキナーゼ〉の低下"],a:1,e:"悪性症候群は高熱・筋強剛・意識障害・発汗・頻脈・血圧の変動が起こり、CKが上昇する。早期に発見して原因薬を中止し、全身管理を行う。"},
+{id:"ps03",f:"seishin",t:"うつ病",q:"うつ病で自殺の危険性が特に高まるとされる時期はどれか。",c:["症状が最も重い極期","回復期","寛解して数年後","入院した当日のみ"],a:1,e:"極期は行動するエネルギーも低下しているが、回復期は意欲が戻り始めて行動に移しやすくなるため注意が必要（病初期も危険）。"},
+{id:"ps04",f:"seishin",t:"薬物療法",q:"炭酸リチウムを服用している患者で定期的な確認が必要なのはどれか。",c:["血中濃度","眼圧","骨密度","聴力"],a:0,e:"炭酸リチウムは有効域と中毒域が近いため血中濃度を測定する。中毒になると手指振戦の増強・嘔吐・下痢・意識障害がみられる。脱水や減塩で中毒が起こりやすい。"},
+{id:"ps05",f:"seishin",t:"精神保健福祉法",q:"自傷他害のおそれがあり、精神保健指定医2名以上の診察結果が一致した場合に、都道府県知事の権限で行う入院はどれか。",c:["任意入院","医療保護入院","措置入院","応急入院"],a:2,e:"措置入院は知事の権限による入院。任意入院は本人の同意、医療保護入院は指定医1名の診察と家族等の同意、応急入院は家族等の同意が得られないとき72時間に限って行う。"},
+{id:"ps06",f:"seishin",t:"防衛機制",q:"受け入れがたい自分の感情を、他者がもっているものとみなす防衛機制はどれか。",c:["昇華","投影","退行","合理化"],a:1,e:"投影は「自分が相手を嫌い」を「相手が自分を嫌っている」と感じるなど。昇華は社会的に認められる形に置き換える、退行は以前の発達段階に戻る、合理化はもっともらしい理由づけ。"},
+{id:"ps07",f:"seishin",t:"依存症",q:"アルコール依存症の患者が断酒して2〜3日後に出現しうる症状はどれか。",c:["振戦せん妄","悪性症候群","セロトニン症候群","緊張病性昏迷"],a:0,e:"振戦せん妄は最終飲酒から2〜3日後に現れやすく、意識障害・幻視（小動物幻視）・振戦・発汗がみられる。早期の離脱症状は数時間〜1日で手指振戦や発汗として現れる。"},
+{id:"ps08",f:"seishin",t:"摂食障害",q:"神経性やせ症〈神経性無食欲症〉でみられるのはどれか。",c:["頻脈","徐脈","高体温","月経過多"],a:1,e:"低栄養で代謝が落ち、徐脈・低体温・低血圧・無月経・うぶ毛の増加がみられる。急な再栄養では低リン血症などの再栄養症候群に注意する。"},
+{id:"ps09",f:"seishin",t:"行動制限",q:"精神科病院で12時間を超えて患者を隔離する必要があるとき、その判断を行うのは誰か。",c:["精神保健指定医","看護師長","精神保健福祉士","患者の家族"],a:0,e:"12時間を超える隔離と身体的拘束は精神保健指定医の判断が必要。行動制限中は頻回に観察し、理由を患者に説明し、記録を残す。"},
+{id:"ps10",f:"seishin",t:"ストレス理論",q:"ストレスへの認知的評価とコーピングの理論を示したのは誰か。",c:["ラザルス","セリエ","キャノン","フロイト"],a:0,e:"ラザルスはストレッサーをどう評価するか（認知的評価）とその対処（コーピング）を重視した。セリエは汎適応症候群、キャノンは闘争・逃走反応を提唱した。"},
+{id:"ps11",f:"seishin",t:"PTSD",q:"心的外傷後ストレス障害〈PTSD〉の症状はどれか。",c:["フラッシュバック","観念奔逸","作為体験","多幸感"],a:0,e:"PTSDでは外傷体験の再体験（フラッシュバック・悪夢）、回避、否定的な認知や気分、過覚醒（不眠・過度の驚愕）がみられる。"},
+{id:"ps12",f:"seishin",t:"リハビリテーション",q:"対人関係や日常生活の技能を、ロールプレイを用いて練習するプログラムはどれか。",c:["社会生活技能訓練〈SST〉","作業療法","芸術療法","自律訓練法"],a:0,e:"SSTは挨拶・頼み方・断り方などの場面をロールプレイで練習し、よかった点をフィードバックして生活の技能を高める。"}
+);
+
+/* ===== 地域・在宅看護論 ===== */
+Q.push(
+{id:"z01",f:"zaitaku",t:"訪問看護制度",q:"要介護認定を受けている利用者でも、医療保険で訪問看護が行われるのはどれか。",c:["脳梗塞後遺症","末期の悪性腫瘍","骨粗鬆症","変形性膝関節症"],a:1,e:"介護保険の対象者は原則介護保険が優先されるが、末期の悪性腫瘍・厚生労働大臣が定める疾病等（神経難病など）・特別訪問看護指示書の期間は医療保険になる。"},
+{id:"z02",f:"zaitaku",t:"訪問看護制度",q:"訪問看護指示書の有効期間の上限はどれか。",c:["1か月","3か月","6か月","1年"],a:2,e:"訪問看護指示書は主治医が交付し、有効期間は最長6か月。"},
+{id:"z03",f:"zaitaku",t:"訪問看護制度",q:"特別訪問看護指示書による訪問看護の期間の上限はどれか。",c:["7日","14日","28日","3か月"],a:1,e:"急性増悪などで頻回の訪問が必要なとき、主治医が交付する。1回につき最長14日間、医療保険で毎日の訪問ができる。原則月1回（一部の状態は月2回）交付できる。"},
+{id:"z04",f:"zaitaku",t:"地域包括ケア",q:"地域包括支援センターに配置が義務づけられている職種はどれか。",c:["医師","薬剤師","主任介護支援専門員","理学療法士"],a:2,e:"保健師（または経験のある看護師）・社会福祉士・主任介護支援専門員の3職種が配置され、総合相談・権利擁護・介護予防ケアマネジメントなどを担う。"},
+{id:"z05",f:"zaitaku",t:"介護保険",q:"居宅サービス計画（ケアプラン）を作成するのは誰か。",c:["介護支援専門員","訪問看護師","主治医","市町村の保健師"],a:0,e:"要介護者のケアプランは居宅介護支援事業所の介護支援専門員（ケアマネジャー）が作成する。本人や家族が自分で作成することもできる。"},
+{id:"z06",f:"zaitaku",t:"在宅医療機器",q:"在宅酸素療法を受ける人への指導で適切なのはどれか。",c:["酸素濃縮器は火気から2m以上離す","息苦しいときは自己判断で流量を上げる","酸素使用中も喫煙してよい","外出時は酸素を使わない"],a:0,e:"酸素は燃焼を助けるため、火気から2m以上離し、使用中は禁煙。流量は医師の指示を守り、外出時は携帯用ボンベを使う。"},
+{id:"z07",f:"zaitaku",t:"在宅医療機器",q:"在宅で胃瘻を管理している人への指導で適切なのはどれか。",c:["瘻孔周囲は消毒薬で毎日消毒する","瘻孔が完成していれば、保護せずに入浴できる","栄養剤の注入は仰臥位で行う","胃瘻カテーテルは毎日交換する"],a:1,e:"瘻孔が安定していれば、そのまま入浴して石けんで洗い、よくすすいで乾かせばよい。消毒は通常不要。注入は上体を30〜90度起こして行う。"},
+{id:"z08",f:"zaitaku",t:"家族支援",q:"家族が一時的に介護から離れて休めるよう、利用者が施設に短期間宿泊するサービスはどれか。",c:["訪問介護","通所介護","短期入所生活介護","居宅療養管理指導"],a:2,e:"短期入所生活介護（ショートステイ）はレスパイトケアとして家族の介護負担を軽くする。通所介護（デイサービス）は日帰り。"},
+{id:"z09",f:"zaitaku",t:"地域包括ケア",q:"地域包括ケアシステムで想定されている日常生活圏域の目安はどれか。",c:["おおむね30分以内に必要なサービスが提供される範囲","都道府県全体","二次医療圏","徒歩5分以内の範囲"],a:0,e:"住まい・医療・介護・予防・生活支援が、おおむね30分以内に届く日常生活圏域（中学校区が目安）で一体的に提供される仕組みをめざしている。"},
+{id:"z10",f:"zaitaku",t:"介護保険",q:"介護保険の地域密着型サービスはどれか。",c:["訪問介護","通所リハビリテーション","小規模多機能型居宅介護","短期入所療養介護"],a:2,e:"地域密着型サービスは市町村が指定・監督し、原則その市町村の住民が利用する。小規模多機能型居宅介護・認知症対応型共同生活介護（グループホーム）・定期巡回・随時対応型訪問介護看護などがある。"},
+{id:"z11",f:"zaitaku",t:"在宅療養",q:"在宅で間欠的自己導尿を行う人への指導で適切なのはどれか。",c:["必ず滅菌手袋を使う","石けんで手を洗い、清潔操作で行う","尿意を感じたときだけ行う","1日1回だけ行う"],a:1,e:"在宅では清潔間欠自己導尿が基本で、手洗いをして清潔に行えばよい。膀胱の過伸展を防ぐため、尿意に関係なく指示された時間ごとに行う。"}
+);
+
+/* ===== 看護の統合と実践 ===== */
+Q.push(
+{id:"t01",f:"tougou",t:"災害看護",q:"トリアージタッグで「最優先治療群」を示す色はどれか。",c:["黒","赤","黄","緑"],a:1,e:"赤＝最優先治療群（区分I）、黄＝待機的治療群（区分II）、緑＝保留群（区分III）、黒＝救命困難群または死亡群（区分0）。"},
+{id:"t02",f:"tougou",t:"災害看護",q:"START式トリアージで、歩行できず、自発呼吸があり呼吸数が35回/分の傷病者の区分はどれか。",c:["黒","赤","黄","緑"],a:1,e:"START式では、呼吸数が30回/分以上または10回/分未満なら赤。歩行できる人は緑、気道確保しても呼吸がなければ黒。"},
+{id:"t03",f:"tougou",t:"医療安全",q:"インシデントレポートを提出する目的はどれか。",c:["当事者の責任を追及する","事故の原因を分析し、再発を防止する","人事評価に用いる","患者に賠償するため"],a:1,e:"インシデントの報告と分析は、個人を責めるためではなく、組織として原因を明らかにし再発を防ぐために行う。"},
+{id:"t04",f:"tougou",t:"医療安全",q:"患者誤認を防ぐための確認方法で適切なのはどれか。",c:["「〇〇さんですね」と看護師が名前を呼んで確認する","患者自身にフルネームを名乗ってもらう","ベッドの位置で確認する","病室の入口の名札だけで確認する"],a:1,e:"「〇〇さんですね」と聞くと、聞き間違えた患者が「はい」と答えることがある。患者にフルネームを名乗ってもらい、リストバンドなど2つ以上の識別子で確認する。"},
+{id:"t05",f:"tougou",t:"医療安全",q:"1件の重大な事故の背後には29件の軽微な事故と300件のヒヤリ・ハットがあるとする法則はどれか。",c:["ハインリッヒの法則","パレートの法則","スイスチーズモデル","SHELモデル"],a:0,e:"ハインリッヒの法則（1:29:300）。ヒヤリ・ハットの段階で報告し対策することが重大事故の予防につながる。"},
+{id:"t06",f:"tougou",t:"チーム医療",q:"摂食嚥下機能の評価と訓練を主に担う職種はどれか。",c:["言語聴覚士","臨床工学技士","診療放射線技師","精神保健福祉士"],a:0,e:"言語聴覚士（ST）は言語・聴覚・摂食嚥下の機能の評価と訓練を行う。看護師は食事場面での観察や口腔ケアで連携する。"},
+{id:"t07",f:"tougou",t:"国際看護",q:"「看護師の倫理綱領」を採択している国際組織はどれか。",c:["WHO","ICN","UNICEF","ILO"],a:1,e:"ICN（国際看護師協会）が「ICN看護師の倫理綱領」を採択している。日本看護協会はICNに加盟しており、独自の「看護職の倫理綱領」も定めている。"},
+{id:"t08",f:"tougou",t:"医療安全",q:"針刺し事故が起きた直後の対応で最も適切なのはどれか。",c:["傷口を口で吸う","流水で十分に洗い流す","そのまま業務を続け、翌日に報告する","傷口を強く圧迫して止血する"],a:1,e:"まず流水と石けんで十分に洗い流し、すぐに上司に報告して、患者の感染症情報に基づいて検査や予防内服などを受ける。"},
+{id:"t09",f:"tougou",t:"災害看護",q:"避難所で深部静脈血栓症（いわゆるエコノミークラス症候群）を予防するための指導で適切なのはどれか。",c:["トイレを我慢して水分を控える","適度に水分をとり、足首を動かす運動をする","車中泊を続ける","きつい衣服を着る"],a:1,e:"同じ姿勢で長く過ごす・水分不足で血栓ができやすくなる。水分補給と足の運動、歩行をすすめる。"},
+{id:"t10",f:"tougou",t:"多重課題",q:"次の場面が同時に起きた。最も優先して対応するのはどれか。",c:["定時の検温","家族からの電話での問い合わせ","SpO₂が85%に低下したというナースコール","翌日の退院指導の準備"],a:2,e:"生命に直結する気道・呼吸・循環の異常を最優先する。他の業務は応援を頼んだり、時間を調整したりする。"},
+{id:"t11",f:"tougou",t:"看護の法的責任",q:"保健師助産師看護師法で定められている看護師の業務はどれか。",c:["診断と治療","療養上の世話と診療の補助","処方せんの交付","保健指導のみ"],a:1,e:"看護師は「傷病者若しくはじょく婦に対する療養上の世話又は診療の補助」を業とする（第5条）。"}
+);
+
+/* ===== 状況設定問題（1ケース3問・1問2点） ===== */
+const CASES = [
+{id:"c1",f:"seijin",title:"胃がんの術後",who:"Aさん（62歳・男性）",
+ story:"Aさんは胃がんのため幽門側胃切除術を受けた。喫煙歴は40年。\n<b>術後1日目</b>：体温37.8℃、脈拍96回/分、SpO₂ 94%（鼻腔カニューレ 2L/分）。痰がからんでいるが、創部痛のため咳が弱い。右下肺野の呼吸音が減弱している。",
+ qs:[
+ {id:"c1-1",q:"術後1日目のAさんに起きていると考えられる合併症はどれか。",c:["無気肺","縫合不全","後出血","麻痺性イレウス"],a:0,e:"喫煙歴・痰の貯留・弱い咳・呼吸音の減弱・発熱・SpO₂低下から、痰で気管支が詰まった無気肺が考えられる。術後1〜3日目に起こりやすい。"},
+ {id:"c1-2",q:"Aさんへの援助で最も適切なのはどれか。",c:["創部を枕で押さえて、深呼吸と咳を促す","痛みが治まるまで臥床を続けてもらう","痰がかたくなるよう水分を制限する","仰臥位を保持する"],a:0,e:"創部を押さえると咳のときの痛みが和らぐ。鎮痛薬で痛みを調整し、深呼吸・排痰・体位変換・早期離床で肺の拡張を促す。"},
+ {id:"c1-3",q:"術後10日目、Aさんは食後20分ほどで冷汗と動悸が出るようになった。適切な指導を2つ選べ。",c:["1回の食事量を少なくし、回数を増やす","食事中に水分を多くとる","よく噛んでゆっくり食べる","甘い菓子を食事代わりにする","食後すぐに運動する"],a:[0,2],e:"食後30分以内の冷汗・動悸は早期ダンピング症候群。少量頻回食・よく噛む・食事中の水分を控える・糖質に偏らない・食後は少し横になる、が基本。"}
+ ]},
+{id:"c2",f:"seijin",title:"2型糖尿病の教育入院",who:"Bさん（55歳・女性）",
+ story:"Bさんは2型糖尿病でHbA1c 8.5%。血糖コントロールと自己管理の習得のため教育入院し、インスリン自己注射を始めることになった。事務職で、夫と二人暮らし。",
+ qs:[
+ {id:"c2-1",q:"インスリン自己注射の指導で正しいのはどれか。",c:["毎回同じ場所に注射する","注射部位を前回から少しずつずらす","注射後は注射部位を強くもむ","未使用のインスリンは冷凍庫で保存する"],a:1,e:"同じ場所に打ち続けると皮下にしこり（リポハイパートロフィー）ができ、吸収が不安定になる。未使用のものは冷蔵庫（凍らせない）、使用中のものは室温で保管する。"},
+ {id:"c2-2",q:"入院5日目の昼食前、Bさんに冷汗と手のふるえがあり、血糖値は58 mg/dLだった。最初の対応で適切なのはどれか。",c:["ブドウ糖10gを摂取してもらう","インスリンを追加で注射する","昼食まで様子をみる","散歩を促す"],a:0,e:"意識があり経口摂取できる低血糖では、ブドウ糖10g（砂糖なら20g）をとってもらい、15分後に血糖値を再測定する。α-グルコシダーゼ阻害薬を内服中なら必ずブドウ糖を使う。"},
+ {id:"c2-3",q:"退院前にシックデイ（発熱や下痢などで体調が悪い日）について指導する。適切なものを2つ選べ。",c:["食事がとれないときは自己判断でインスリンを中止する","水分を十分にとる","血糖値をいつもより頻回に測る","食欲がなくても普段どおりの量を無理に食べる","症状が続いても受診は控える"],a:[1,2],e:"シックデイは血糖値が乱れやすい。自己判断でインスリンを中止せず、水分をとり、血糖値をこまめに測って主治医に連絡する。消化のよいものでエネルギーをとる。"}
+ ]},
+{id:"c3",f:"rounen",title:"大腿骨頸部骨折の術後",who:"Cさん（84歳・女性）",
+ story:"Cさんは自宅で転倒し、右大腿骨頸部骨折で人工骨頭置換術（後方アプローチ）を受けた。軽度のアルツハイマー型認知症がある。\n<b>術後2日目の夜</b>：「家に帰らなきゃ」と大声を出し、点滴を抜こうとする。日中はうとうとしていることが多い。",
+ qs:[
+ {id:"c3-1",q:"術後2日目の夜のCさんの状態で考えられるのはどれか。",c:["術後せん妄","うつ病","統合失調症","認知症の急速な進行"],a:0,e:"手術をきっかけに急に始まり、夜間に悪化し、日中は傾眠という変動がある。高齢・認知症・手術・環境の変化はせん妄の危険因子。"},
+ {id:"c3-2",q:"Cさんへの対応で適切なのはどれか。",c:["日中はカーテンを閉めて眠れるようにする","日中は離床を促し、生活リズムを整える","夜間は部屋を真っ暗にする","説明せずにすぐ身体拘束を行う"],a:1,e:"日中の覚醒と活動を促し、時計やカレンダーで見当識を補い、夜は足元灯などの薄明かりにする。家族の面会やなじみの物も安心につながる。"},
+ {id:"c3-3",q:"人工骨頭（後方アプローチ）の脱臼予防のため、避けるよう指導する動作はどれか。",c:["高めのいすに座る","低いいすに深く腰かける","両膝の間に枕を挟んで側臥位になる","洋式トイレを使う"],a:1,e:"後方アプローチでは股関節の深い屈曲・内転・内旋で脱臼しやすい。低いいす・正座・横座り・足を組む・かがんで靴下をはく動作は避ける。"}
+ ]},
+{id:"c4",f:"shouni",title:"胃腸炎による脱水",who:"Dちゃん（1歳2か月・男児）",
+ story:"Dちゃんは2日前から嘔吐と水様便が続き、ぐったりしているため入院した。体重は1週前の健診で10.0kg、入院時は9.4kg。大泉門の陥没、口唇の乾燥があり、おむつが濡れる回数が減っている。ロタウイルス抗原が陽性だった。",
+ qs:[
+ {id:"c4-1",q:"Dちゃんの体重減少率はどれか。",c:["0.6%","6%","9.4%","16%"],a:1,e:"(10.0−9.4)÷10.0×100＝6%。乳児では体重減少率が脱水の重症度の目安になる（おおむね5%未満は軽度、5〜10%は中等度、10%以上は重度）。"},
+ {id:"c4-2",q:"嘔吐が落ち着いたDちゃんへの水分の与え方で適切なのはどれか。",c:["一度にたくさん飲ませる","経口補水液を少量ずつ頻回に与える","果汁を多めに与える","牛乳を与える"],a:1,e:"経口補水液をスプーンなどで少量ずつ頻回に与えると嘔吐しにくい。果汁は糖分が多く下痢を悪化させることがある。"},
+ {id:"c4-3",q:"母親への感染予防の指導で適切なものを2つ選べ。",c:["おむつ交換後はアルコールで手指を消毒すれば十分である","おむつ交換後は流水と石けんで手を洗う","便で汚れた衣類は次亜塩素酸ナトリウム液で消毒する","きょうだいと同じタオルを使ってよい","下痢が止まれば便にウイルスは出ない"],a:[1,2],e:"ロタウイルスはアルコールが効きにくい。流水と石けんの手洗い、汚物の次亜塩素酸ナトリウムでの消毒、タオルの共用を避けることが大切。下痢が止まった後もしばらく便にウイルスが出る。"}
+ ]},
+{id:"c5",f:"bosei",title:"産褥期と新生児",who:"Eさん（30歳・初産婦）",
+ story:"Eさんは妊娠39週2日に経腟分娩で女児（出生体重3,100g、アプガースコア1分後9点）を出産した。分娩経過に異常はなく、母乳育児を希望している。\n<b>産褥2日目</b>：「授乳のとき乳首が痛い」と話す。児の体重は2,900g。",
+ qs:[
+ {id:"c5-1",q:"産褥2日目のEさんの正常な経過として適切なのはどれか。",c:["白色悪露がみられる","赤色悪露がみられる","子宮底が恥骨結合上縁にある","子宮底が剣状突起下にある"],a:1,e:"産褥3日ころまでは赤色悪露。子宮底は分娩後12時間ころ臍高で、その後1日約1横指ずつ下がり、産褥2日目は臍下1〜2横指程度になる。"},
+ {id:"c5-2",q:"授乳時の乳頭痛を軽減するための指導で適切なのはどれか。",c:["授乳の回数を減らす","乳輪まで深くくわえさせる","毎回石けんで乳頭を洗う","1回の授乳を30分以上続ける"],a:1,e:"浅い吸着が乳頭痛や亀裂の原因になる。児の口を大きく開けさせて乳輪まで深くくわえさせ、抱き方を工夫する。石けんで頻回に洗うと乳頭の皮膚が荒れる。"},
+ {id:"c5-3",q:"生後2日目の児の体重についての判断で適切なのはどれか。",c:["生理的体重減少の範囲内である","高度の脱水である","すぐに人工乳を大量に追加する必要がある","出生時より体重が増えている"],a:0,e:"(3,100−2,900)÷3,100×100≒6.5%で、生理的体重減少（5〜10%）の範囲内。排尿・排便、哺乳状況、黄疸とあわせて観察を続ける。"}
+ ]},
+{id:"c6",f:"seishin",title:"統合失調症の入院治療",who:"Fさん（24歳・男性）",
+ story:"Fさんは大学卒業後に就職したが、半年ほど前から「隣の部屋から悪口が聞こえる」と言って自室に閉じこもるようになった。統合失調症と診断されて任意入院し、抗精神病薬の内服が始まった。",
+ qs:[
+ {id:"c6-1",q:"Fさんが「今も隣から自分の悪口が聞こえる」と訴えた。対応で適切なのはどれか。",c:["「そんな声は聞こえません」と否定する","「本当に悪口を言われていますね」と同調する","否定も肯定もせず、つらい気持ちを受け止める","話題にしないよう無視する"],a:2,e:"幻聴の内容を否定・肯定せず、「それはつらいですね」と本人が感じている苦痛に焦点を当てる。安心できる関係づくりが第一。"},
+ {id:"c6-2",q:"内服開始から10日後、Fさんは「じっと座っていられない。足がむずむずする」と訴えた。考えられるのはどれか。",c:["アカシジア","遅発性ジスキネジア","悪性症候群","起立性低血圧"],a:0,e:"アカシジア（静座不能）は抗精神病薬による錐体外路症状の一つ。遅発性ジスキネジアは長期内服後に口周囲の不随意運動として現れる。主治医に報告する。"},
+ {id:"c6-3",q:"Fさんの退院に向けた支援で適切なものを2つ選べ。",c:["症状が消えたら薬を自己判断でやめてよいと伝える","再発の注意サイン（不眠など）を本人と一緒に確認する","退院後の相談先として訪問看護や相談支援事業所を紹介する","家族には病状を伝えないようにする","退院後はすべて一人でこなすよう指導する"],a:[1,2],e:"服薬の継続、再発の注意サインへの気づき、地域の支援とのつながりが再入院の予防になる。本人の同意を得て家族とも情報を共有する。"}
+ ]},
+{id:"c7",f:"zaitaku",title:"在宅酸素療法",who:"Gさん（78歳・男性）",
+ story:"GさんはCOPDで在宅酸素療法（安静時1L/分、労作時2L/分）を受けている。要介護2で、妻（76歳）と二人暮らし。週1回の訪問看護を利用している。",
+ qs:[
+ {id:"c7-1",q:"訪問時、Gさんは「息苦しいので、ずっと酸素を3Lに上げている」と話した。訪問看護師の対応で最も適切なのはどれか。",c:["息苦しいときは自由に流量を上げてよいと伝える","指示された流量を守るよう伝え、症状を観察して主治医に報告する","酸素吸入を中止する","次回の訪問まで様子をみる"],a:1,e:"COPDでは高流量の酸素でCO₂ナルコーシスを起こす危険がある。流量は指示を守り、息苦しさが増している原因（感染・増悪など）をアセスメントして主治医に報告する。"},
+ {id:"c7-2",q:"Gさんの入浴についての指導で適切なのはどれか。",c:["入浴中は酸素を外す","熱めの湯に肩までつかる","酸素を吸入したまま、息を吐きながらゆっくり動く","浴槽に長くつかって体を温める"],a:2,e:"入浴は酸素の消費が多い動作。酸素を吸入したまま、ぬるめの湯に胸の下まで短時間つかり、息を吐きながらゆっくり動くよう指導する。"},
+ {id:"c7-3",q:"妻が「最近疲れて眠れない」と話した。訪問看護師の対応で適切なものを2つ選べ。",c:["介護支援専門員と相談し、サービスの調整を提案する","もっと頑張るよう妻を励ます","短期入所などのレスパイトケアの利用を提案する","訪問看護を中止する","妻の話は聞かずにGさんのケアに集中する"],a:[0,2],e:"介護者も支援の対象。妻の思いを聴き、介護支援専門員と連携して通所・短期入所などを組み合わせ、介護負担を軽くする。"}
+ ]},
+{id:"c8",f:"tougou",title:"地震後の避難所",who:"避難所で活動する看護師",
+ story:"震度6強の地震から2日後。あなたは看護師として約200人が避難している小学校の体育館で活動している。断水が続いており、トイレの環境が悪い。",
+ qs:[
+ {id:"c8-1",q:"80歳の男性が「高血圧の薬を家に置いてきてしまった」と話した。対応で最も適切なのはどれか。",c:["数日なら薬を飲まなくても問題ないと伝える","ほかの避難者から同じ薬を分けてもらう","お薬手帳などで内服薬を確認し、医療救護班につなぐ","血圧が上がるまで様子をみる"],a:2,e:"内服の中断は持病の悪化につながる。お薬手帳や本人の話から薬を確認し、医療救護班や医師につないで処方を受けられるようにする。"},
+ {id:"c8-2",q:"避難所内でノロウイルス感染が疑われる嘔吐があった。嘔吐物の処理で適切なのはどれか。",c:["アルコールで拭き取る","0.1%次亜塩素酸ナトリウム液で消毒する","水拭きだけ行う","乾燥させてからほうきで掃く"],a:1,e:"手袋・マスク・エプロンを着けてペーパーで静かに拭き取り、0.1%（1,000ppm）次亜塩素酸ナトリウム液で消毒する。乾燥するとウイルスが舞い上がり、空気中から感染が広がる。"},
+ {id:"c8-3",q:"地震から1か月後、避難者の女性が「眠れない。あの日のことが頭から離れない」と話した。対応で適切なものを2つ選べ。",c:["つらい体験を詳しく話すよう促す","「みんな同じだから頑張って」と励ます","本人のペースで話を聴く","睡眠や食事の状況を確認し、こころのケアチームなど専門職につなぐ","気のせいだと伝える"],a:[2,3],e:"体験を無理に話させることは避け、本人が話したいペースで聴く。生活面の状態を確認し、必要に応じて専門職につなぐ（サイコロジカル・ファーストエイドの考え方）。"}
+ ]}
+];
+
+/* ===== 分野・ランク・シール・バッジ ===== */
+const FIELDS = [
+  {k:"hitsu",  n:"必修問題",               s:"必", col:"pink"},
+  {k:"jintai", n:"人体の構造と機能",       s:"体", col:"sky"},
+  {k:"shippei",n:"疾病の成り立ちと回復の促進",s:"病", col:"grape"},
+  {k:"shakai", n:"健康支援と社会保障制度", s:"社", col:"lemon"},
+  {k:"kiso",   n:"基礎看護学",             s:"基", col:"mint"},
+  {k:"seijin", n:"成人看護学",             s:"成", col:"peach"},
+  {k:"rounen", n:"老年看護学",             s:"老", col:"grape"},
+  {k:"shouni", n:"小児看護学",             s:"小", col:"sky"},
+  {k:"bosei",  n:"母性看護学",             s:"母", col:"pink"},
+  {k:"seishin",n:"精神看護学",             s:"精", col:"mint"},
+  {k:"zaitaku",n:"地域・在宅看護論",       s:"在", col:"lemon"},
+  {k:"tougou", n:"看護の統合と実践",       s:"統", col:"peach"}
+];
+const FMAP = Object.fromEntries(FIELDS.map(f => [f.k, f]));
+const QMAP = {};
+Q.forEach(q => { QMAP[q.id] = q; });
+CASES.forEach(cs => cs.qs.forEach(q => { q.f = cs.f; q.case = cs.id; QMAP[q.id] = q; }));
+
+/* 第116回：2027年2月14日（日）。第115回の合格基準：必修40/50点・一般＋状況設定166/249点 */
+const EXAM_DEFAULT = "2027-02-14";
+const PASS_GEN_RATE = 166 / 249;
+
+/* レベル → ランク（ぴよナースの見た目の段階） */
+const RANKS = [
+  {lv:1,  st:0, n:"たまご",           line:"ぴよ…？ まだ殻の中。1問解くと何かが起きるかも"},
+  {lv:3,  st:1, n:"ひよっこ看護学生", line:"殻からこんにちは！ いっしょに国試めざそうね"},
+  {lv:6,  st:2, n:"実習がんばり中",   line:"記録も国試もコツコツが大事だぴよ"},
+  {lv:10, st:3, n:"新人ナース",       line:"聴診器デビュー！ 必修は8割が合格ライン"},
+  {lv:15, st:4, n:"先輩ナース",       line:"後輩に教えられるくらいになってきたね"},
+  {lv:20, st:5, n:"主任ナース",       line:"弱点分野をつぶせば合格はもうすぐ"},
+  {lv:30, st:6, n:"看護師長",         line:"病棟をまとめる貫禄が出てきたぴよ"},
+  {lv:40, st:7, n:"レジェンドナース", line:"国試なんてこわくない！ 伝説のナース誕生"}
+];
+const rankOf = lv => { let r = RANKS[0]; RANKS.forEach(x => { if(lv >= x.lv) r = x; }); return r; };
+const xpNeed = lv => 40 + lv * 12;           /* 次のレベルまでに必要なXP */
+
+/* シール（ガチャで集める）。r: 1=ノーマル 2=レア 3=スーパーレア */
+const STICKERS = [
+  {id:"s01",n:"聴診器",r:1,col:"sky"},   {id:"s02",n:"体温計",r:1,col:"pink"},  {id:"s03",n:"カプセル",r:1,col:"mint"},
+  {id:"s04",n:"ばんそうこう",r:1,col:"peach"},{id:"s05",n:"注射器",r:1,col:"sky"},{id:"s06",n:"カルテ",r:1,col:"lemon"},
+  {id:"s07",n:"ナースシューズ",r:1,col:"grape"},{id:"s08",n:"点滴",r:1,col:"mint"},{id:"s09",n:"マスク",r:1,col:"sky"},
+  {id:"s10",n:"消毒ボトル",r:1,col:"pink"},{id:"s11",n:"ハートモニター",r:2,col:"pink"},{id:"s12",n:"救急車",r:2,col:"peach"},
+  {id:"s13",n:"ほ乳びん",r:2,col:"lemon"},{id:"s14",n:"車いす",r:2,col:"sky"},{id:"s15",n:"しんぞう",r:2,col:"pink"},
+  {id:"s16",n:"はい",r:2,col:"grape"},{id:"s17",n:"ナースキャップ",r:3,col:"pink"},{id:"s18",n:"合格さくら",r:3,col:"pink"},
+  {id:"s19",n:"金のひよこ",r:3,col:"lemon"},{id:"s20",n:"看護師免許",r:3,col:"mint"}
+];
+const RARITY = ["", "N", "R", "SR"];
+const GACHA_COST = 20;
+
+/* バッジ（実績）。判定は state を見て行う */
+const BADGES = [
+  {id:"first", n:"はじめの一問",   d:"はじめて問題に答える",          ok:S => S.tot.n >= 1},
+  {id:"n100",  n:"100問突破",      d:"合計100問に答える",             ok:S => S.tot.n >= 100},
+  {id:"n500",  n:"500問突破",      d:"合計500問に答える",             ok:S => S.tot.n >= 500},
+  {id:"streak3",n:"3日連続",       d:"3日続けて勉強する",             ok:S => streakDays(S) >= 3},
+  {id:"streak7",n:"1週間皆勤",     d:"7日続けて勉強する",             ok:S => streakDays(S) >= 7},
+  {id:"combo10",n:"コンボ10",      d:"10問連続で正解する",            ok:S => S.best.combo >= 10},
+  {id:"hitsu", n:"必修クリア",     d:"必修チャレンジで8割以上とる",   ok:S => S.best.hitsu >= 8},
+  {id:"mock",  n:"ミニ模試合格",   d:"ミニ模試で合格ラインを超える",   ok:S => !!S.best.mockPass},
+  {id:"calc",  n:"計算マスター",   d:"計算ドリルで合計20問正解",       ok:S => S.calc.c >= 20},
+  {id:"case",  n:"ケースの達人",   d:"状況設定を5ケース全問正解",       ok:S => Object.values(S.cases).filter(v => v === 3).length >= 5},
+  {id:"allf",  n:"全分野デビュー", d:"全12分野で1問以上正解する",     ok:S => FIELDS.every(f => (S.fs[f.k] || {}).c > 0)},
+  {id:"stk10", n:"シール10種",     d:"シールを10種類集める",          ok:S => Object.keys(S.stk).length >= 10},
+  {id:"ta15",  n:"スピードスター", d:"タイムアタックで15問正解",       ok:S => S.best.ta >= 15},
+  {id:"lv10",  n:"新人ナース",     d:"レベル10に到達する",            ok:S => S.lv >= 10}
+];
+
+/* ===== 計算ドリル（毎回数値が変わる） ===== */
+const ri = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+const round0 = x => Math.round(x + 1e-9);
+const CALC_GEN = [
+  function adultDrip(){
+    const v = pick([250, 500, 500, 1000, 1500]), h = pick([2, 3, 4, 5, 6, 8, 10, 12]);
+    const ans = round0(v * 20 / (h * 60));
+    return {t:"滴下数（成人用）", q:`成人用輸液セット（20滴≒1 mL）を用いて、輸液${v} mLを${h}時間で滴下する。1分間の滴下数を求めよ。\n※小数点以下第1位を四捨五入する。`, ans, unit:"滴/分",
+      e:`1分間の滴下数＝総量(mL)×1 mLあたりの滴数÷時間(分)\n＝${v}×20÷(${h}×60)＝${(v * 20 / (h * 60)).toFixed(2)} → ${ans}滴/分`};
+  },
+  function childDrip(){
+    const v = pick([100, 150, 200, 240, 300, 360, 480, 500]), h = pick([2, 4, 5, 6, 8, 10, 12, 24]);
+    const ans = round0(v * 60 / (h * 60));
+    return {t:"滴下数（小児用）", q:`小児用（微量）輸液セット（60滴≒1 mL）を用いて、輸液${v} mLを${h}時間で滴下する。1分間の滴下数を求めよ。\n※小数点以下第1位を四捨五入する。`, ans, unit:"滴/分",
+      e:`${v}×60÷(${h}×60)＝${(v / h).toFixed(2)} → ${ans}滴/分\n60滴≒1 mLのセットでは「1分間の滴下数＝1時間あたりのmL数」になる。`};
+  },
+  function pump(){
+    const h = pick([4, 5, 6, 8, 10, 12, 16, 24]), rate = ri(2, 25) * 5, v = rate * h;
+    return {t:"輸液ポンプの流量", q:`輸液${v} mLを輸液ポンプで${h}時間かけて投与する。流量（mL/時）を求めよ。`, ans:rate, unit:"mL/時",
+      e:`流量＝総量÷時間＝${v}÷${h}＝${rate} mL/時`};
+  },
+  function dose(){
+    const conc = pick([2, 5, 10, 20, 25, 50]), ml = pick([0.5, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 8]), mg = conc * ml;
+    const ok = Number.isInteger(ml);
+    if(!ok) return CALC_GEN[3]();
+    return {t:"薬液量", q:`「${mg} mgを静脈内注射」の指示があった。薬液は1 mLあたり${conc} mgを含む。必要な薬液量（mL）を求めよ。`, ans:ml, unit:"mL",
+      e:`必要量＝指示量÷濃度＝${mg}÷${conc}＝${ml} mL`};
+  },
+  function dilute(){
+    const stock = pick([5, 6, 10]), target = pick([0.02, 0.05, 0.1]), total = pick([500, 1000, 1500, 2000, 3000]);
+    const raw = Math.round(total * target / stock * 1000) / 1000;
+    if(!Number.isInteger(raw)) return CALC_GEN[4]();
+    return {t:"希釈", q:`${stock}%次亜塩素酸ナトリウム液を用いて、${target}%の消毒液を${total} mLつくる。必要な原液の量（mL）を求めよ。`, ans:raw, unit:"mL",
+      e:`原液量＝つくる量×つくる濃度÷原液の濃度\n＝${total}×${target}÷${stock}＝${raw} mL`};
+  },
+  function oxygen(){
+    const p = pick([5, 7, 8, 10, 12]), f = pick([1, 2, 3, 4, 5]);
+    const remain = 500 * p / 14.7, min = Math.floor(remain / f);
+    return {t:"酸素ボンベ", q:`500 L酸素ボンベ（満充填時14.7 MPa）の圧力計が${p} MPaを示している。酸素を${f} L/分で投与するとき、使用可能時間（分）を求めよ。\n※安全係数は考えず、小数点以下を切り捨てる。`, ans:min, unit:"分",
+      e:`残量＝500×${p}÷14.7＝${remain.toFixed(1)} L\n使用可能時間＝${remain.toFixed(1)}÷${f}＝${(remain / f).toFixed(1)} → ${min}分\n実際の臨床では安全係数（0.8など）をかけて余裕をもたせる。`};
+  },
+  function bmi(){
+    const hcm = ri(148, 182), w = ri(40, 95), b = w / Math.pow(hcm / 100, 2), ans = round0(b);
+    return {t:"BMI", q:`身長${hcm} cm、体重${w} kgの成人のBMIを求めよ。\n※小数点以下第1位を四捨五入する。`, ans, unit:"",
+      e:`BMI＝体重(kg)÷身長(m)²＝${w}÷(${(hcm / 100).toFixed(2)})²＝${b.toFixed(2)} → ${ans}\n日本肥満学会の基準では18.5未満が低体重、25以上が肥満。`};
+  }
+];
+
+/* ===== SVG ===== */
+const SVGI = {
+  cross:'<svg viewBox="0 0 16 16"><path d="M6 1.5h4v4.5h4.5v4H10v4.5H6V10H1.5V6H6z" fill="#fff"/></svg>',
+  star:(on, c) => `<svg viewBox="0 0 24 24"><path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4L2.8 9.5l6.4-.8z" fill="${on ? `var(--${c || "lemon"})` : "var(--soft)"}" stroke="var(--line)" stroke-width="2" stroke-linejoin="round"/></svg>`,
+  heart:on => `<svg viewBox="0 0 24 24"><path d="M12 20.5s-8-4.9-8-10.6C4 6.8 6.2 5 8.4 5c1.6 0 2.8.9 3.6 2.1C12.8 5.9 14 5 15.6 5 17.8 5 20 6.8 20 9.9c0 5.7-8 10.6-8 10.6z" fill="${on ? "var(--pink)" : "var(--soft)"}" stroke="var(--line)" stroke-width="2" stroke-linejoin="round"/></svg>`,
+  home:'<svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M4 12L13 4l9 8"/><path d="M6.5 10.5V21h13V10.5"/><path d="M11 21v-5h4v5"/></svg>',
+  map:'<svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M3.5 6.5l6-2.5 7 2.5 6-2.5v15.5l-6 2.5-7-2.5-6 2.5z"/><path d="M9.5 4v15.5M16.5 6.5V22"/></svg>',
+  note:'<svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><rect x="5" y="3.5" width="16" height="19" rx="3"/><path d="M9 9h8M9 13h8M9 17h5"/></svg>',
+  book:'<svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><circle cx="13" cy="13" r="8.5"/><path d="M13 8.5l1.4 2.9 3.1.4-2.3 2.2.6 3.1-2.8-1.5-2.8 1.5.6-3.1-2.3-2.2 3.1-.4z"/></svg>',
+  chart:'<svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M4 21.5h18"/><rect x="6" y="12" width="3.6" height="7" rx="1"/><rect x="11.2" y="7" width="3.6" height="12" rx="1"/><rect x="16.4" y="10" width="3.6" height="9" rx="1"/></svg>',
+  bolt:'<svg viewBox="0 0 24 24"><path d="M13.5 2.5L5 13.5h6l-1.5 8 8.5-11h-6z" fill="var(--lemon)" stroke="var(--line)" stroke-width="2" stroke-linejoin="round"/></svg>',
+  clock:'<svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8" fill="var(--sky-s)" stroke="var(--line)" stroke-width="2"/><path d="M12 9v4.5l3 2" fill="none" stroke="var(--line)" stroke-width="2.2" stroke-linecap="round"/><path d="M9.5 2.8h5" stroke="var(--line)" stroke-width="2.2" stroke-linecap="round"/></svg>',
+  hearts:'<svg viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10C4.5 7.1 6.5 5.5 8.6 5.5c1.5 0 2.7.8 3.4 2 .7-1.2 1.9-2 3.4-2 2.1 0 4.1 1.6 4.1 4.5 0 5.4-7.5 10-7.5 10z" fill="var(--pink)" stroke="var(--line)" stroke-width="2" stroke-linejoin="round"/></svg>',
+  drip:'<svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="10" rx="2.5" fill="var(--mint-s)" stroke="var(--line)" stroke-width="2"/><path d="M7 8h10" stroke="var(--line)" stroke-width="1.6"/><path d="M12 12.5v3.5" stroke="var(--line)" stroke-width="2"/><path d="M12 17.2c-1.3 1.6-1.8 2.4-1.8 3.1a1.8 1.8 0 003.6 0c0-.7-.5-1.5-1.8-3.1z" fill="var(--sky)" stroke="var(--line)" stroke-width="1.6"/></svg>',
+  clip:'<svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17.5" rx="2.5" fill="var(--lemon-s)" stroke="var(--line)" stroke-width="2"/><rect x="8.5" y="2.5" width="7" height="3.5" rx="1.2" fill="var(--card)" stroke="var(--line)" stroke-width="1.8"/><path d="M8.5 11h7M8.5 14.5h7M8.5 18h4" stroke="var(--line)" stroke-width="1.8" stroke-linecap="round"/></svg>',
+  medal:'<svg viewBox="0 0 24 24"><path d="M7.5 2.5h3l1.5 5-3 1.5zM16.5 2.5h-3l-1.5 5 3 1.5z" fill="var(--pink)" stroke="var(--line)" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="15" r="6.5" fill="var(--lemon)" stroke="var(--line)" stroke-width="2"/><path d="M12 11.5l1 2.1 2.3.3-1.7 1.6.4 2.3-2-1.1-2 1.1.4-2.3-1.7-1.6 2.3-.3z" fill="var(--card)" stroke="var(--line)" stroke-width="1.1" stroke-linejoin="round"/></svg>',
+  flame:'<svg viewBox="0 0 24 24"><path d="M12 2.5c1 3.5 5.5 5.5 5.5 11a5.5 5.5 0 01-11 0c0-2.7 1.4-4.2 2.5-5.3.2 1.8 1 2.8 2 3.1-.6-3.3.1-6.3 1-8.8z" fill="var(--peach)" stroke="var(--line)" stroke-width="2" stroke-linejoin="round"/></svg>',
+  cap:'<svg viewBox="0 0 24 24"><path d="M3.5 13.5c0-4.5 3.8-7.5 8.5-7.5s8.5 3 8.5 7.5l-2.5 3.5h-12z" fill="var(--card)" stroke="var(--line)" stroke-width="2" stroke-linejoin="round"/><path d="M10.6 8.8h2.8v2.3h2.3v2.8h-2.3v2.3h-2.8v-2.3H8.3v-2.8h2.3z" fill="var(--pink)"/></svg>'
+};
+
+/* ===== ぴよナース（成長8段階）===== */
+function piyoSVG(st, mood){
+  mood = mood || "normal";
+  const L = 'stroke="var(--line)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"';
+  const L3 = 'stroke="var(--line)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"';
+  const body = st === 7 ? "var(--gold)" : "var(--piyo)";
+  let s = '<svg viewBox="0 0 200 200" role="img" aria-label="ぴよナース">';
+  s += '<ellipse cx="100" cy="186" rx="52" ry="8" fill="var(--line)" opacity=".13"/>';
+  if(st === 7){
+    s += '<g opacity=".55">';
+    for(let i = 0; i < 12; i++){ const a = i * 30; s += `<path d="M100 112 L${100 + 96 * Math.cos((a - 6) * Math.PI / 180)} ${112 + 96 * Math.sin((a - 6) * Math.PI / 180)} L${100 + 96 * Math.cos((a + 6) * Math.PI / 180)} ${112 + 96 * Math.sin((a + 6) * Math.PI / 180)}z" fill="var(--lemon)"/>`; }
+    s += '</g>';
+  }
+  if(st === 0){
+    /* たまご：殻のすき間から目がのぞく */
+    s += `<g class="piyo-bob"><path d="M100 30c-34 0-56 50-56 88 0 36 25 62 56 62s56-26 56-62c0-38-22-88-56-88z" fill="var(--egg)" ${L}/>`;
+    s += `<path d="M58 104l14 10 12-12 14 12 12-12 14 12 12-10 12 8" fill="none" ${L3}/>`;
+    s += '<ellipse cx="86" cy="96" rx="4" ry="5.5" fill="var(--line)" class="blink"/><ellipse cx="114" cy="96" rx="4" ry="5.5" fill="var(--line)" class="blink"/>';
+    s += `<path d="M84 30c4-10 28-10 32 0l-2 10H86z" fill="var(--card)" ${L3}/><path d="M97.5 28h5v4h4v5h-4v3h-5v-3h-4v-5h4z" fill="var(--pink)"/>`;
+    s += '<circle cx="136" cy="150" r="5" fill="var(--pink-s)"/><circle cx="66" cy="140" r="4" fill="var(--sky-s)"/></g></svg>';
+    return s;
+  }
+  s += '<g class="piyo-bob">';
+  /* 足 */
+  s += `<path d="M78 170l-8 10h18zM122 170l-8 10h18z" fill="var(--beak)" ${L3}/>`;
+  /* 体 */
+  s += `<path d="M100 52c-40 0-64 30-64 66 0 36 26 60 64 60s64-24 64-60c0-36-24-66-64-66z" fill="${body}" ${L}/>`;
+  s += '<ellipse cx="100" cy="146" rx="34" ry="22" fill="#fff" opacity=".38"/>';
+  /* 羽 */
+  const wingL = mood === "happy" ? "M40 112c-16-10-20-26-12-30 8 2 16 14 18 24z" : "M40 110c-12 6-14 24-6 30 8-2 12-14 12-26z";
+  const wingR = mood === "happy" ? "M160 112c16-10 20-26 12-30-8 2-16 14-18 24z" : "M160 110c12 6 14 24 6 30-8-2-12-14-12-26z";
+  s += `<path d="${wingL}" fill="${body}" ${L3}/><path d="${wingR}" fill="${body}" ${L3}/>`;
+  /* 顔 */
+  if(mood === "happy"){
+    s += `<path d="M74 100q8-10 16 0M110 100q8-10 16 0" fill="none" ${L}/>`;
+    s += `<path d="M92 112h16l-8 12z" fill="var(--beak)" ${L3}/><path d="M95 116h10" stroke="var(--line)" stroke-width="2"/>`;
+  } else if(mood === "sad"){
+    s += `<path d="M74 96q8 4 16 2M110 98q8 2 16-2" fill="none" ${L3}/>`;
+    s += '<ellipse cx="82" cy="104" rx="4.5" ry="6" fill="var(--line)"/><ellipse cx="118" cy="104" rx="4.5" ry="6" fill="var(--line)"/>';
+    s += `<path d="M126 110c3 6 3 10 0 12-3-2-3-6 0-12z" fill="var(--sky)" stroke="var(--line)" stroke-width="2"/>`;
+    s += `<path d="M92 116l8 7 8-7z" fill="var(--beak)" ${L3}/>`;
+  } else {
+    s += '<g class="blink"><ellipse cx="82" cy="100" rx="5.5" ry="7.5" fill="var(--line)"/><ellipse cx="118" cy="100" rx="5.5" ry="7.5" fill="var(--line)"/></g>';
+    s += '<circle cx="84" cy="97" r="2" fill="#fff"/><circle cx="120" cy="97" r="2" fill="#fff"/>';
+    s += `<path d="M91 112l9-5 9 5-9 6z" fill="var(--beak)" ${L3}/>`;
+  }
+  s += '<ellipse cx="68" cy="116" rx="8" ry="5" fill="var(--blush)" opacity=".75"/><ellipse cx="132" cy="116" rx="8" ry="5" fill="var(--blush)" opacity=".75"/>';
+  /* 1：殻をはいている */
+  if(st === 1){
+    s += `<path d="M40 140c4 30 28 44 60 44s56-14 60-44l-12 10-12-12-12 12-12-12-12 12-12-12-12 12-12-12-12 12z" fill="var(--egg)" ${L}/>`;
+    s += `<path d="M90 54c-2-10 6-16 10-8 2-8 12-6 10 4" fill="none" ${L3}/>`;
+  }
+  /* 2以上：ナースキャップ */
+  if(st >= 2){
+    const capCross = st >= 6 ? "var(--gold)" : "var(--pink)";
+    s += `<path d="M68 62c0-16 14-24 32-24s32 8 32 24l-6 8H74z" fill="var(--card)" ${L3}/>`;
+    s += `<path d="M96 44h8v6h6v8h-6v6h-8v-6h-6v-8h6z" fill="${capCross}" stroke="var(--line)" stroke-width="2"/>`;
+  }
+  /* 2：ノート */
+  if(st === 2){
+    s += `<rect x="128" y="120" width="30" height="36" rx="4" fill="var(--sky-s)" ${L3} transform="rotate(12 143 138)"/><path d="M136 130h14M135 138h14M134 146h10" stroke="var(--line)" stroke-width="2" stroke-linecap="round" transform="rotate(12 143 138)"/>`;
+  }
+  /* 3以上：聴診器 */
+  if(st >= 3){
+    s += `<path d="M72 124c0 22 56 22 56 0" fill="none" stroke="var(--line)" stroke-width="5" stroke-linecap="round"/><path d="M72 124c0 22 56 22 56 0" fill="none" stroke="var(--sky)" stroke-width="2.2" stroke-linecap="round"/>`;
+    s += `<path d="M100 140v10" stroke="var(--line)" stroke-width="4"/><circle cx="100" cy="156" r="7" fill="var(--sky)" ${L3}/>`;
+  }
+  /* 4以上：カルテ */
+  if(st >= 4){
+    s += `<rect x="26" y="126" width="28" height="34" rx="4" fill="var(--lemon-s)" ${L3} transform="rotate(-12 40 143)"/><rect x="33" y="122" width="14" height="7" rx="2" fill="var(--card)" stroke="var(--line)" stroke-width="2" transform="rotate(-12 40 143)"/>`;
+  }
+  /* 5以上：リボンバッジ */
+  if(st >= 5){
+    s += `<path d="M118 150l-5 16 8-4 5 7 2-17z" fill="var(--pink)" stroke="var(--line)" stroke-width="2.4" stroke-linejoin="round"/><circle cx="122" cy="148" r="8" fill="var(--lemon)" stroke="var(--line)" stroke-width="2.6"/>`;
+  }
+  /* 6以上：きらきら */
+  if(st >= 6){
+    s += '<path d="M166 58l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="var(--lemon)" stroke="var(--line)" stroke-width="2"/><path d="M34 70l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--lemon)" stroke="var(--line)" stroke-width="2"/>';
+  }
+  /* 7：王冠 */
+  if(st === 7){
+    s += `<path d="M78 40l6-18 10 12 6-16 6 16 10-12 6 18z" fill="var(--gold)" ${L3}/><circle cx="100" cy="30" r="3" fill="var(--pink)"/>`;
+  }
+  s += '</g></svg>';
+  return s;
+}
+
+/* ===== シール ===== */
+function stickerSVG(id){
+  const L = 'stroke="var(--line)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"';
+  const art = {
+    s01:`<path d="M34 20v22a16 16 0 0032 0V20" fill="none" ${L}/><path d="M50 58v10a14 14 0 0028 0v-8" fill="none" ${L}/><circle cx="78" cy="54" r="9" fill="var(--sky)" ${L}/><circle cx="34" cy="18" r="4" fill="var(--line)"/><circle cx="66" cy="18" r="4" fill="var(--line)"/>`,
+    s02:`<g transform="rotate(-35 50 50)"><rect x="40" y="10" width="20" height="64" rx="10" fill="var(--card)" ${L}/><rect x="46" y="40" width="8" height="34" rx="4" fill="var(--pink)"/><circle cx="50" cy="80" r="12" fill="var(--pink)" ${L}/></g>`,
+    s03:`<g transform="rotate(40 50 50)"><path d="M32 50V36a18 18 0 0136 0v14z" fill="var(--pink)" ${L}/><path d="M32 50v14a18 18 0 0036 0V50z" fill="var(--card)" ${L}/></g>`,
+    s04:`<g transform="rotate(-30 50 50)"><rect x="12" y="36" width="76" height="28" rx="14" fill="var(--peach-s)" ${L}/><rect x="36" y="36" width="28" height="28" fill="var(--peach)" ${L}/><circle cx="22" cy="50" r="2.5" fill="var(--line)"/><circle cx="78" cy="50" r="2.5" fill="var(--line)"/></g>`,
+    s05:`<g transform="rotate(-40 50 50)"><rect x="38" y="24" width="24" height="46" rx="4" fill="var(--sky-s)" ${L}/><path d="M50 70v18M34 24h32M50 24V10M40 10h20" fill="none" ${L}/><path d="M38 50h24" stroke="var(--sky)" stroke-width="6"/></g>`,
+    s06:`<rect x="22" y="16" width="56" height="70" rx="8" fill="var(--lemon-s)" ${L}/><rect x="36" y="10" width="28" height="14" rx="4" fill="var(--card)" ${L}/><path d="M34 42h32M34 56h32M34 70h20" fill="none" ${L}/>`,
+    s07:`<path d="M14 62c0-10 10-12 18-12 6 0 10-16 22-16 8 0 10 10 10 18 12 2 22 6 22 14v8H14z" fill="var(--card)" ${L}/><path d="M14 74h72" ${L}/><circle cx="46" cy="50" r="3" fill="var(--pink)"/>`,
+    s08:`<rect x="30" y="8" width="40" height="44" rx="8" fill="var(--mint-s)" ${L}/><path d="M30 30h40M50 52v14" fill="none" ${L}/><rect x="42" y="64" width="16" height="12" rx="3" fill="var(--card)" ${L}/><path d="M50 80c-5 6-6 8-6 10a6 6 0 0012 0c0-2-1-4-6-10z" fill="var(--sky)" ${L}/>`,
+    s09:`<path d="M24 38c16-8 36-8 52 0v26c-16 10-36 10-52 0z" fill="var(--card)" ${L}/><path d="M24 44c-10 0-14 6-12 12s10 8 12 6M76 44c10 0 14 6 12 12s-10 8-12 6" fill="none" ${L}/><path d="M32 48h36M32 56h36" stroke="var(--sky)" stroke-width="3.5" stroke-linecap="round"/>`,
+    s10:`<path d="M34 40h32v40a8 8 0 01-8 8H42a8 8 0 01-8-8z" fill="var(--pink-s)" ${L}/><path d="M42 40V28h16v12M58 30h14" fill="none" ${L}/><path d="M44 58h12M50 52v12" stroke="var(--pink)" stroke-width="5" stroke-linecap="round"/>`,
+    s11:`<rect x="12" y="20" width="76" height="56" rx="10" fill="var(--grape-s)" ${L}/><path d="M18 50h16l6-14 8 28 6-20 4 6h24" fill="none" stroke="var(--mint)" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><path d="M40 86h20" ${L}/>`,
+    s12:`<path d="M10 70V36h46l14 14h20v20z" fill="var(--card)" ${L}/><circle cx="30" cy="72" r="8" fill="var(--line)"/><circle cx="74" cy="72" r="8" fill="var(--line)"/><path d="M26 52h16M34 44v16" stroke="var(--ng)" stroke-width="6" stroke-linecap="round"/><rect x="36" y="28" width="12" height="8" rx="2" fill="var(--sky)" ${L}/>`,
+    s13:`<rect x="34" y="34" width="32" height="54" rx="10" fill="var(--card)" ${L}/><path d="M36 34l4-8h20l4 8z" fill="var(--lemon)" ${L}/><path d="M44 26c0-12 12-12 12 0" fill="var(--peach-s)" ${L}/><path d="M42 54h10M42 66h10M42 78h10" stroke="var(--sky)" stroke-width="4" stroke-linecap="round"/>`,
+    s14:`<circle cx="44" cy="62" r="24" fill="none" ${L}/><circle cx="44" cy="62" r="5" fill="var(--line)"/><path d="M30 16v34h32l12 26M62 50V36" fill="none" ${L}/><circle cx="76" cy="80" r="6" fill="var(--sky)" ${L}/>`,
+    s15:`<path d="M50 86C22 68 12 52 16 36c3-12 18-18 28-8 3 3 5 6 6 9 1-3 3-6 6-9 10-10 25-4 28 8 4 16-6 32-34 50z" fill="var(--pink)" ${L}/><path d="M34 34c4-4 8-4 10 0" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/>`,
+    s16:`<path d="M46 20v28c-4 4-10 6-10 6M54 20v28c4 4 10 6 10 6" fill="none" ${L}/><path d="M40 38c-12 0-24 12-24 30 0 12 8 16 16 14s12-8 12-16V42zM60 38c12 0 24 12 24 30 0 12-8 16-16 14s-12-8-12-16V42z" fill="var(--grape-s)" ${L}/>`,
+    s17:`<path d="M14 62c0-24 16-38 36-38s36 14 36 38l-10 12H24z" fill="var(--card)" ${L}/><path d="M44 36h12v10h10v12H56v10H44V58H34V46h10z" fill="var(--pink)" stroke="var(--line)" stroke-width="3"/>`,
+    s18:`<g fill="var(--pink-s)" ${L}>${[0, 72, 144, 216, 288].map(a => `<path transform="rotate(${a} 50 50)" d="M50 50c-10-8-14-22-8-32 3 2 6 5 8 8 2-3 5-6 8-8 6 10 2 24-8 32z"/>`).join("")}</g><circle cx="50" cy="50" r="7" fill="var(--lemon)" stroke="var(--line)" stroke-width="3"/>`,
+    s19:`<ellipse cx="50" cy="56" rx="30" ry="28" fill="var(--gold)" ${L}/><circle cx="41" cy="50" r="3.5" fill="var(--line)"/><circle cx="59" cy="50" r="3.5" fill="var(--line)"/><path d="M45 58l5-3 5 3-5 4z" fill="var(--beak)" stroke="var(--line)" stroke-width="2.4"/><path d="M36 24l5-10 6 8 3-10 3 10 6-8 5 10z" fill="var(--lemon)" stroke="var(--line)" stroke-width="3" stroke-linejoin="round"/>`,
+    s20:`<rect x="12" y="20" width="76" height="54" rx="6" fill="var(--card)" ${L}/><path d="M24 36h40M24 48h52M24 60h28" fill="none" stroke="var(--line)" stroke-width="3.5" stroke-linecap="round"/><path d="M66 70l-4 18 8-5 8 5-4-18" fill="var(--pink)" stroke="var(--line)" stroke-width="3" stroke-linejoin="round"/><circle cx="70" cy="64" r="10" fill="var(--lemon)" ${L}/>`
+  };
+  return `<svg viewBox="0 0 100 100" aria-hidden="true">${art[id] || ""}</svg>`;
+}
+
+/* ===== 患者さん・カプセル ===== */
+function patientSVG(mood){
+  const face = mood === "good" ? '<path d="M18 28q4 5 8 0M30 28q4 5 8 0" fill="none" stroke="var(--line)" stroke-width="2.6" stroke-linecap="round"/><path d="M22 36q6 6 12 0" fill="none" stroke="var(--line)" stroke-width="2.6" stroke-linecap="round"/>'
+    : mood === "bad" ? '<circle cx="21" cy="29" r="2.4" fill="var(--line)"/><circle cx="35" cy="29" r="2.4" fill="var(--line)"/><path d="M22 39q6-5 12 0" fill="none" stroke="var(--line)" stroke-width="2.6" stroke-linecap="round"/><path d="M40 20c2 4 2 6 0 8-2-2-2-4 0-8z" fill="var(--sky)"/>'
+    : '<circle cx="21" cy="29" r="2.4" fill="var(--line)"/><circle cx="35" cy="29" r="2.4" fill="var(--line)"/><path d="M23 37h10" stroke="var(--line)" stroke-width="2.6" stroke-linecap="round"/>';
+  return `<svg viewBox="0 0 56 56"><circle cx="28" cy="30" r="20" fill="var(--egg)" stroke="var(--line)" stroke-width="3"/><path d="M10 24c2-12 10-16 18-16s16 4 18 16c-6-6-12-6-18-6s-12 0-18 6z" fill="var(--line)"/>${face}<ellipse cx="15" cy="35" rx="3.4" ry="2.2" fill="var(--blush)" opacity=".7"/><ellipse cx="41" cy="35" rx="3.4" ry="2.2" fill="var(--blush)" opacity=".7"/></svg>`;
+}
+function capsuleSVG(open){
+  const L = 'stroke="var(--line)" stroke-width="4" stroke-linejoin="round"';
+  if(open) return `<svg viewBox="0 0 120 120"><path d="M20 70a40 40 0 0080 0z" fill="var(--sky)" ${L}/><path d="M24 50a36 36 0 0172 0z" fill="var(--pink)" ${L} transform="rotate(-24 24 50) translate(-6 -14)"/><circle cx="60" cy="62" r="6" fill="var(--lemon)" stroke="var(--line)" stroke-width="3"/></svg>`;
+  return `<svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="42" fill="var(--sky)" ${L}/><path d="M18 60a42 42 0 0184 0z" fill="var(--pink)" ${L}/><path d="M18 60h84" ${L}/><circle cx="60" cy="60" r="9" fill="var(--card)" stroke="var(--line)" stroke-width="3.5"/><path d="M36 38q8-8 18-10" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".7"/></svg>`;
+}
+
+/* ===== 状態・保存 ===== */
+const LS_KEY = "piyonurse_state_v1", UI_KEY = "piyonurse_ui_v1";
+const pad2 = n => String(n).padStart(2, "0");
+const fmtD = d => d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate());
+const todayStr = () => fmtD(new Date());
+const parseD = s => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ""); return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null; };
+const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+const pct = (c, n) => n ? Math.round(c * 100 / n) : 0;
+const esc = s => String(s).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+
+function newDay(){ return {d: todayStr(), n: 0, c: 0, combo: 0, maxCombo: 0, calc: 0, cse: 0, got: {}}; }
+function defaultState(){
+  return {v: 1, lv: 1, xp: 0, coins: 10, tot: {n: 0, c: 0}, fs: {}, qs: {}, wrong: {}, cases: {},
+    calc: {n: 0, c: 0}, best: {combo: 0, hitsu: 0, ta: 0, sv: 0, mock: 0, mockPass: false},
+    act: {}, day: newDay(), stk: {}, badges: {}, set: {exam: EXAM_DEFAULT, sound: true}, updatedAt: 0};
+}
+function normalize(o){
+  const s = defaultState();
+  if(!o || typeof o !== "object") return s;
+  Object.keys(s).forEach(k => { if(o[k] !== undefined) s[k] = o[k]; });
+  ["fs", "qs", "wrong", "cases", "act", "stk", "badges"].forEach(k => { if(!s[k] || typeof s[k] !== "object" || Array.isArray(s[k])) s[k] = {}; });
+  s.tot = Object.assign({n: 0, c: 0}, s.tot);
+  s.calc = Object.assign({n: 0, c: 0}, s.calc);
+  s.best = Object.assign(defaultState().best, s.best);
+  s.set = Object.assign(defaultState().set, s.set);
+  if(!parseD(s.set.exam)) s.set.exam = EXAM_DEFAULT;
+  if(!s.day || typeof s.day !== "object") s.day = newDay();
+  s.day = Object.assign(newDay(), s.day);
+  if(!s.day.got || typeof s.day.got !== "object") s.day.got = {};
+  s.lv = Math.max(1, +s.lv || 1); s.xp = Math.max(0, +s.xp || 0); s.coins = Math.max(0, +s.coins || 0);
+  s.updatedAt = +s.updatedAt || 0;
+  return s;
+}
+let S = defaultState();
+let UI = {tab: "home", rv: "all"};
+try{ const t = localStorage.getItem(LS_KEY); if(t) S = normalize(JSON.parse(t)); }catch(e){}
+try{ const t = localStorage.getItem(UI_KEY); if(t){ const u = JSON.parse(t); if(u && typeof u === "object") Object.assign(UI, u); } }catch(e){}
+if(!["home", "quest", "review", "zukan", "record"].includes(UI.tab)) UI.tab = "home";
+
+function saveLocal(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(S)); }catch(e){} }
+function saveUI(){ try{ localStorage.setItem(UI_KEY, JSON.stringify(UI)); }catch(e){} }
+function save(){ S.updatedAt = Date.now(); saveLocal(); Sync.queue(G ? 2500 : 900); }
+
+/* ---------- クラウド同期（本人だけが読める非公開ドキュメント） ---------- */
+const Sync = {
+  ref: null, state: "local", timer: null, writing: false, again: false, retried: false, readonly: false,
+  set(st){
+    this.state = st;
+    const label = {local: "この端末に保存中", connecting: "クラウドに接続中…", synced: "クラウドに同期済み", saving: "保存中…"}[st] || "この端末に保存中";
+    document.querySelectorAll("[data-sync]").forEach(el => { el.textContent = label; el.dataset.state = st; });
+  },
+  queue(delay){
+    if(!this.ref || this.readonly) return;
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => this.push(), delay == null ? 900 : delay);
+  },
+  async push(){
+    if(!this.ref || this.readonly) return;
+    if(this.writing){ this.again = true; return; }
+    this.writing = true; this.set("saving");
+    try{
+      await this.ref.set(JSON.parse(JSON.stringify(S)));
+      this.retried = false; this.set("synced");
+    }catch(e){
+      const code = e && e.code;
+      if(code === "unavailable" && !this.retried){ this.retried = true; this.writing = false; setTimeout(() => this.queue(0), 800 + Math.random() * 1200); return; }
+      if(["invalid_argument", "not_granted", "revoked", "capability_disabled", "capability_removed", "quota_exceeded"].includes(code)) this.readonly = true;
+      this.set("local");
+    }
+    this.writing = false;
+    if(this.again){ this.again = false; this.queue(300); }
+  },
+  adopt(r){
+    S = normalize(JSON.parse(JSON.stringify(r)));
+    ensureDay(); saveLocal();
+    if(!G) render();
+  },
+  async init(){
+    const cl = window.claude;
+    if(!cl || typeof cl.use !== "function"){ this.set("local"); return; }
+    this.set("connecting");
+    let db = null, user = null;
+    try{ const r = await Promise.all([cl.use("db"), cl.use("user")]); db = r[0]; user = r[1]; }catch(e){}
+    if(!db || !user){ this.set("local"); return; }
+    let uid = null;
+    try{ uid = await user.id(); }catch(e){}
+    if(!uid){ this.set("local"); return; }
+    let ref;
+    try{ ref = db.doc("data/users/" + uid + "/state"); }catch(e){ this.set("local"); return; }
+    try{
+      const snap = await ref.get();
+      this.ref = ref;
+      const r = snap.exists ? snap.data() : null;
+      const ru = (r && +r.updatedAt) || 0;
+      if(r && ru > S.updatedAt){ this.adopt(r); this.set("synced"); }
+      else if(S.updatedAt > ru){ this.queue(0); }
+      else this.set("synced");
+    }catch(e){ this.ref = null; this.set("local"); return; }
+    try{
+      ref.onSnapshot(snap => {
+        if(!snap || !snap.exists || (snap.metadata && snap.metadata.hasPendingWrites)) return;
+        const r = snap.data();
+        if(r && (+r.updatedAt || 0) > S.updatedAt){ this.adopt(r); toast("別の端末の記録を反映しました"); }
+      }, () => {});
+    }catch(e){}
+  }
+};
+
+/* ---------- 集計 ---------- */
+function ensureDay(){ if(S.day.d !== todayStr()) S.day = newDay(); }
+function streakDays(st){
+  st = st || S;
+  let d = new Date();
+  if(!st.act[fmtD(d)]) d = addDays(d, -1);
+  let k = 0;
+  while(st.act[fmtD(d)]){ k++; d = addDays(d, -1); }
+  return k;
+}
+function daysLeft(){
+  const e = parseD(S.set.exam) || parseD(EXAM_DEFAULT);
+  const t = parseD(todayStr());
+  return Math.round((e - t) / 86400000);
+}
+const poolOf = k => Q.filter(q => q.f === k);
+function fieldInfo(k){
+  const pool = poolOf(k), fs = S.fs[k] || {n: 0, c: 0};
+  const mastered = pool.filter(q => { const r = S.qs[q.id]; return r && r.c > 0 && r.last === 1; }).length;
+  const ratio = pool.length ? mastered / pool.length : 0;
+  const stars = ratio >= .9 ? 3 : ratio >= .6 ? 2 : ratio >= .3 ? 1 : 0;
+  return {total: pool.length, mastered, ratio, stars, n: fs.n, c: fs.c, acc: pct(fs.c, fs.n)};
+}
+function accOf(keys){ let n = 0, c = 0; keys.forEach(k => { const f = S.fs[k]; if(f){ n += f.n; c += f.c; } }); return {n, c, p: pct(c, n)}; }
+function wrongIds(){ return Object.keys(S.wrong).filter(id => QMAP[id]); }
+
+/* ---------- 解答の記録・XP ---------- */
+function recordAnswer(q, ok){
+  ensureDay();
+  const t = todayStr();
+  S.tot.n++; if(ok) S.tot.c++;
+  const f = S.fs[q.f] || (S.fs[q.f] = {n: 0, c: 0});
+  f.n++; if(ok) f.c++;
+  const r = S.qs[q.id] || (S.qs[q.id] = {n: 0, c: 0, last: 0});
+  r.n++; if(ok) r.c++; r.last = ok ? 1 : 0; r.ts = Date.now();
+  if(ok){
+    const w = S.wrong[q.id];
+    if(w){ w.ok = (w.ok || 0) + 1; if(w.ok >= 2) delete S.wrong[q.id]; }
+  } else {
+    S.wrong[q.id] = {t: Date.now(), ok: 0};
+  }
+  S.act[t] = (S.act[t] || 0) + 1;
+  S.day.n++;
+  if(ok){ S.day.c++; S.day.combo++; S.day.maxCombo = Math.max(S.day.maxCombo, S.day.combo); }
+  else S.day.combo = 0;
+}
+let pendingLv = [];
+function addXP(n){
+  S.xp += Math.max(0, Math.round(n));
+  while(S.xp >= xpNeed(S.lv)){
+    S.xp -= xpNeed(S.lv); S.lv++;
+    pendingLv.push(S.lv);
+  }
+}
+function addCoins(n){ S.coins += Math.max(0, Math.round(n)); }
+
+/* ---------- デイリーミッション ---------- */
+function missions(){
+  ensureDay();
+  return [
+    {id: "m1", t: "今日10問とく", need: 10, cur: S.day.n},
+    {id: "m2", t: "5問連続で正解する", need: 5, cur: S.day.maxCombo},
+    {id: "m3", t: "計算ドリルか状況設定に挑戦", need: 1, cur: S.day.calc + S.day.cse}
+  ];
+}
+function claimMissions(){
+  const done = [];
+  missions().forEach(m => {
+    if(m.cur >= m.need && !S.day.got[m.id]){ S.day.got[m.id] = 1; addCoins(10); addXP(15); done.push(m.t); }
+  });
+  return done;
+}
+function checkBadges(){
+  const got = [];
+  BADGES.forEach(b => { if(!S.badges[b.id]){ let ok = false; try{ ok = b.ok(S); }catch(e){} if(ok){ S.badges[b.id] = Date.now(); got.push(b.n); } } });
+  return got;
+}
+
+/* ===== 画面（タブ） ===== */
+const $ = s => document.querySelector(s);
+function fieldIcon(f, size){ return `<span class="fi" style="background:var(--${f.col})${size ? ";width:" + size + "px;height:" + size + "px" : ""}">${f.s}</span>`; }
+function starsHTML(n, c){ return `<span class="stars">${[1, 2, 3].map(i => SVGI.star(i <= n, c)).join("")}</span>`; }
+function headerHTML(){
+  return `<header class="top">
+    <div class="logo"><span class="cross">${SVGI.cross}</span><span>ぴよナース<small>看護師国試クエスト</small></span></div>
+    <div class="chips">
+      <span class="chip" title="連続学習日数"><i class="c-fire"><svg viewBox="0 0 24 24"><path d="M12 2.5c1 3.5 5.5 5.5 5.5 11a5.5 5.5 0 01-11 0c0-2.7 1.4-4.2 2.5-5.3.2 1.8 1 2.8 2 3.1-.6-3.3.1-6.3 1-8.8z" fill="#fff"/></svg></i><span class="num">${streakDays()}</span>日</span>
+      <span class="chip" title="コイン"><i class="c-coin">C</i><span class="num">${S.coins}</span></span>
+    </div>
+  </header>`;
+}
+function tabbarHTML(){
+  const w = wrongIds().length;
+  const tabs = [["home", "ホーム", SVGI.home], ["quest", "クエスト", SVGI.map], ["review", "ふくしゅう", SVGI.note], ["zukan", "ずかん", SVGI.book], ["record", "きろく", SVGI.chart]];
+  return `<nav class="tabbar" aria-label="メニュー"><div class="in">${tabs.map(t => `<button class="tab${UI.tab === t[0] ? " on" : ""}" data-act="tab:${t[0]}" aria-current="${UI.tab === t[0] ? "page" : "false"}">${t[2]}<span>${t[1]}</span>${t[0] === "review" && w ? `<b class="dotn">${w}</b>` : ""}</button>`).join("")}</div></nav>`;
+}
+
+function viewHome(){
+  const rk = rankOf(S.lv), need = xpNeed(S.lv), left = daysLeft();
+  const ex = parseD(S.set.exam);
+  const exLabel = ex ? `${ex.getFullYear()}年${ex.getMonth() + 1}月${ex.getDate()}日（${"日月火水木金土"[ex.getDay()]}）` : "";
+  const ms = missions();
+  const line = S.tot.n === 0 ? rk.line : (S.day.n === 0 ? "今日はまだ0問。まずは1問だけやってみよ？" : S.day.n >= 10 ? `今日は${S.day.n}問！ えらすぎるぴよ` : rk.line);
+  return `
+  <section class="card hero tint-lemon" aria-label="ぴよナース">
+    <div class="pet" data-act="poke" id="pet">${piyoSVG(rk.st)}</div>
+    <div class="stack" style="gap:6px">
+      <p class="bubble">${esc(line)}</p>
+      <p class="rank"><span class="lv">Lv.${S.lv}</span><span class="rn">${esc(rk.n)}</span></p>
+      <div><div class="xpline"><span>次のLvまで</span><span class="num">${S.xp} / ${need} XP</span></div>
+      <div class="bar"><i style="width:${pct(S.xp, need)}%"></i></div></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="count">
+      <div class="days num">${left >= 0 ? left : 0}<small>日</small></div>
+      <div><p class="pop" style="font-size:.95rem">${left > 0 ? "看護師国家試験まで" : left === 0 ? "今日が試験日！ がんばって" : "試験日を過ぎました（きろくで変更できます）"}</p><p class="sub small" style="font-weight:700">${esc(exLabel)}</p></div>
+    </div>
+    <div class="pass-line">
+      <div>必修問題<br><b>40</b>/50点以上<span class="sub">（8割・絶対基準）</span></div>
+      <div>一般＋状況設定<br><b>166</b>/249点以上<span class="sub">（第115回の実績）</span></div>
+    </div>
+  </section>
+
+  <h2 class="sec-t">きょうのミッション <span class="sub">達成ごとに10コイン＋15XP</span></h2>
+  <section class="missions">${ms.map(m => { const done = m.cur >= m.need; return `<div class="mission${done ? " done" : ""}"><span class="ck">${done ? "✓" : ""}</span><div><p class="mt">${esc(m.t)}</p><div class="bar thin" style="margin-top:4px"><i style="width:${pct(Math.min(m.cur, m.need), m.need)}%;background-color:var(--mint)"></i></div></div><span class="mp num">${Math.min(m.cur, m.need)}/${m.need}</span></div>`; }).join("")}</section>
+
+  <h2 class="sec-t">あそぶ <span class="sub">どれからでもOK</span></h2>
+  <section class="modes">
+    <button class="mode wide tint-pink card" data-act="start:mix"><span class="mi">${SVGI.cap}</span><span class="mt2"><b>おまかせ10問</b><span>まだ解いていない問題と、間違えた問題を中心に出題</span></span></button>
+    <button class="mode card tint-peach" data-act="start:hitsu"><span class="mi">${SVGI.medal}</span><b>必修チャレンジ</b><span>10問・8問正解で合格</span></button>
+    <button class="mode card tint-sky" data-act="start:ta"><span class="mi">${SVGI.clock}</span><b>タイムアタック</b><span>60秒で何問とける？</span></button>
+    <button class="mode card tint-grape" data-act="start:sv"><span class="mi">${SVGI.hearts}</span><b>サバイバル</b><span>ハート3つ。まちがえると減る</span></button>
+    <button class="mode card tint-mint" data-act="start:calc"><span class="mi">${SVGI.drip}</span><b>計算ドリル</b><span>点滴・薬液・酸素ボンベ（毎回数値が変わる）</span></button>
+    <button class="mode card tint-lemon" data-act="start:case"><span class="mi">${SVGI.clip}</span><b>状況設定バトル</b><span>患者さんを元気にする3問勝負</span></button>
+    <button class="mode card tint-peach" data-act="start:mock"><span class="mi">${SVGI.bolt}</span><b>ミニ模試</b><span>必修10＋一般15＋状況2ケース</span></button>
+  </section>`;
+}
+
+function viewQuest(){
+  return `
+  <h2 class="sec-t">分野クエスト <span class="sub">1回5問。正解済みの割合で★が増える</span></h2>
+  <section class="fields">${FIELDS.map(f => { const fi = fieldInfo(f.k); return `
+    <button class="field${f.k === "hitsu" ? " hitsu" : ""}" data-act="start:field:${f.k}">
+      <span class="fh">${fieldIcon(f)}<span class="fn">${esc(f.n)}</span></span>
+      ${starsHTML(fi.stars, f.col)}
+      <div class="bar thin"><i style="width:${Math.round(fi.ratio * 100)}%;background-color:var(--${f.col})"></i></div>
+      <span class="fm"><span class="num">正解済み ${fi.mastered}/${fi.total}</span><span class="num">${fi.n ? "正答率 " + fi.acc + "%" : "未挑戦"}</span></span>
+    </button>`; }).join("")}</section>
+
+  <h2 class="sec-t" id="cases">状況設定バトル <span class="sub">1問2点・全問正解で患者さんが元気に</span></h2>
+  <section class="cases">${CASES.map(cs => { const f = FMAP[cs.f], b = S.cases[cs.id]; return `
+    <button class="case-btn" data-act="start:case:${cs.id}">
+      <span class="ci" style="background:var(--${f.col})">${f.s}</span>
+      <span><b>${esc(cs.title)}</b><span>${esc(cs.who)}・${esc(f.n)}</span></span>
+      ${b == null ? '<span class="tag">未挑戦</span>' : `<span class="tag" style="background:var(--${b === 3 ? "mint" : "soft"})">${b}/3</span>`}
+    </button>`; }).join("")}</section>`;
+}
+
+function viewReview(){
+  const ids = wrongIds();
+  const fks = FIELDS.filter(f => ids.some(id => QMAP[id].f === f.k));
+  if(UI.rv !== "all" && !fks.some(f => f.k === UI.rv)) UI.rv = "all";
+  const list = ids.filter(id => UI.rv === "all" || QMAP[id].f === UI.rv).sort((a, b) => S.wrong[b].t - S.wrong[a].t);
+  return `
+  <section class="card tint-grape">
+    <div class="row"><div class="grow"><h2 style="font-size:1.1rem">間違いノート</h2><p class="small sub" style="font-weight:700">間違えた問題がたまる。復習で2回続けて正解すると卒業</p></div>
+    <div class="pop" style="font-size:2rem;color:var(--grape)">${ids.length}<span style="font-size:.8rem;color:var(--ink)">問</span></div></div>
+    <button class="btn big grape block" style="margin-top:12px" data-act="start:review" ${list.length ? "" : "disabled"}>${list.length ? `まとめて復習する（${Math.min(10, list.length)}問）` : "復習する問題はありません"}</button>
+  </section>
+  ${fks.length ? `<div class="seg" role="group" aria-label="分野でしぼる"><button class="${UI.rv === "all" ? "on" : ""}" data-act="rv:all">すべて</button>${fks.map(f => `<button class="${UI.rv === f.k ? "on" : ""}" data-act="rv:${f.k}">${esc(f.n.length > 7 ? f.s + "：" + f.n.slice(0, 6) + "…" : f.n)}</button>`).join("")}</div>` : ""}
+  <section class="stack" style="gap:8px">${list.length ? list.map(id => { const q = QMAP[id], f = FMAP[q.f], w = S.wrong[id]; return `
+    <div class="wrong-item"><div style="min-width:0"><div class="row" style="gap:6px;margin-bottom:3px"><span class="tag" style="background:var(--${f.col}-s)">${esc(f.n)}</span>${w.ok ? '<span class="tag" style="background:var(--mint-s)">あと1回で卒業</span>' : ""}</div><p>${esc(q.q)}</p></div>
+    <button class="btn sm" data-act="start:one:${id}">解く</button></div>`; }).join("") : `<div class="card empty">${S.tot.n ? "間違いノートは空っぽ。すばらしいぴよ！" : "問題に答えると、間違えた問題がここにたまります。<br>まずはホームの「おまかせ10問」から。"}</div>`}</section>`;
+}
+
+function viewZukan(){
+  const have = Object.keys(S.stk).length;
+  return `
+  <section class="card tint-sky gacha">
+    <div class="capsule" id="capsule">${capsuleSVG(false)}</div>
+    <div><h2 style="font-size:1.1rem">ごほうびガチャ</h2><p class="small sub" style="font-weight:700">1回${GACHA_COST}コイン。正解するとコインがたまる</p></div>
+    <button class="btn big pink" data-act="gacha" ${S.coins >= GACHA_COST ? "" : "disabled"}>まわす（手持ち ${S.coins}コイン）</button>
+  </section>
+  <h2 class="sec-t">シールずかん <span class="sub num">${have}/${STICKERS.length}種類</span></h2>
+  <section class="stickers">${STICKERS.map(st => { const n = S.stk[st.id] || 0; return `
+    <div class="sticker${n ? "" : " locked"}" style="${n ? `background:var(--${st.col}-s)` : ""}" title="${esc(st.n)}">
+      ${stickerSVG(st.id)}<small>${n ? esc(st.n) : "？？？"}</small>
+      ${st.r > 1 ? `<span class="rar">${RARITY[st.r]}</span>` : ""}${n > 1 ? `<span class="cnt num">×${n}</span>` : ""}
+    </div>`; }).join("")}</section>
+  <h2 class="sec-t">バッジ <span class="sub num">${Object.keys(S.badges).length}/${BADGES.length}</span></h2>
+  <section class="badges">${BADGES.map(b => { const on = !!S.badges[b.id]; return `<div class="badge${on ? "" : " locked"}"><span class="bi">${on ? "★" : "？"}</span><div><b>${esc(b.n)}</b><span>${esc(b.d)}</span></div></div>`; }).join("")}</section>`;
+}
+
+function viewRecord(){
+  const hit = accOf(["hitsu"]), gen = accOf(FIELDS.filter(f => f.k !== "hitsu").map(f => f.k));
+  const hitEst = hit.n ? Math.round(hit.c / hit.n * 50) : null, genEst = gen.n ? Math.round(gen.c / gen.n * 250) : null;
+  const days = []; for(let i = 6; i >= 0; i--){ const d = addDays(new Date(), -i); days.push({l: "日月火水木金土"[d.getDay()], n: S.act[fmtD(d)] || 0, today: i === 0}); }
+  const maxN = Math.max(10, ...days.map(d => d.n));
+  return `
+  <section class="tiles">
+    <div class="tile"><b class="num">${S.tot.n}</b><span>解いた問題</span></div>
+    <div class="tile"><b class="num">${pct(S.tot.c, S.tot.n)}<small style="font-size:.7rem">%</small></b><span>正答率</span></div>
+    <div class="tile"><b class="num">${streakDays()}<small style="font-size:.7rem">日</small></b><span>連続学習</span></div>
+  </section>
+
+  <section class="card">
+    <h2 style="font-size:1rem">合格ラインとの距離 <span class="sub small" style="font-family:var(--f-body)">いまの正答率で本番を解いた場合の目安</span></h2>
+    <div class="stack" style="gap:12px;margin-top:10px">
+      ${gauge("必修問題", hitEst, 50, 40, "pink", hit.n)}
+      ${gauge("一般＋状況設定", genEst, 250, 167, "sky", gen.n)}
+    </div>
+    <p class="small sub" style="margin-top:8px">※一般・状況設定の合格基準は毎年変わります（第115回は249点満点中166点＝約67%）。アプリ内の問題での推定です。</p>
+  </section>
+
+  <section class="card">
+    <h2 style="font-size:1rem">この7日間</h2>
+    <svg viewBox="0 0 280 120" style="width:100%;height:auto;display:block;margin-top:6px" role="img" aria-label="この7日間に解いた問題数">
+      <line x1="10" y1="96" x2="270" y2="96" stroke="var(--line)" stroke-width="2"/>
+      ${days.map((d, i) => { const h = Math.round(d.n / maxN * 72), x = 18 + i * 37; return `<rect x="${x}" y="${96 - h}" width="24" height="${Math.max(h, 0)}" rx="6" fill="var(--${d.today ? "pink" : "grape"})" stroke="var(--line)" stroke-width="${h ? 2 : 0}"/><text x="${x + 12}" y="${90 - h}" text-anchor="middle" font-size="11" font-weight="800" fill="var(--ink)">${d.n || ""}</text><text x="${x + 12}" y="112" text-anchor="middle" font-size="11" font-weight="800" fill="var(--sub)">${d.l}</text>`; }).join("")}
+    </svg>
+  </section>
+
+  <section class="card">
+    <h2 style="font-size:1rem">分野別の正答率</h2>
+    <div class="stack" style="gap:8px;margin-top:10px">${FIELDS.map(f => { const fi = fieldInfo(f.k); return `<div class="statrow"><span>${esc(f.n.length > 9 ? f.n.slice(0, 8) + "…" : f.n)}</span><div class="bar thin"><i style="width:${fi.acc}%;background-color:var(--${f.col})"></i></div><span class="v num">${fi.n ? fi.acc + "%" : "−"}</span></div>`; }).join("")}</div>
+  </section>
+
+  <section class="card">
+    <h2 style="font-size:1rem">ベスト記録</h2>
+    <div class="tiles" style="margin-top:10px">
+      <div class="tile"><b class="num">${S.best.combo}</b><span>最大コンボ</span></div>
+      <div class="tile"><b class="num">${S.best.ta}</b><span>タイムアタック</span></div>
+      <div class="tile"><b class="num">${S.best.sv}</b><span>サバイバル</span></div>
+      <div class="tile"><b class="num">${S.best.hitsu}<small style="font-size:.7rem">/10</small></b><span>必修チャレンジ</span></div>
+      <div class="tile"><b class="num">${S.best.mock}<small style="font-size:.7rem">点</small></b><span>ミニ模試</span></div>
+      <div class="tile"><b class="num">${S.calc.c}</b><span>計算 正解数</span></div>
+    </div>
+  </section>
+
+  <section class="card stack" style="gap:12px">
+    <h2 style="font-size:1rem">せってい</h2>
+    <label class="field-set" for="exam-date">試験日<input type="date" id="exam-date" value="${esc(S.set.exam)}"></label>
+    <div class="field-set"><span id="snd-l">効果音</span><button class="switch" id="snd" role="switch" aria-checked="${S.set.sound ? "true" : "false"}" aria-labelledby="snd-l" data-act="sound"></button></div>
+    <p class="sync small" data-sync data-state="${Sync.state}" style="text-align:left;margin:0">${{local: "この端末に保存中", connecting: "クラウドに接続中…", synced: "クラウドに同期済み", saving: "保存中…"}[Sync.state]}</p>
+    <div id="reset-box"><button class="btn sm ghost" data-act="reset-ask">記録をすべてリセット</button></div>
+  </section>`;
+}
+function gauge(label, est, max, line, col, n){
+  if(est == null) return `<div><div class="xpline"><span>${label}</span><span>まだデータがありません</span></div><div class="bar"><i style="width:0"></i></div></div>`;
+  const ok = est >= line;
+  return `<div><div class="xpline"><span>${label}</span><span class="num">推定 ${est}/${max}点 ${ok ? "（ライン到達）" : `（あと${line - est}点）`}</span></div>
+    <div class="bar" style="position:relative"><i style="width:${pct(est, max)}%;background-color:var(--${ok ? "mint" : col})"></i><span style="position:absolute;top:-4px;bottom:-4px;left:${pct(line, max)}%;border-left:3px dashed var(--line)"></span></div>
+    <p class="small sub" style="margin-top:2px">回答数 ${n}問・合格ライン ${line}点${label === "必修問題" ? "（8割）" : "（約67%）"}</p></div>`;
+}
+
+/* ===== ゲーム本体 ===== */
+let G = null;
+const MODE_NAME = {field: "分野クエスト", mix: "おまかせ10問", hitsu: "必修チャレンジ", ta: "タイムアタック", sv: "サバイバル", calc: "計算ドリル", "case": "状況設定バトル", mock: "ミニ模試", review: "間違いノート復習", one: "1問復習"};
+const shuffle = a => { a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+function pickQs(pool, n){
+  const fresh = [], wrong = [], rest = [];
+  shuffle(pool).forEach(q => { const r = S.qs[q.id]; (!r ? fresh : r.last === 0 ? wrong : rest).push(q); });
+  rest.sort((a, b) => (S.qs[a.id].ts || 0) - (S.qs[b.id].ts || 0));
+  return fresh.concat(wrong, rest).slice(0, n);
+}
+const qItem = q => ({kind: "q", q});
+function isMulti(q){ return Array.isArray(q.a); }
+function judge(q, sel){
+  if(isMulti(q)) return sel.length === q.a.length && q.a.every(x => sel.includes(x));
+  return sel[0] === q.a;
+}
+
+function startGame(mode, arg){
+  ensureDay();
+  let items = [], extra = {};
+  if(mode === "field"){ items = pickQs(poolOf(arg), 5).map(qItem); extra.field = arg; }
+  else if(mode === "mix"){ items = pickQs(Q, 10).map(qItem); }
+  else if(mode === "hitsu"){ items = pickQs(poolOf("hitsu"), 10).map(qItem); }
+  else if(mode === "ta" || mode === "sv"){ items = shuffle(Q).map(qItem); }
+  else if(mode === "calc"){ items = shuffle(CALC_GEN).slice(0, 5).map(fn => ({kind: "calc", c: fn()})); }
+  else if(mode === "case"){
+    let cs = CASES.find(c => c.id === arg);
+    if(!cs){ const cand = CASES.filter(c => S.cases[c.id] !== 3); cs = pick(cand.length ? cand : CASES); }
+    items = cs.qs.map(q => ({kind: "q", q, story: cs})); extra.cs = cs.id; extra.genki = 25;
+  }
+  else if(mode === "mock"){
+    const cs = shuffle(CASES).slice(0, 2);
+    items = pickQs(poolOf("hitsu"), 10).map(q => ({kind: "q", q, sec: "hitsu"}))
+      .concat(pickQs(Q.filter(q => q.f !== "hitsu"), 15).map(q => ({kind: "q", q, sec: "gen"})))
+      .concat(...cs.map(c => c.qs.map(q => ({kind: "q", q, story: c, sec: "case"}))));
+  }
+  else if(mode === "review"){
+    const ids = wrongIds().filter(id => UI.rv === "all" || QMAP[id].f === UI.rv).sort((a, b) => S.wrong[b].t - S.wrong[a].t).slice(0, 10);
+    items = shuffle(ids).map(id => qItem(QMAP[id]));
+  }
+  else if(mode === "one"){ if(QMAP[arg]) items = [qItem(QMAP[arg])]; }
+  if(!items.length){ toast("出題できる問題がありません"); return; }
+  G = Object.assign({mode, arg: arg || "", items, i: 0, sel: [], done: false, answered: false, res: [], combo: 0, xp: 0, coins: 0, input: "", lives: 3, time: 60, t0: Date.now()}, extra);
+  if(mode === "ta") startTimer();
+  unlockAudio();
+  render(); window.scrollTo(0, 0);
+}
+function startTimer(){
+  clearInterval(G.timerId);
+  G.timerId = setInterval(() => {
+    if(!G || G.mode !== "ta") return;
+    G.time = Math.max(0, G.time - 1);
+    const el = $("#ta-time"); if(el) el.textContent = G.time;
+    if(G.time <= 0){ clearInterval(G.timerId); finishGame(); }
+  }, 1000);
+}
+const curItem = () => G.items[G.i];
+
+/* ---------- 問題画面 ---------- */
+function viewGame(){
+  const it = curItem();
+  const total = (G.mode === "ta" || G.mode === "sv") ? null : G.items.length;
+  let head = `<div class="qhead"><button class="qx" data-act="quit-ask" aria-label="やめる">✕</button><div class="qprog">`;
+  if(total) head += `<div class="bar"><i style="width:${pct(G.i + (G.answered ? 1 : 0), total)}%"></i></div>`;
+  else if(G.mode === "sv") head += `<div class="hearts" aria-label="残りハート${G.lives}">${[0, 1, 2].map(i => SVGI.heart(i < G.lives)).join("")}</div>`;
+  else head += `<div class="bar"><i style="width:${Math.round(G.time / 60 * 100)}%;background-color:var(--peach)"></i></div>`;
+  head += `</div>`;
+  if(G.mode === "ta") head += `<span class="timer num" id="ta-time" aria-live="off">${G.time}</span>`;
+  else head += `<span class="qcount num">${total ? `${G.i + 1}/${total}` : `${G.res.filter(r => r.ok).length}問正解`}</span>`;
+  head += `</div>`;
+  const combo = G.combo >= 2 ? `<span class="combo">${G.combo}コンボ！</span>` : "";
+  let body = "";
+  if(it.kind === "calc") body = viewCalc(it);
+  else body = viewQ(it);
+  return head + `<div class="row" style="justify-content:space-between;min-height:22px"><span class="pop small">${esc(MODE_NAME[G.mode])}</span>${combo}</div>` + body;
+}
+function caseHead(cs){
+  const g = G.mode === "case" ? `<div class="genki"><span>元気ゲージ</span><div class="bar thin"><i style="width:${G.genki}%"></i></div></div>` : "";
+  const mood = G.mode === "case" ? (G.genki >= 90 ? "good" : G.genki <= 15 ? "bad" : "mid") : "mid";
+  return `<div class="card tint-peach stack" style="gap:8px;padding:12px"><div class="patient"><span class="face">${patientSVG(mood)}</span><div><b class="pop" style="font-size:.95rem">${esc(cs.title)}</b><p class="small sub" style="font-weight:800">${esc(cs.who)}</p></div></div>${g}<div class="story">${cs.story}</div></div>`;
+}
+function viewQ(it){
+  const q = it.q, f = FMAP[q.f], multi = isMulti(q), ans = G.answered;
+  const correct = multi ? q.a : [q.a];
+  let h = it.story ? caseHead(it.story) : "";
+  h += `<section class="card qcard"><div class="qmeta"><span class="tag" style="background:var(--${f.col}-s)">${esc(f.n)}</span>${q.t ? `<span class="tag">${esc(q.t)}</span>` : ""}${it.story ? '<span class="tag" style="background:var(--lemon-s)">状況設定・2点</span>' : ""}</div>`;
+  h += `<p class="qtext">${esc(q.q)}</p>${multi ? '<p class="multi-hint">2つ選んでから「こたえる」をタップ</p>' : ""}`;
+  h += `<div class="choices">${q.c.map((c, i) => {
+    let cls = "";
+    if(ans){ if(correct.includes(i)) cls = " ok"; else if(G.sel.includes(i)) cls = " ng"; else cls = " dim"; }
+    else if(G.sel.includes(i)) cls = " sel";
+    return `<button class="choice${cls}" data-act="choose:${i}" ${ans ? "disabled" : ""}><span class="k">${i + 1}</span><span>${esc(c)}</span></button>`;
+  }).join("")}</div>`;
+  if(multi && !ans) h += `<button class="btn big sky block" data-act="submit" ${G.sel.length === 2 ? "" : "disabled"}>こたえる</button>`;
+  h += `</section>`;
+  if(ans && G.mode !== "ta"){
+    const ok = G.res[G.res.length - 1].ok;
+    h += `<section class="explain ${ok ? "okx" : "ngx"}" aria-live="polite"><h3>${ok ? "せいかい！" : "ざんねん…"}</h3>
+      <p class="ans">正解：${correct.map(i => (i + 1) + "．" + esc(q.c[i])).join("　")}</p><p>${esc(q.e)}</p></section>`;
+    h += `<button class="btn big pink block" data-act="next" id="next-btn">${nextLabel()}</button>`;
+  }
+  return h;
+}
+function nextLabel(){
+  if(G.mode === "sv" && G.lives <= 0) return "結果を見る";
+  if(G.i + 1 >= G.items.length) return "結果を見る";
+  return "つぎへ";
+}
+function viewCalc(it){
+  const c = it.c, ans = G.answered;
+  let h = `<section class="card qcard"><div class="qmeta"><span class="tag" style="background:var(--mint-s)">計算ドリル</span><span class="tag">${esc(c.t)}</span></div><p class="qtext">${esc(c.q)}</p>
+    <div class="calc-disp" aria-live="polite"><b class="num">${esc(G.input || (ans ? "" : "?"))}</b><span>${esc(c.unit)}</span></div>`;
+  if(!ans){
+    h += `<div class="keypad">${[7, 8, 9, 4, 5, 6, 1, 2, 3].map(d => `<button class="btn" data-act="key:${d}">${d}</button>`).join("")}<button class="btn" data-act="key-del" aria-label="1文字消す">←</button><button class="btn" data-act="key:0">0</button><button class="btn mint" data-act="key-ok" ${G.input ? "" : "disabled"}>OK</button></div>`;
+  }
+  h += `</section>`;
+  if(ans){
+    const ok = G.res[G.res.length - 1].ok;
+    h += `<section class="explain ${ok ? "okx" : "ngx"}"><h3>${ok ? "せいかい！" : "ざんねん…"}</h3><p class="ans">正解：${c.ans} ${esc(c.unit)}</p><p style="white-space:pre-line">${esc(c.e)}</p></section>
+      <button class="btn big pink block" data-act="next" id="next-btn">${nextLabel()}</button>`;
+  }
+  return h;
+}
+
+/* ---------- 解答処理 ---------- */
+function choose(i){
+  if(!G || G.answered) return;
+  const q = curItem().q;
+  if(isMulti(q)){
+    if(G.sel.includes(i)) G.sel = G.sel.filter(x => x !== i);
+    else if(G.sel.length < 2) G.sel.push(i);
+    render(); return;
+  }
+  G.sel = [i]; answer();
+}
+function answer(){
+  const it = curItem();
+  const ok = it.kind === "calc" ? (+G.input === it.c.ans) : judge(it.q, G.sel);
+  G.answered = true;
+  if(ok){ G.combo++; } else { G.combo = 0; if(G.mode === "sv") G.lives--; }
+  if(it.kind === "calc"){
+    S.calc.n++; if(ok) S.calc.c++;
+    ensureDay(); S.act[todayStr()] = (S.act[todayStr()] || 0) + 1; S.day.n++;
+    if(ok){ S.day.c++; S.day.combo++; S.day.maxCombo = Math.max(S.day.maxCombo, S.day.combo); } else S.day.combo = 0;
+  } else recordAnswer(it.q, ok);
+  let xp = ok ? (G.mode === "ta" ? 6 : it.kind === "calc" ? 12 : 10) + Math.min(G.combo, 5) * 2 : 3;
+  if(ok && it.story) xp += 6;
+  G.xp += xp; addXP(xp);
+  if(ok){ G.coins += 1; addCoins(1); }
+  S.best.combo = Math.max(S.best.combo, G.combo);
+  if(G.mode === "case"){ G.genki = Math.max(0, Math.min(100, G.genki + (ok ? 25 : -10))); }
+  G.res.push({ok, id: it.kind === "q" ? it.q.id : null, kind: it.kind, sec: it.sec || "", pts: it.story ? 2 : 1});
+  save();
+  feedback(ok);
+  if(G.mode === "ta"){
+    render();
+    setTimeout(() => { if(G && G.mode === "ta" && G.answered) nextQ(); }, ok ? 380 : 900);
+    return;
+  }
+  render();
+  const nb = $("#next-btn"); if(nb){ nb.focus({preventScroll: true}); const ex = document.querySelector(".explain"); if(ex) ex.scrollIntoView({behavior: "smooth", block: "nearest"}); }
+}
+function nextQ(){
+  if(!G || G.done) return;
+  if((G.mode === "sv" && G.lives <= 0)){ finishGame(); return; }
+  if(G.i + 1 >= G.items.length){
+    if(G.mode === "ta" || G.mode === "sv"){ G.items = G.items.concat(shuffle(Q).map(qItem)); }
+    else { finishGame(); return; }
+  }
+  G.i++; G.sel = []; G.answered = false; G.input = "";
+  render(); window.scrollTo(0, 0);
+}
+function finishGame(){
+  if(!G || G.done) return;
+  G.done = true; clearInterval(G.timerId);
+  const n = G.res.length, c = G.res.filter(r => r.ok).length;
+  let title = "おつかれさま！", verdict = "", pass = null, detail = "";
+  if(G.mode === "hitsu"){ pass = c >= 8; S.best.hitsu = Math.max(S.best.hitsu, c); verdict = pass ? "合格ライン突破！" : "あと" + (8 - c) + "問で合格ライン"; }
+  if(G.mode === "ta"){ S.best.ta = Math.max(S.best.ta, c); verdict = c >= 15 ? "スピードスター！" : "60秒で" + c + "問正解"; }
+  if(G.mode === "sv"){ S.best.sv = Math.max(S.best.sv, c); verdict = c + "問生きのこった！"; }
+  if(G.mode === "calc"){ S.day.calc++; }
+  if(G.mode === "case"){ S.day.cse++; S.cases[G.cs] = Math.max(S.cases[G.cs] || 0, c); pass = c === 3; verdict = pass ? "患者さん、すっかり元気に！" : "元気ゲージ " + G.genki + "%"; }
+  if(G.mode === "mock"){
+    const hc = G.res.filter(r => r.sec === "hitsu" && r.ok).length;
+    const gp = G.res.filter(r => r.sec !== "hitsu" && r.ok).reduce((a, r) => a + r.pts, 0);
+    const gmax = G.res.filter(r => r.sec !== "hitsu").reduce((a, r) => a + r.pts, 0) || 27;
+    const gline = Math.ceil(gmax * PASS_GEN_RATE - 1e-9);
+    pass = hc >= 8 && gp >= gline;
+    S.best.mock = Math.max(S.best.mock, hc + gp); if(pass) S.best.mockPass = true;
+    detail = `<div class="pass-line" style="margin-top:10px"><div>必修<br><b>${hc}</b>/10点<span class="sub">（ライン8点）</span> ${hc >= 8 ? "◎" : "×"}</div><div>一般＋状況<br><b>${gp}</b>/${gmax}点<span class="sub">（ライン${gline}点）</span> ${gp >= gline ? "◎" : "×"}</div></div>`;
+    verdict = pass ? "合格ライン突破！" : "もう一歩！";
+  }
+  const rate = n ? c / n : 0;
+  let bonus = 0;
+  if(n >= 3 && (pass || (pass === null && rate >= .8))){ bonus = 20; addXP(20); addCoins(5); G.coins += 5; }
+  G.xp += bonus;
+  if(G.mode === "field"){ const fi = fieldInfo(G.field); detail = `<p class="small" style="text-align:center;margin-top:6px;font-weight:800">${esc(FMAP[G.field].n)}　${starsHTML(fi.stars, FMAP[G.field].col).replace('class="stars"', 'class="stars" style="display:inline-flex;vertical-align:middle"')}</p>`; }
+  const ms = claimMissions(), bd = checkBadges();
+  save();
+  const rk = rankOf(S.lv);
+  const review = G.res.map((r, i) => {
+    const it = G.items[i];
+    const txt = it.kind === "calc" ? it.c.t + "：" + it.c.ans + " " + it.c.unit : it.q.q;
+    return `<div class="review-item"><span class="mk" style="background:var(--${r.ok ? "ok" : "ng"})">${r.ok ? "○" : "×"}</span><span>${esc(txt.length > 60 ? txt.slice(0, 58) + "…" : txt)}</span></div>`;
+  }).join("");
+  const scoreLine = (G.mode === "ta" || G.mode === "sv") ? `${c}<small>問正解</small>` : `${c}<small>/${n}</small>`;
+  openSheet(`<div class="lvup-pet" style="width:120px;height:120px">${piyoSVG(rk.st, rate >= .6 ? "happy" : "sad")}</div>
+    <h2>${esc(title)}</h2><p class="sub small" style="text-align:center;font-weight:800">${esc(MODE_NAME[G.mode])}</p>
+    <div class="bigscore num">${scoreLine}</div>
+    ${verdict ? `<span class="verdict ${pass === false ? "fail" : "pass"}">${esc(verdict)}</span>` : ""}
+    ${detail}
+    <div class="gain"><span class="chip">XP +${G.xp}</span><span class="chip"><i class="c-coin">C</i>+${G.coins}</span>${bonus ? '<span class="chip">ボーナス込み</span>' : ""}</div>
+    ${ms.length ? `<p class="small" style="text-align:center;margin-top:8px;font-weight:800;color:var(--ok)">ミッション達成：${ms.map(esc).join("・")}</p>` : ""}
+    ${bd.length ? `<p class="small" style="text-align:center;margin-top:4px;font-weight:800;color:var(--grape)">バッジ獲得：${bd.map(esc).join("・")}</p>` : ""}
+    ${n ? `<details style="margin-top:10px"><summary class="small" style="font-weight:800;cursor:pointer">解いた問題をふりかえる</summary><div class="review-list">${review}</div></details>` : ""}
+    <div class="row" style="margin-top:14px"><button class="btn grow" data-act="close-result">ホームへ</button><button class="btn pink grow" data-act="again">もう一回</button></div>`, "result");
+  if(rate >= .8 && n >= 3) confetti();
+}
+function quitGame(){
+  if(!G) return;
+  clearInterval(G.timerId);
+  const hadAnswers = G.res.length > 0;
+  if(hadAnswers && !G.done){ finishGame(); return; }
+  G = null; closeSheet(); render();
+}
+
+/* ===== 演出・シート・起動 ===== */
+let AC = null;
+function unlockAudio(){
+  if(AC || !S.set.sound) return;
+  try{ const C = window.AudioContext || window.webkitAudioContext; if(C) AC = new C(); }catch(e){ AC = null; }
+}
+function beep(notes){
+  if(!S.set.sound) return;
+  unlockAudio(); if(!AC) return;
+  try{
+    if(AC.state === "suspended") AC.resume();
+    let t = AC.currentTime;
+    notes.forEach(([f, d, type]) => {
+      const o = AC.createOscillator(), g = AC.createGain();
+      o.type = type || "triangle"; o.frequency.value = f;
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.18, t + .015); g.gain.exponentialRampToValueAtTime(.0001, t + d);
+      o.connect(g).connect(AC.destination); o.start(t); o.stop(t + d + .02); t += d * .8;
+    });
+  }catch(e){}
+}
+const SND = {ok: [[880, .09], [1320, .16]], ng: [[220, .18, "square"], [180, .22, "square"]], lv: [[523, .1], [659, .1], [784, .1], [1047, .28]], gacha: [[660, .08], [880, .08], [1100, .08], [1320, .25]]};
+
+function feedback(ok){
+  beep(ok ? SND.ok : SND.ng);
+  const st = document.createElement("div");
+  st.className = "stamp " + (ok ? "ok" : "ng");
+  st.textContent = ok ? (G && G.combo >= 3 ? G.combo + "コンボ！" : "せいかい！") : "おしい…";
+  document.body.appendChild(st);
+  requestAnimationFrame(() => st.classList.add("show"));
+  setTimeout(() => st.remove(), 950);
+  if(ok && G && G.combo > 0 && G.combo % 5 === 0) confetti();
+}
+function confetti(){
+  if(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const box = document.createElement("div"); box.className = "confetti";
+  const cols = ["pink", "mint", "lemon", "sky", "grape", "peach"];
+  for(let i = 0; i < 36; i++){
+    const e = document.createElement("i");
+    e.style.left = Math.random() * 100 + "%";
+    e.style.background = `var(--${cols[i % cols.length]})`;
+    e.style.setProperty("--dx", (Math.random() * 160 - 80) + "px");
+    e.style.setProperty("--rot", (Math.random() * 720 - 360) + "deg");
+    e.style.animationDuration = (1.2 + Math.random() * 1.1) + "s";
+    e.style.animationDelay = (Math.random() * .25) + "s";
+    box.appendChild(e);
+  }
+  document.body.appendChild(box);
+  setTimeout(() => box.remove(), 2800);
+}
+let toastTimer = null;
+function toast(msg){
+  let t = $("#toast");
+  if(!t){ t = document.createElement("div"); t.id = "toast"; t.className = "toast"; t.setAttribute("role", "status"); document.body.appendChild(t); }
+  t.textContent = msg; t.hidden = false;
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => { t.hidden = true; }, 2600);
+}
+
+/* ---------- シート（モーダル） ---------- */
+let sheetKind = "";
+function openSheet(html, kind){
+  closeSheet();
+  sheetKind = kind || "";
+  const ov = document.createElement("div");
+  ov.className = "overlay"; ov.id = "overlay";
+  ov.innerHTML = `<div class="sheet" role="dialog" aria-modal="true">${html}</div>`;
+  document.body.appendChild(ov);
+  const b = ov.querySelector(".btn.pink") || ov.querySelector(".btn"); if(b) b.focus({preventScroll: true});
+}
+function closeSheet(){ const o = $("#overlay"); if(o) o.remove(); sheetKind = ""; }
+function afterResult(){
+  if(pendingLv.length){
+    const lv = pendingLv[pendingLv.length - 1], from = pendingLv[0] - 1;
+    pendingLv = [];
+    const r0 = rankOf(from), r1 = rankOf(lv);
+    beep(SND.lv); confetti();
+    openSheet(`<div class="lvup-pet">${piyoSVG(r1.st, "happy")}</div>
+      <h2>${r1.st !== r0.st ? "ランクアップ！" : "レベルアップ！"}</h2>
+      <p class="bigscore num" style="font-size:2.2rem">Lv.${lv}</p>
+      ${r1.st !== r0.st ? `<span class="verdict pass">「${esc(r1.n)}」になった！</span>` : ""}
+      <p class="small" style="text-align:center;margin-top:8px;font-weight:700">${esc(r1.line)}</p>
+      <button class="btn big pink block" style="margin-top:14px" data-act="close-sheet">やったね！</button>`, "lv");
+    return true;
+  }
+  return false;
+}
+
+/* ---------- ガチャ ---------- */
+function doGacha(){
+  if(S.coins < GACHA_COST){ toast("コインが足りません。問題に正解するとたまります"); return; }
+  S.coins -= GACHA_COST;
+  const roll = Math.random(), r = roll < .06 ? 3 : roll < .32 ? 2 : 1;
+  const st = pick(STICKERS.filter(x => x.r === r));
+  const isNew = !S.stk[st.id];
+  S.stk[st.id] = (S.stk[st.id] || 0) + 1;
+  const bd = checkBadges();
+  save();
+  const cap = $("#capsule");
+  if(cap){ cap.classList.remove("shake"); void cap.offsetWidth; cap.classList.add("shake"); }
+  beep(SND.gacha);
+  setTimeout(() => {
+    render();
+    if(r === 3) confetti();
+    openSheet(`<div class="capsule">${capsuleSVG(true)}</div>
+      <div class="sticker" style="width:140px;margin:0 auto;background:var(--${st.col}-s)">${stickerSVG(st.id)}<small>${esc(st.n)}</small>${st.r > 1 ? `<span class="rar">${RARITY[st.r]}</span>` : ""}</div>
+      <h2 style="margin-top:12px">${isNew ? "NEW！ " : ""}${esc(st.n)}</h2>
+      <p class="small sub" style="text-align:center;font-weight:800">${isNew ? "ずかんに登録したよ" : "もう持っているシール（×" + S.stk[st.id] + "）"}${bd.length ? "／バッジ獲得：" + bd.map(esc).join("・") : ""}</p>
+      <div class="row" style="margin-top:14px"><button class="btn grow" data-act="close-sheet">とじる</button><button class="btn pink grow" data-act="gacha-again" ${S.coins >= GACHA_COST ? "" : "disabled"}>もう1回</button></div>`, "gacha");
+  }, 650);
+}
+
+/* ---------- 描画 ---------- */
+function render(){
+  const app = $("#app");
+  if(!app) return;
+  if(G && !G.done){
+    app.innerHTML = viewGame();
+    const tb = $("#tabbar-slot"); if(tb) tb.innerHTML = "";
+    return;
+  }
+  const views = {home: viewHome, quest: viewQuest, review: viewReview, zukan: viewZukan, record: viewRecord};
+  app.innerHTML = headerHTML() + `<main class="stack">${views[UI.tab]()}</main>`;
+  const tb = $("#tabbar-slot"); if(tb) tb.innerHTML = tabbarHTML();
+}
+
+/* ---------- 操作 ---------- */
+function onAct(act, el){
+  const [a, b, c] = act.split(":");
+  if(a === "tab"){ UI.tab = b; saveUI(); render(); window.scrollTo(0, 0); return; }
+  if(a === "start"){ closeSheet(); startGame(b, c); return; }
+  if(a === "rv"){ UI.rv = b; saveUI(); render(); return; }
+  if(a === "choose"){ choose(+b); return; }
+  if(a === "submit"){ if(G && G.sel.length === 2) answer(); return; }
+  if(a === "next"){ nextQ(); return; }
+  if(a === "key"){ if(G && !G.answered && G.input.length < 5){ G.input = (G.input === "0" ? "" : G.input) + b; render(); } return; }
+  if(a === "key-del"){ if(G && !G.answered){ G.input = G.input.slice(0, -1); render(); } return; }
+  if(a === "key-ok"){ if(G && !G.answered && G.input) answer(); return; }
+  if(a === "quit-ask"){
+    if(!G) return;
+    if(!G.res.length){ quitGame(); return; }
+    openSheet(`<h2>ここでやめる？</h2><p class="small" style="text-align:center;margin-top:6px;font-weight:700">ここまでに答えた${G.res.length}問の記録は保存されます。</p><div class="row" style="margin-top:14px"><button class="btn grow" data-act="close-sheet">つづける</button><button class="btn pink grow" data-act="quit-yes">やめて結果を見る</button></div>`, "quit");
+    return;
+  }
+  if(a === "quit-yes"){ closeSheet(); quitGame(); return; }
+  if(a === "close-sheet"){
+    const k = sheetKind; closeSheet();
+    if(k === "result" || k === "lv"){ if(!afterResult() && G && G.done){ G = null; render(); } }
+    return;
+  }
+  if(a === "close-result" || a === "again"){
+    const again = a === "again" && G ? [G.mode, G.mode === "field" ? G.field : G.mode === "case" ? "" : G.arg] : null;
+    closeSheet(); G = null; render();
+    if(afterResult()){ pendingAgain = again; return; }
+    if(again) startGame(again[0], again[1]);
+    return;
+  }
+  if(a === "poke"){ const p = $("#pet svg"); if(p){ p.classList.remove("piyo-jump"); void p.getBoundingClientRect(); p.classList.add("piyo-jump"); } beep([[1200, .06], [1500, .08]]); return; }
+  if(a === "gacha" || a === "gacha-again"){ closeSheet(); if(UI.tab !== "zukan"){ UI.tab = "zukan"; render(); } doGacha(); return; }
+  if(a === "sound"){ S.set.sound = !S.set.sound; save(); render(); if(S.set.sound) beep(SND.ok); return; }
+  if(a === "reset-ask"){ const bx = $("#reset-box"); if(bx) bx.innerHTML = `<p class="small" style="font-weight:800;color:var(--ng)">レベル・コイン・シール・解答記録がすべて消えます。元に戻せません。</p><div class="row" style="margin-top:8px"><button class="btn sm" data-act="reset-no">やめる</button><button class="btn sm pink" data-act="reset-yes">すべて消す</button></div>`; return; }
+  if(a === "reset-no"){ render(); return; }
+  if(a === "reset-yes"){ const keepExam = S.set.exam; S = defaultState(); S.set.exam = keepExam; save(); render(); toast("記録をリセットしました"); return; }
+}
+let pendingAgain = null;
+
+document.addEventListener("click", e => {
+  const el = e.target.closest("[data-act]");
+  if(!el || el.disabled) return;
+  const act = el.getAttribute("data-act");
+  if(act === "close-sheet" && pendingAgain && (sheetKind === "lv")){ const pa = pendingAgain; pendingAgain = null; closeSheet(); startGame(pa[0], pa[1]); return; }
+  onAct(act, el);
+});
+document.addEventListener("change", e => {
+  if(e.target && e.target.id === "exam-date"){
+    if(parseD(e.target.value)){ S.set.exam = e.target.value; save(); render(); toast("試験日を変更しました"); }
+  }
+});
+document.addEventListener("keydown", e => {
+  if(!G || G.done || $("#overlay")) return;
+  if(e.target && /INPUT|SELECT|TEXTAREA/.test(e.target.tagName)) return;
+  const it = curItem();
+  if(it.kind === "q" && !G.answered && e.key === "Enter" && isMulti(it.q) && G.sel.length === 2){ answer(); e.preventDefault(); }
+  else if(it.kind === "q" && !G.answered && /^[1-5]$/.test(e.key)){ const i = +e.key - 1; if(i < it.q.c.length){ choose(i); e.preventDefault(); } }
+  else if(it.kind === "calc" && !G.answered){
+    if(/^[0-9]$/.test(e.key)){ onAct("key:" + e.key); e.preventDefault(); }
+    else if(e.key === "Backspace"){ onAct("key-del"); e.preventDefault(); }
+    else if(e.key === "Enter"){ onAct("key-ok"); e.preventDefault(); }
+  }
+  else if(e.key === "Enter" && G.answered && G.mode !== "ta" && document.activeElement && document.activeElement.id !== "next-btn"){ nextQ(); e.preventDefault(); }
+});
+
+/* ---------- 起動（公開ページの更新時は途中のゲームを引き継ぐ） ---------- */
+function snapshotG(){
+  if(!G || G.done) return null;
+  return {mode: G.mode, arg: G.arg, field: G.field, cs: G.cs, genki: G.genki, i: G.i, lives: G.lives, time: G.time, combo: G.combo, xp: G.xp, coins: G.coins, res: G.res,
+    items: G.items.map(it => it.kind === "calc" ? {kind: "calc", c: it.c} : {kind: "q", id: it.q.id, story: it.story ? it.story.id : null, sec: it.sec || ""})};
+}
+function restoreG(d){
+  if(!d || !Array.isArray(d.items)) return;
+  const items = d.items.map(it => it.kind === "calc" ? it : (QMAP[it.id] ? {kind: "q", q: QMAP[it.id], story: it.story ? CASES.find(c => c.id === it.story) : null, sec: it.sec} : null)).filter(Boolean);
+  if(!items.length) return;
+  G = {mode: d.mode, arg: d.arg, field: d.field, cs: d.cs, genki: d.genki, items, i: Math.min(d.i || 0, items.length - 1), sel: [], done: false, answered: false, res: d.res || [], combo: d.combo || 0, xp: d.xp || 0, coins: d.coins || 0, input: "", lives: d.lives == null ? 3 : d.lives, time: d.time || 60};
+  if(G.mode === "ta") startTimer();
+}
+function start(data){
+  ensureDay();
+  if(data && data.ui) Object.assign(UI, data.ui);
+  if(data && data.g) restoreG(data.g);
+  render();
+  Sync.init();
+}
+try{ window.claude?.hot?.snapshot?.(() => ({ui: UI, g: snapshotG()})); }catch(e){}
+if(window.claude?.hot?.ready) window.claude.hot.ready(start); else start(window.claude?.hot?.data ?? {});
+
+</script>
+</body>
+</html>
