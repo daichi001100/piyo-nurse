@@ -31,7 +31,7 @@
   --f-pop:"Mochiy Pop One","M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Hiragino Sans",sans-serif;
   --f-body:"M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
   --r:20px;
-  --piyo:#FFD54A; --piyo-d:#F2B233; --beak:#FF8A3D; --blush:#FF8FB1; --egg:#FFF8EC; --gold:#FFC21A;
+  --piyo:#FFD54A; --piyo-d:#F2B233; --beak:#FF8A3D; --blush:#FF8FB1; --egg:#FFF8EC; --gold:#FFC21A; --usa:#FFFFFF; --usa-in:#FFC2D6; --kuma:#D9A06B; --kuma-in:#F7DCBD;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
@@ -281,9 +281,9 @@ p{margin:0}
 
 /* ---------- タブバー ---------- */
 .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--card);border-top:2.5px solid var(--line);padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))}
-.tabbar .in{max-width:540px;margin:0 auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}
-.tab{display:flex;flex-direction:column;align-items:center;gap:1px;background:none;border:0;padding:4px 0;border-radius:14px;cursor:pointer;font-size:.66rem;font-weight:800;color:var(--sub)}
-.tab svg{width:26px;height:26px}
+.tabbar .in{max-width:540px;margin:0 auto;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:2px}
+.tab{display:flex;flex-direction:column;align-items:center;gap:1px;background:none;border:0;padding:4px 0;border-radius:14px;cursor:pointer;font-size:.62rem;white-space:nowrap;font-weight:800;color:var(--sub)}
+.tab svg{width:24px;height:24px}
 .tab.on{color:var(--ink);background:var(--pink-s)}
 .tab .dotn{position:absolute;margin-left:22px;margin-top:-2px;min-width:16px;height:16px;border-radius:999px;background:var(--ng);color:var(--on-accent);font-size:.58rem;display:grid;place-items:center;padding:0 4px;border:2px solid var(--line)}
 .tab{position:relative}
@@ -296,10 +296,90 @@ p{margin:0}
 @keyframes sad{30%{transform:rotate(-6deg)}60%{transform:rotate(5deg)}}
 .blink{animation:blink 4.2s infinite;transform-box:fill-box;transform-origin:center}
 @keyframes blink{0%,94%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+
+/* ---------- 勉強タイマー ---------- */
+.timer-card{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center}
+.timer-card .tt{font-family:var(--f-pop);font-size:.95rem}
+.timer-card .clock{font-family:var(--f-pop);font-size:2.1rem;line-height:1.15;color:var(--mint);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.timer-card.running .clock{color:var(--peach)}
+.timer-card .meta{font-size:.74rem;font-weight:800;color:var(--sub)}
+.timer-card .go{width:84px;height:84px;border-radius:50%;flex-direction:column;gap:0;font-family:var(--f-pop);font-weight:400;font-size:.92rem;padding:0}
+.timer-card .go small{font-family:var(--f-body);font-size:.62rem;font-weight:800}
+.timer-card .links{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.livedot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--ng);border:2px solid var(--line);margin-right:5px;animation:pulse 1.4s ease-in-out infinite;vertical-align:-1px}
+@keyframes pulse{50%{transform:scale(1.35);opacity:.6}}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.inp{display:flex;flex-direction:column;gap:3px;font-size:.74rem;font-weight:800;color:var(--sub)}
+.inp input{font:inherit;font-size:1rem;font-weight:700;color:var(--ink);border:2.5px solid var(--line);border-radius:12px;padding:8px 10px;background:var(--card);width:100%;min-width:0}
+.inp.full{grid-column:1/-1}
+.day-list{display:flex;flex-direction:column;gap:6px;margin-top:10px;max-height:260px;overflow:auto}
+.day-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;font-size:.82rem;font-weight:700;padding:6px 8px;border-radius:12px;background:var(--soft)}
+.day-row.on{background:var(--mint-s)}
+.note{font-size:.76rem;font-weight:700;color:var(--sub);line-height:1.6}
+.warn-note{font-size:.78rem;font-weight:800;color:var(--ng);background:var(--pink-s);border-radius:12px;padding:8px 10px}
+
+/* ---------- ともだち ---------- */
+.mycode{font-family:var(--f-pop);font-size:1.5rem;letter-spacing:.08em;font-variant-numeric:tabular-nums}
+.net{font-size:.7rem;font-weight:800;color:var(--sub)}
+.net::before{content:"● ";color:var(--sub)}
+.net[data-state="on"]::before{color:var(--ok)}
+.net[data-state="wait"]::before{color:var(--lemon)}
+.net[data-state="err"]::before{color:var(--ng)}
+.studying-strip{display:flex;gap:8px;flex-wrap:wrap}
+.studying-strip .tag{background:var(--peach-s);font-size:.74rem;padding:3px 10px}
+.group-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center}
+.group-head h3{font-size:1rem}
+.group-code{font-size:.74rem;font-weight:800;color:var(--sub);font-variant-numeric:tabular-nums}
+.members{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.member{display:grid;grid-template-columns:52px minmax(0,1fr);gap:10px;align-items:center;padding:9px 10px;border-radius:16px;border:2px solid var(--line);background:var(--card)}
+.member.me{background:var(--lemon-s)}
+.member .av{width:52px;height:52px;border-radius:14px;border:2px solid var(--line);background:var(--soft);display:grid;place-items:center;overflow:hidden}
+.member .av svg{width:50px;height:50px}
+.member .av b{font-family:var(--f-pop);font-weight:400;font-size:1.2rem}
+.member .nm{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-weight:800;font-size:.9rem}
+.member .st{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:.72rem;font-weight:700;color:var(--sub);margin-top:2px}
+.member .st b{color:var(--ink);font-weight:800}
+.badge-live{display:inline-flex;align-items:center;font-size:.68rem;font-weight:800;padding:1px 8px;border-radius:999px;background:var(--peach-s);border:2px solid var(--line);font-variant-numeric:tabular-nums}
+.badge-off{font-size:.66rem;font-weight:700;color:var(--sub)}
+.toggles{display:flex;flex-wrap:wrap;gap:6px}
+.toggles button{border:2.5px solid var(--line);border-radius:999px;background:var(--card);padding:4px 11px;font-weight:800;font-size:.76rem;cursor:pointer}
+.toggles button[aria-pressed="true"]{background:var(--mint);color:var(--on-accent)}
+.toggles button[aria-pressed="true"]::before{content:"✓ "}
+.codebox{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--soft);border:2.5px dashed var(--line);border-radius:16px;padding:10px;margin-top:8px}
+
+/* ---------- はじめての画面・アカウント ---------- */
+.ob{padding-top:8px}
+.ob-head{display:flex;align-items:center;justify-content:space-between}
+.ob-steps{display:flex;gap:6px}
+.ob-steps i{width:28px;height:8px;border-radius:999px;border:2px solid var(--line);background:var(--card)}
+.ob-steps i.on{background:var(--pink)}
+.ob-chars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ob-char{display:flex;flex-direction:column;align-items:center;gap:2px;border:2.5px solid var(--line);border-radius:18px;background:var(--card);box-shadow:var(--shadow-s);padding:8px 4px 10px;cursor:pointer;transition:transform .08s}
+.ob-char:active{transform:translateY(2px)}
+.ob-char.on{background:var(--pink-s);box-shadow:var(--shadow)}
+.ob-char.on b::after{content:" ✓";color:var(--pink)}
+.ob-pic{width:100%;max-width:92px;aspect-ratio:1}
+.ob-pic svg{width:100%;height:100%;display:block}
+.ob-char b{font-size:.8rem;white-space:nowrap}
+.ob-char span:last-child{font-size:.66rem;font-weight:700;color:var(--sub)}
+.ob-preview{display:grid;grid-template-columns:minmax(0,120px) minmax(0,1fr);gap:12px;align-items:center}
+.ob-big{width:100%;max-width:120px;aspect-ratio:1}
+.ob-big svg{width:100%;height:100%;display:block}
+.acc-btn{width:40px;height:40px;border-radius:50%;border:2.5px solid var(--line);background:var(--lemon-s);box-shadow:var(--shadow-s);padding:0;cursor:pointer;overflow:hidden;display:grid;place-items:center}
+.acc-btn svg{width:46px;height:46px;margin-top:6px}
+.acc-list{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.acc-row{display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 10px;border:2px solid var(--line);border-radius:16px;background:var(--card)}
+.acc-row.on{background:var(--lemon-s)}
+.acc-row .av{width:48px;height:48px;border-radius:14px;border:2px solid var(--line);background:var(--soft);overflow:hidden;display:grid;place-items:center}
+.acc-row .av svg{width:46px;height:46px}
+.acc-row b{display:block;font-size:.9rem}
+.acc-row span{font-size:.7rem;font-weight:700;color:var(--sub)}
+.acc-row > div > span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @media (max-width:370px){
   .modes,.fields{gap:10px}
   .stickers{grid-template-columns:repeat(3,minmax(0,1fr))}
   .hero{grid-template-columns:minmax(0,110px) minmax(0,1fr)}
+  .logo small{display:none}
 }
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition:none!important}
@@ -613,15 +693,25 @@ CASES.forEach(cs => cs.qs.forEach(q => { q.f = cs.f; q.case = cs.id; QMAP[q.id] 
 const EXAM_DEFAULT = "2027-02-14";
 const PASS_GEN_RATE = 166 / 249;
 
-/* レベル → ランク（ぴよナースの見た目の段階） */
+/* キャラクター（最初に1体えらぶ）。e は語尾 */
+const CHARS = {
+  piyo: {n: "ぴよナース", e: "ぴよ", sp: "ひよこ", d: "元気いっぱい。いっしょに最後まで走りきるタイプ"},
+  usa:  {n: "うさナース", e: "ぴょん", sp: "うさぎ", d: "やさしくて聞き上手。毎日コツコツ進めるタイプ"},
+  kuma: {n: "くまナース", e: "くま", sp: "くま", d: "力持ちでたよれる。どっしり構えて合格をつかむタイプ"}
+};
+const CHAR_KEYS = Object.keys(CHARS);
+const charName = () => CHARS[S.char] ? CHARS[S.char].n : CHARS.piyo.n;
+const gobi = () => CHARS[S.char] ? CHARS[S.char].e : "ぴよ";
+const lineOf = rk => rk.line.replace(/\{e\}/g, gobi());
+/* レベル → ランク（キャラの見た目の段階） */
 const RANKS = [
-  {lv:1,  st:0, n:"たまご",           line:"ぴよ…？ まだ殻の中。1問解くと何かが起きるかも"},
+  {lv:1,  st:0, n:"たまご",           line:"{e}…？ まだ殻の中。1問解くと何かが起きるかも"},
   {lv:3,  st:1, n:"ひよっこ看護学生", line:"殻からこんにちは！ いっしょに国試めざそうね"},
-  {lv:6,  st:2, n:"実習がんばり中",   line:"記録も国試もコツコツが大事だぴよ"},
+  {lv:6,  st:2, n:"実習がんばり中",   line:"記録も国試もコツコツが大事だ{e}"},
   {lv:10, st:3, n:"新人ナース",       line:"聴診器デビュー！ 必修は8割が合格ライン"},
   {lv:15, st:4, n:"先輩ナース",       line:"後輩に教えられるくらいになってきたね"},
   {lv:20, st:5, n:"主任ナース",       line:"弱点分野をつぶせば合格はもうすぐ"},
-  {lv:30, st:6, n:"看護師長",         line:"病棟をまとめる貫禄が出てきたぴよ"},
+  {lv:30, st:6, n:"看護師長",         line:"病棟をまとめる貫禄が出てきた{e}"},
   {lv:40, st:7, n:"レジェンドナース", line:"国試なんてこわくない！ 伝説のナース誕生"}
 ];
 const rankOf = lv => { let r = RANKS[0]; RANKS.forEach(x => { if(lv >= x.lv) r = x; }); return r; };
@@ -655,7 +745,10 @@ const BADGES = [
   {id:"allf",  n:"全分野デビュー", d:"全12分野で1問以上正解する",     ok:S => FIELDS.every(f => (S.fs[f.k] || {}).c > 0)},
   {id:"stk10", n:"シール10種",     d:"シールを10種類集める",          ok:S => Object.keys(S.stk).length >= 10},
   {id:"ta15",  n:"スピードスター", d:"タイムアタックで15問正解",       ok:S => S.best.ta >= 15},
-  {id:"lv10",  n:"新人ナース",     d:"レベル10に到達する",            ok:S => S.lv >= 10}
+  {id:"lv10",  n:"新人ナース",     d:"レベル10に到達する",            ok:S => S.lv >= 10},
+  {id:"st10",  n:"勉強10時間",     d:"勉強時間の累計が10時間になる",  ok:S => studyTotal() >= 600},
+  {id:"st50",  n:"勉強50時間",     d:"勉強時間の累計が50時間になる",  ok:S => studyTotal() >= 3000},
+  {id:"pal",   n:"なかまができた", d:"グループに入るか友達を追加する", ok:S => S.social.groups.length + S.social.friends.length > 0}
 ];
 
 /* ===== 計算ドリル（毎回数値が変わる） ===== */
@@ -716,6 +809,7 @@ const SVGI = {
   map:'<svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M3.5 6.5l6-2.5 7 2.5 6-2.5v15.5l-6 2.5-7-2.5-6 2.5z"/><path d="M9.5 4v15.5M16.5 6.5V22"/></svg>',
   note:'<svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><rect x="5" y="3.5" width="16" height="19" rx="3"/><path d="M9 9h8M9 13h8M9 17h5"/></svg>',
   book:'<svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><circle cx="13" cy="13" r="8.5"/><path d="M13 8.5l1.4 2.9 3.1.4-2.3 2.2.6 3.1-2.8-1.5-2.8 1.5.6-3.1-2.3-2.2 3.1-.4z"/></svg>',
+  pals:'<svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><circle cx="9.5" cy="9" r="3.6"/><path d="M3 21c0-3.8 2.9-6.5 6.5-6.5S16 17.2 16 21"/><circle cx="18" cy="10" r="3"/><path d="M17.5 14.6c3.2 0 5.5 2.4 5.5 5.8"/></svg>',
   chart:'<svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M4 21.5h18"/><rect x="6" y="12" width="3.6" height="7" rx="1"/><rect x="11.2" y="7" width="3.6" height="12" rx="1"/><rect x="16.4" y="10" width="3.6" height="9" rx="1"/></svg>',
   bolt:'<svg viewBox="0 0 24 24"><path d="M13.5 2.5L5 13.5h6l-1.5 8 8.5-11h-6z" fill="var(--lemon)" stroke="var(--line)" stroke-width="2" stroke-linejoin="round"/></svg>',
   clock:'<svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8" fill="var(--sky-s)" stroke="var(--line)" stroke-width="2"/><path d="M12 9v4.5l3 2" fill="none" stroke="var(--line)" stroke-width="2.2" stroke-linecap="round"/><path d="M9.5 2.8h5" stroke="var(--line)" stroke-width="2.2" stroke-linecap="round"/></svg>',
@@ -727,13 +821,14 @@ const SVGI = {
   cap:'<svg viewBox="0 0 24 24"><path d="M3.5 13.5c0-4.5 3.8-7.5 8.5-7.5s8.5 3 8.5 7.5l-2.5 3.5h-12z" fill="var(--card)" stroke="var(--line)" stroke-width="2" stroke-linejoin="round"/><path d="M10.6 8.8h2.8v2.3h2.3v2.8h-2.3v2.3h-2.8v-2.3H8.3v-2.8h2.3z" fill="var(--pink)"/></svg>'
 };
 
-/* ===== ぴよナース（成長8段階）===== */
-function piyoSVG(st, mood){
+/* ===== キャラクター（3種類×成長8段階）===== */
+function charSVG(type, st, mood){
+  type = CHARS[type] ? type : "piyo";
   mood = mood || "normal";
   const L = 'stroke="var(--line)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"';
   const L3 = 'stroke="var(--line)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"';
-  const body = st === 7 ? "var(--gold)" : "var(--piyo)";
-  let s = '<svg viewBox="0 0 200 200" role="img" aria-label="ぴよナース">';
+  const body = type === "usa" ? "var(--usa)" : type === "kuma" ? "var(--kuma)" : (st === 7 ? "var(--gold)" : "var(--piyo)");
+  let s = `<svg viewBox="0 0 200 200" role="img" aria-label="${CHARS[type].n}">`;
   s += '<ellipse cx="100" cy="186" rx="52" ry="8" fill="var(--line)" opacity=".13"/>';
   if(st === 7){
     s += '<g opacity=".55">';
@@ -741,43 +836,68 @@ function piyoSVG(st, mood){
     s += '</g>';
   }
   if(st === 0){
-    /* たまご：殻のすき間から目がのぞく */
-    s += `<g class="piyo-bob"><path d="M100 30c-34 0-56 50-56 88 0 36 25 62 56 62s56-26 56-62c0-38-22-88-56-88z" fill="var(--egg)" ${L}/>`;
+    /* たまご：上から耳や帽子がのぞいて、中に何がいるかわかる */
+    s += '<g class="piyo-bob">';
+    if(type === "usa") s += `<path d="M78 52c-12-22-12-44-2-46 10-2 14 24 12 46z" fill="var(--usa)" ${L3}/><path d="M122 52c12-22 12-44 2-46-10-2-14 24-12 46z" fill="var(--usa)" ${L3}/><path d="M80 44c-6-14-6-28-2-30 4 0 6 16 6 30z" fill="var(--usa-in)"/><path d="M120 44c6-14 6-28 2-30-4 0-6 16-6 30z" fill="var(--usa-in)"/>`;
+    if(type === "kuma") s += `<circle cx="70" cy="52" r="14" fill="var(--kuma)" ${L3}/><circle cx="130" cy="52" r="14" fill="var(--kuma)" ${L3}/><circle cx="70" cy="52" r="6" fill="var(--kuma-in)"/><circle cx="130" cy="52" r="6" fill="var(--kuma-in)"/>`;
+    s += `<path d="M100 30c-34 0-56 50-56 88 0 36 25 62 56 62s56-26 56-62c0-38-22-88-56-88z" fill="var(--egg)" ${L}/>`;
     s += `<path d="M58 104l14 10 12-12 14 12 12-12 14 12 12-10 12 8" fill="none" ${L3}/>`;
     s += '<ellipse cx="86" cy="96" rx="4" ry="5.5" fill="var(--line)" class="blink"/><ellipse cx="114" cy="96" rx="4" ry="5.5" fill="var(--line)" class="blink"/>';
-    s += `<path d="M84 30c4-10 28-10 32 0l-2 10H86z" fill="var(--card)" ${L3}/><path d="M97.5 28h5v4h4v5h-4v3h-5v-3h-4v-5h4z" fill="var(--pink)"/>`;
-    s += '<circle cx="136" cy="150" r="5" fill="var(--pink-s)"/><circle cx="66" cy="140" r="4" fill="var(--sky-s)"/></g></svg>';
+    if(type === "piyo") s += `<path d="M84 30c4-10 28-10 32 0l-2 10H86z" fill="var(--card)" ${L3}/><path d="M97.5 28h5v4h4v5h-4v3h-5v-3h-4v-5h4z" fill="var(--pink)"/>`;
+    const dots = type === "usa" ? "var(--usa-in)" : type === "kuma" ? "var(--kuma)" : "var(--pink-s)";
+    s += `<circle cx="136" cy="150" r="5" fill="${dots}"/><circle cx="66" cy="140" r="4" fill="${type === "piyo" ? "var(--sky-s)" : dots}"/><circle cx="120" cy="164" r="3" fill="${dots}"/></g></svg>`;
     return s;
   }
   s += '<g class="piyo-bob">';
+  /* 耳（体のうしろ） */
+  if(type === "usa"){
+    s += `<path d="M72 70c-14-24-16-60-2-64 14-4 20 34 18 62z" fill="var(--usa)" ${L}/><path d="M128 70c14-24 16-60 2-64-14-4-20 34-18 62z" fill="var(--usa)" ${L}/>`;
+    s += '<path d="M75 60c-8-18-9-40-3-42 6-1 9 22 9 42z" fill="var(--usa-in)"/><path d="M125 60c8-18 9-40 3-42-6-1-9 22-9 42z" fill="var(--usa-in)"/>';
+  }
+  if(type === "kuma"){
+    s += `<circle cx="60" cy="68" r="18" fill="var(--kuma)" ${L}/><circle cx="140" cy="68" r="18" fill="var(--kuma)" ${L}/><circle cx="60" cy="68" r="8" fill="var(--kuma-in)"/><circle cx="140" cy="68" r="8" fill="var(--kuma-in)"/>`;
+  }
   /* 足 */
-  s += `<path d="M78 170l-8 10h18zM122 170l-8 10h18z" fill="var(--beak)" ${L3}/>`;
+  if(type === "piyo") s += `<path d="M78 170l-8 10h18zM122 170l-8 10h18z" fill="var(--beak)" ${L3}/>`;
+  else s += `<ellipse cx="78" cy="176" rx="13" ry="8" fill="${body}" ${L3}/><ellipse cx="122" cy="176" rx="13" ry="8" fill="${body}" ${L3}/>`;
   /* 体 */
   s += `<path d="M100 52c-40 0-64 30-64 66 0 36 26 60 64 60s64-24 64-60c0-36-24-66-64-66z" fill="${body}" ${L}/>`;
-  s += '<ellipse cx="100" cy="146" rx="34" ry="22" fill="#fff" opacity=".38"/>';
-  /* 羽 */
+  if(type === "piyo") s += '<ellipse cx="100" cy="146" rx="34" ry="22" fill="#fff" opacity=".38"/>';
+  if(type === "usa") s += '<ellipse cx="100" cy="148" rx="30" ry="20" fill="var(--usa-in)" opacity=".45"/>';
+  if(type === "kuma") s += '<ellipse cx="100" cy="148" rx="32" ry="21" fill="var(--kuma-in)" opacity=".75"/>';
+  /* 羽・腕 */
   const wingL = mood === "happy" ? "M40 112c-16-10-20-26-12-30 8 2 16 14 18 24z" : "M40 110c-12 6-14 24-6 30 8-2 12-14 12-26z";
   const wingR = mood === "happy" ? "M160 112c16-10 20-26 12-30-8 2-16 14-18 24z" : "M160 110c12 6 14 24 6 30-8-2-12-14-12-26z";
   s += `<path d="${wingL}" fill="${body}" ${L3}/><path d="${wingR}" fill="${body}" ${L3}/>`;
-  /* 顔 */
-  if(mood === "happy"){
-    s += `<path d="M74 100q8-10 16 0M110 100q8-10 16 0" fill="none" ${L}/>`;
-    s += `<path d="M92 112h16l-8 12z" fill="var(--beak)" ${L3}/><path d="M95 116h10" stroke="var(--line)" stroke-width="2"/>`;
-  } else if(mood === "sad"){
+  /* くまの口まわり */
+  if(type === "kuma") s += `<ellipse cx="100" cy="117" rx="20" ry="14" fill="var(--kuma-in)" ${L3}/>`;
+  /* 目 */
+  if(mood === "happy") s += `<path d="M74 100q8-10 16 0M110 100q8-10 16 0" fill="none" ${L}/>`;
+  else if(mood === "sad"){
     s += `<path d="M74 96q8 4 16 2M110 98q8 2 16-2" fill="none" ${L3}/>`;
     s += '<ellipse cx="82" cy="104" rx="4.5" ry="6" fill="var(--line)"/><ellipse cx="118" cy="104" rx="4.5" ry="6" fill="var(--line)"/>';
-    s += `<path d="M126 110c3 6 3 10 0 12-3-2-3-6 0-12z" fill="var(--sky)" stroke="var(--line)" stroke-width="2"/>`;
-    s += `<path d="M92 116l8 7 8-7z" fill="var(--beak)" ${L3}/>`;
+    s += '<path d="M128 112c3 6 3 10 0 12-3-2-3-6 0-12z" fill="var(--sky)" stroke="var(--line)" stroke-width="2"/>';
   } else {
     s += '<g class="blink"><ellipse cx="82" cy="100" rx="5.5" ry="7.5" fill="var(--line)"/><ellipse cx="118" cy="100" rx="5.5" ry="7.5" fill="var(--line)"/></g>';
     s += '<circle cx="84" cy="97" r="2" fill="#fff"/><circle cx="120" cy="97" r="2" fill="#fff"/>';
-    s += `<path d="M91 112l9-5 9 5-9 6z" fill="var(--beak)" ${L3}/>`;
+  }
+  /* 口・くちばし */
+  if(type === "piyo"){
+    if(mood === "happy") s += `<path d="M92 112h16l-8 12z" fill="var(--beak)" ${L3}/><path d="M95 116h10" stroke="var(--line)" stroke-width="2"/>`;
+    else if(mood === "sad") s += `<path d="M92 116l8 7 8-7z" fill="var(--beak)" ${L3}/>`;
+    else s += `<path d="M91 112l9-5 9 5-9 6z" fill="var(--beak)" ${L3}/>`;
+  } else {
+    const ny = type === "kuma" ? 110 : 109;
+    s += `<path d="M95 ${ny}h10l-5 5z" fill="${type === "kuma" ? "var(--line)" : "var(--pink)"}" stroke="var(--line)" stroke-width="2.4" stroke-linejoin="round"/>`;
+    if(mood === "happy") s += `<path d="M92 ${ny + 7}q8 10 16 0z" fill="var(--pink)" ${L3}/>`;
+    else if(mood === "sad") s += `<path d="M93 ${ny + 12}q7-6 14 0" fill="none" ${L3}/>`;
+    else s += `<path d="M100 ${ny + 5}v3M92 ${ny + 8}q4 4 8 0q4 4 8 0" fill="none" ${L3}/>`;
   }
   s += '<ellipse cx="68" cy="116" rx="8" ry="5" fill="var(--blush)" opacity=".75"/><ellipse cx="132" cy="116" rx="8" ry="5" fill="var(--blush)" opacity=".75"/>';
   /* 1：殻をはいている */
   if(st === 1){
     s += `<path d="M40 140c4 30 28 44 60 44s56-14 60-44l-12 10-12-12-12 12-12-12-12 12-12-12-12 12-12-12-12 12z" fill="var(--egg)" ${L}/>`;
-    s += `<path d="M90 54c-2-10 6-16 10-8 2-8 12-6 10 4" fill="none" ${L3}/>`;
+    if(type === "piyo") s += `<path d="M90 54c-2-10 6-16 10-8 2-8 12-6 10 4" fill="none" ${L3}/>`;
   }
   /* 2以上：ナースキャップ */
   if(st >= 2){
@@ -785,34 +905,30 @@ function piyoSVG(st, mood){
     s += `<path d="M68 62c0-16 14-24 32-24s32 8 32 24l-6 8H74z" fill="var(--card)" ${L3}/>`;
     s += `<path d="M96 44h8v6h6v8h-6v6h-8v-6h-6v-8h6z" fill="${capCross}" stroke="var(--line)" stroke-width="2"/>`;
   }
-  /* 2：ノート */
   if(st === 2){
     s += `<rect x="128" y="120" width="30" height="36" rx="4" fill="var(--sky-s)" ${L3} transform="rotate(12 143 138)"/><path d="M136 130h14M135 138h14M134 146h10" stroke="var(--line)" stroke-width="2" stroke-linecap="round" transform="rotate(12 143 138)"/>`;
   }
-  /* 3以上：聴診器 */
   if(st >= 3){
-    s += `<path d="M72 124c0 22 56 22 56 0" fill="none" stroke="var(--line)" stroke-width="5" stroke-linecap="round"/><path d="M72 124c0 22 56 22 56 0" fill="none" stroke="var(--sky)" stroke-width="2.2" stroke-linecap="round"/>`;
-    s += `<path d="M100 140v10" stroke="var(--line)" stroke-width="4"/><circle cx="100" cy="156" r="7" fill="var(--sky)" ${L3}/>`;
+    s += '<path d="M72 126c0 22 56 22 56 0" fill="none" stroke="var(--line)" stroke-width="5" stroke-linecap="round"/><path d="M72 126c0 22 56 22 56 0" fill="none" stroke="var(--sky)" stroke-width="2.2" stroke-linecap="round"/>';
+    s += `<path d="M100 142v8" stroke="var(--line)" stroke-width="4"/><circle cx="100" cy="156" r="7" fill="var(--sky)" ${L3}/>`;
   }
-  /* 4以上：カルテ */
   if(st >= 4){
     s += `<rect x="26" y="126" width="28" height="34" rx="4" fill="var(--lemon-s)" ${L3} transform="rotate(-12 40 143)"/><rect x="33" y="122" width="14" height="7" rx="2" fill="var(--card)" stroke="var(--line)" stroke-width="2" transform="rotate(-12 40 143)"/>`;
   }
-  /* 5以上：リボンバッジ */
   if(st >= 5){
-    s += `<path d="M118 150l-5 16 8-4 5 7 2-17z" fill="var(--pink)" stroke="var(--line)" stroke-width="2.4" stroke-linejoin="round"/><circle cx="122" cy="148" r="8" fill="var(--lemon)" stroke="var(--line)" stroke-width="2.6"/>`;
+    s += '<path d="M118 150l-5 16 8-4 5 7 2-17z" fill="var(--pink)" stroke="var(--line)" stroke-width="2.4" stroke-linejoin="round"/><circle cx="122" cy="148" r="8" fill="var(--lemon)" stroke="var(--line)" stroke-width="2.6"/>';
   }
-  /* 6以上：きらきら */
   if(st >= 6){
     s += '<path d="M166 58l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="var(--lemon)" stroke="var(--line)" stroke-width="2"/><path d="M34 70l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--lemon)" stroke="var(--line)" stroke-width="2"/>';
   }
-  /* 7：王冠 */
   if(st === 7){
     s += `<path d="M78 40l6-18 10 12 6-16 6 16 10-12 6 18z" fill="var(--gold)" ${L3}/><circle cx="100" cy="30" r="3" fill="var(--pink)"/>`;
   }
   s += '</g></svg>';
   return s;
 }
+/* いまのアカウントのキャラ */
+function piyoSVG(st, mood){ return charSVG(S.char, st, mood); }
 
 /* ===== シール ===== */
 function stickerSVG(id){
@@ -865,11 +981,16 @@ const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); r
 const pct = (c, n) => n ? Math.round(c * 100 / n) : 0;
 const esc = s => String(s).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 
+const SOC_KEYS = [["now", "勉強中かどうか"], ["study", "勉強時間"], ["quiz", "小テスト（問題の成績）"], ["grow", "キャラの成長"], ["streak", "連続日数"], ["collect", "シール"]];
+function randDigits(n){ const a = new Uint32Array(n); try{ crypto.getRandomValues(a); }catch(e){ for(let i = 0; i < n; i++) a[i] = Math.floor(Math.random() * 1e9); } return Array.from(a, (x, i) => i === 0 ? 1 + x % 9 : x % 10).join(""); }
+function randId(){ const cs = "abcdefghijkmnpqrstuvwxyz23456789"; const a = new Uint32Array(12); try{ crypto.getRandomValues(a); }catch(e){ for(let i = 0; i < 12; i++) a[i] = Math.floor(Math.random() * 1e9); } return Array.from(a, x => cs[x % cs.length]).join(""); }
+function newSocial(){ const all = Object.fromEntries(SOC_KEYS.map(k => [k[0], true])); return {id: randId(), code: randDigits(8), name: "", on: false, groups: [], friends: [], show: Object.assign({}, all), share: Object.assign({}, all)}; }
 function newDay(){ return {d: todayStr(), n: 0, c: 0, combo: 0, maxCombo: 0, calc: 0, cse: 0, got: {}}; }
 function defaultState(){
   return {v: 1, lv: 1, xp: 0, coins: 10, tot: {n: 0, c: 0}, fs: {}, qs: {}, wrong: {}, cases: {},
     calc: {n: 0, c: 0}, best: {combo: 0, hitsu: 0, ta: 0, sv: 0, mock: 0, mockPass: false},
-    act: {}, day: newDay(), stk: {}, badges: {}, set: {exam: EXAM_DEFAULT, sound: true}, updatedAt: 0};
+    act: {}, day: newDay(), stk: {}, badges: {}, set: {exam: EXAM_DEFAULT, sound: true},
+    study: {days: {}, run: null}, social: newSocial(), char: "piyo", updatedAt: 0};
 }
 function normalize(o){
   const s = defaultState();
@@ -884,19 +1005,44 @@ function normalize(o){
   if(!s.day || typeof s.day !== "object") s.day = newDay();
   s.day = Object.assign(newDay(), s.day);
   if(!s.day.got || typeof s.day.got !== "object") s.day.got = {};
+  if(!s.study || typeof s.study !== "object") s.study = {days: {}, run: null};
+  if(!s.study.days || typeof s.study.days !== "object" || Array.isArray(s.study.days)) s.study.days = {};
+  if(!s.study.run || !(+s.study.run.s > 0)) s.study.run = null;
+  const so = (s.social && typeof s.social === "object") ? s.social : {};
+  const ns = newSocial();
+  s.social = {id: typeof so.id === "string" && so.id ? so.id : ns.id, code: /^\d{8}$/.test(so.code || "") ? so.code : ns.code, name: typeof so.name === "string" ? so.name.slice(0, 16) : "", on: so.on === undefined ? !!so.name : !!so.on,
+    groups: Array.isArray(so.groups) ? so.groups.filter(g => g && /^\d{8}$/.test(g.code)) : [], friends: Array.isArray(so.friends) ? so.friends.filter(f => f && /^\d{8}$/.test(f.code)) : [],
+    show: Object.assign(ns.show, so.show || {}), share: Object.assign(ns.share, so.share || {})};
+  if(!CHARS[s.char]) s.char = "piyo";
   s.lv = Math.max(1, +s.lv || 1); s.xp = Math.max(0, +s.xp || 0); s.coins = Math.max(0, +s.coins || 0);
   s.updatedAt = +s.updatedAt || 0;
   return s;
 }
-let S = defaultState();
+/* アカウント：1台の端末で何人でも。状態はアカウントごとに別のキーへ保存 */
+const ACC_KEY = "piyonurse_accounts_v1";
+let ACC = {current: "", list: []};
+try{ const t = localStorage.getItem(ACC_KEY); if(t){ const o = JSON.parse(t); if(o && Array.isArray(o.list)) ACC = {current: o.current || "", list: o.list.filter(a => a && typeof a.id === "string")}; } }catch(e){}
+if(!ACC.list.some(a => a.id === ACC.current)) ACC.current = ACC.list[0] ? ACC.list[0].id : "";
+const stateKey = id => LS_KEY + "_" + id;
+let LEGACY = null;   /* アカウント機能より前の記録（最初のアカウントに引き継ぐ） */
+try{ const t = localStorage.getItem(LS_KEY); if(t) LEGACY = normalize(JSON.parse(t)); }catch(e){}
+function loadAccountState(id){
+  try{ const t = localStorage.getItem(stateKey(id)); if(t){ const s = normalize(JSON.parse(t)); s.social.id = id; return s; } }catch(e){}
+  const s = defaultState(); s.social.id = id; return s;
+}
+let S = ACC.current ? loadAccountState(ACC.current) : defaultState();
+function saveAcc(){ try{ localStorage.setItem(ACC_KEY, JSON.stringify(ACC)); }catch(e){} if(typeof Sync !== "undefined") Sync.pushAccounts(); }
+function syncAccMeta(){
+  const a = ACC.list.find(x => x.id === ACC.current);
+  if(a && (a.name !== S.social.name || a.char !== S.char || a.lv !== S.lv)){ a.name = S.social.name; a.char = S.char; a.lv = S.lv; saveAcc(); }
+}
 let UI = {tab: "home", rv: "all"};
-try{ const t = localStorage.getItem(LS_KEY); if(t) S = normalize(JSON.parse(t)); }catch(e){}
 try{ const t = localStorage.getItem(UI_KEY); if(t){ const u = JSON.parse(t); if(u && typeof u === "object") Object.assign(UI, u); } }catch(e){}
-if(!["home", "quest", "review", "zukan", "record"].includes(UI.tab)) UI.tab = "home";
+if(!["home", "quest", "review", "friends", "zukan", "record"].includes(UI.tab)) UI.tab = "home";
 
-function saveLocal(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(S)); }catch(e){} }
+function saveLocal(){ if(!ACC.current) return; try{ localStorage.setItem(stateKey(ACC.current), JSON.stringify(S)); }catch(e){} syncAccMeta(); }
 function saveUI(){ try{ localStorage.setItem(UI_KEY, JSON.stringify(UI)); }catch(e){} }
-function save(){ S.updatedAt = Date.now(); saveLocal(); Sync.queue(G ? 2500 : 900); }
+function save(){ if(!ACC.current) return; S.updatedAt = Date.now(); saveLocal(); Sync.queue(G ? 2500 : 900); if(typeof Net !== "undefined") Net.publishSoon(); }
 
 /* ---------- クラウド同期（本人だけが読める非公開ドキュメント） ---------- */
 const Sync = {
@@ -927,35 +1073,76 @@ const Sync = {
     this.writing = false;
     if(this.again){ this.again = false; this.queue(300); }
   },
+  db: null, uid: null, ready: null, unsub: null, accTimer: null,
   adopt(r){
-    S = normalize(JSON.parse(JSON.stringify(r)));
-    ensureDay(); saveLocal();
+    const n = normalize(JSON.parse(JSON.stringify(r)));
+    if(n.social.id !== ACC.current){ n.social.id = ACC.current; n.social.name = S.social.name || n.social.name; n.char = S.char; }
+    S = n; ensureDay(); saveLocal();
     if(!G) render();
   },
+  connect(){
+    if(this.ready) return this.ready;
+    this.ready = (async () => {
+      const cl = window.claude;
+      if(!cl || typeof cl.use !== "function") return false;
+      let db = null, user = null;
+      try{ const r = await Promise.all([cl.use("db"), cl.use("user")]); db = r[0]; user = r[1]; }catch(e){}
+      if(!db || !user) return false;
+      let uid = null;
+      try{ uid = await user.id(); }catch(e){}
+      if(!uid) return false;
+      this.db = db; this.uid = uid; return true;
+    })();
+    return this.ready;
+  },
+  /* 別の端末で作ったアカウントの一覧を取り込む */
+  async boot(){
+    if(!window.claude || typeof window.claude.use !== "function") return false;
+    if(!(await this.connect())) return false;
+    try{
+      const snap = await this.db.doc("data/users/" + this.uid + "/accounts").get();
+      const r = snap.exists ? snap.data() : null;
+      if(!r || !Array.isArray(r.list)) return false;
+      let changed = false;
+      r.list.forEach(x => { if(x && typeof x.id === "string" && !ACC.list.some(y => y.id === x.id)){ ACC.list.push({id: x.id, name: String(x.name || ""), char: x.char, lv: +x.lv || 1, created: +x.created || 0}); changed = true; } });
+      if(!changed) return false;
+      if(!ACC.current){ ACC.current = ACC.list[0].id; S = loadAccountState(ACC.current); }
+      try{ localStorage.setItem(ACC_KEY, JSON.stringify(ACC)); }catch(e){}
+      return true;
+    }catch(e){ return false; }
+  },
+  pushAccounts(){
+    if(!this.db) return;
+    clearTimeout(this.accTimer);
+    this.accTimer = setTimeout(async () => { try{ await this.db.doc("data/users/" + this.uid + "/accounts").set({list: JSON.parse(JSON.stringify(ACC.list)), updatedAt: Date.now()}); }catch(e){} }, 1500);
+  },
   async init(){
-    const cl = window.claude;
-    if(!cl || typeof cl.use !== "function"){ this.set("local"); return; }
+    if(this.unsub){ try{ this.unsub(); }catch(e){} this.unsub = null; }
+    clearTimeout(this.timer); this.ref = null; this.readonly = false;
+    if(!ACC.current || !window.claude || typeof window.claude.use !== "function"){ this.set("local"); return; }
     this.set("connecting");
-    let db = null, user = null;
-    try{ const r = await Promise.all([cl.use("db"), cl.use("user")]); db = r[0]; user = r[1]; }catch(e){}
-    if(!db || !user){ this.set("local"); return; }
-    let uid = null;
-    try{ uid = await user.id(); }catch(e){}
-    if(!uid){ this.set("local"); return; }
+    if(!(await this.connect())){ this.set("local"); return; }
+    const acc = ACC.current;
     let ref;
-    try{ ref = db.doc("data/users/" + uid + "/state"); }catch(e){ this.set("local"); return; }
+    try{ ref = this.db.doc("data/users/" + this.uid + "/acc-" + acc); }catch(e){ this.set("local"); return; }
     try{
       const snap = await ref.get();
+      if(acc !== ACC.current) return;
       this.ref = ref;
-      const r = snap.exists ? snap.data() : null;
+      let r = snap.exists ? snap.data() : null;
+      if(!r && ACC.list.length === 1 && S.tot.n === 0){
+        /* アカウント機能より前にクラウドへ保存していた記録を引き継ぐ */
+        try{ const old = await this.db.doc("data/users/" + this.uid + "/state").get(); if(old.exists){ this.adopt(old.data()); this.queue(0); } }catch(e){}
+      }
       const ru = (r && +r.updatedAt) || 0;
       if(r && ru > S.updatedAt){ this.adopt(r); this.set("synced"); }
-      else if(S.updatedAt > ru){ this.queue(0); }
+      else if(S.updatedAt > ru) this.queue(0);
       else this.set("synced");
     }catch(e){ this.ref = null; this.set("local"); return; }
+    this.pushAccounts();
     try{
-      ref.onSnapshot(snap => {
-        if(!snap || !snap.exists || (snap.metadata && snap.metadata.hasPendingWrites)) return;
+      this.unsub = ref.onSnapshot(snap => {
+        if(acc !== ACC.current || !snap || !snap.exists || (snap.metadata && snap.metadata.hasPendingWrites)) return;
         const r = snap.data();
         if(r && (+r.updatedAt || 0) > S.updatedAt){ this.adopt(r); toast("別の端末の記録を反映しました"); }
       }, () => {});
@@ -968,9 +1155,10 @@ function ensureDay(){ if(S.day.d !== todayStr()) S.day = newDay(); }
 function streakDays(st){
   st = st || S;
   let d = new Date();
-  if(!st.act[fmtD(d)]) d = addDays(d, -1);
+  const on = k => st.act[k] || (st.study && st.study.days && st.study.days[k]);
+  if(!on(fmtD(d))) d = addDays(d, -1);
   let k = 0;
-  while(st.act[fmtD(d)]){ k++; d = addDays(d, -1); }
+  while(on(fmtD(d))){ k++; d = addDays(d, -1); }
   return k;
 }
 function daysLeft(){
@@ -1049,6 +1237,7 @@ function headerHTML(){
   return `<header class="top">
     <div class="logo"><span class="cross">${SVGI.cross}</span><span>ぴよナース<small>看護師国試クエスト</small></span></div>
     <div class="chips">
+      <button class="acc-btn" data-act="acc" aria-label="アカウント：${esc(S.social.name)}">${piyoSVG(rankOf(S.lv).st)}</button>
       <span class="chip" title="連続学習日数"><i class="c-fire"><svg viewBox="0 0 24 24"><path d="M12 2.5c1 3.5 5.5 5.5 5.5 11a5.5 5.5 0 01-11 0c0-2.7 1.4-4.2 2.5-5.3.2 1.8 1 2.8 2 3.1-.6-3.3.1-6.3 1-8.8z" fill="#fff"/></svg></i><span class="num">${streakDays()}</span>日</span>
       <span class="chip" title="コイン"><i class="c-coin">C</i><span class="num">${S.coins}</span></span>
     </div>
@@ -1056,7 +1245,7 @@ function headerHTML(){
 }
 function tabbarHTML(){
   const w = wrongIds().length;
-  const tabs = [["home", "ホーム", SVGI.home], ["quest", "クエスト", SVGI.map], ["review", "ふくしゅう", SVGI.note], ["zukan", "ずかん", SVGI.book], ["record", "きろく", SVGI.chart]];
+  const tabs = [["home", "ホーム", SVGI.home], ["quest", "クエスト", SVGI.map], ["review", "ふくしゅう", SVGI.note], ["friends", "ともだち", SVGI.pals], ["zukan", "ずかん", SVGI.book], ["record", "きろく", SVGI.chart]];
   return `<nav class="tabbar" aria-label="メニュー"><div class="in">${tabs.map(t => `<button class="tab${UI.tab === t[0] ? " on" : ""}" data-act="tab:${t[0]}" aria-current="${UI.tab === t[0] ? "page" : "false"}">${t[2]}<span>${t[1]}</span>${t[0] === "review" && w ? `<b class="dotn">${w}</b>` : ""}</button>`).join("")}</div></nav>`;
 }
 
@@ -1065,9 +1254,9 @@ function viewHome(){
   const ex = parseD(S.set.exam);
   const exLabel = ex ? `${ex.getFullYear()}年${ex.getMonth() + 1}月${ex.getDate()}日（${"日月火水木金土"[ex.getDay()]}）` : "";
   const ms = missions();
-  const line = S.tot.n === 0 ? rk.line : (S.day.n === 0 ? "今日はまだ0問。まずは1問だけやってみよ？" : S.day.n >= 10 ? `今日は${S.day.n}問！ えらすぎるぴよ` : rk.line);
+  const g = gobi(), line = S.tot.n === 0 ? lineOf(rk) : (S.day.n === 0 ? `${S.social.name ? S.social.name + "さん、" : ""}今日はまだ0問。まずは1問だけやってみる${g}？` : S.day.n >= 10 ? `今日は${S.day.n}問！ えらすぎる${g}` : lineOf(rk));
   return `
-  <section class="card hero tint-lemon" aria-label="ぴよナース">
+  <section class="card hero tint-lemon" aria-label="${charName()}">
     <div class="pet" data-act="poke" id="pet">${piyoSVG(rk.st)}</div>
     <div class="stack" style="gap:6px">
       <p class="bubble">${esc(line)}</p>
@@ -1076,6 +1265,9 @@ function viewHome(){
       <div class="bar"><i style="width:${pct(S.xp, need)}%"></i></div></div>
     </div>
   </section>
+
+  ${studyCardHTML()}
+  ${friendsHomeHTML()}
 
   <section class="card">
     <div class="count">
@@ -1137,7 +1329,7 @@ function viewReview(){
   ${fks.length ? `<div class="seg" role="group" aria-label="分野でしぼる"><button class="${UI.rv === "all" ? "on" : ""}" data-act="rv:all">すべて</button>${fks.map(f => `<button class="${UI.rv === f.k ? "on" : ""}" data-act="rv:${f.k}">${esc(f.n.length > 7 ? f.s + "：" + f.n.slice(0, 6) + "…" : f.n)}</button>`).join("")}</div>` : ""}
   <section class="stack" style="gap:8px">${list.length ? list.map(id => { const q = QMAP[id], f = FMAP[q.f], w = S.wrong[id]; return `
     <div class="wrong-item"><div style="min-width:0"><div class="row" style="gap:6px;margin-bottom:3px"><span class="tag" style="background:var(--${f.col}-s)">${esc(f.n)}</span>${w.ok ? '<span class="tag" style="background:var(--mint-s)">あと1回で卒業</span>' : ""}</div><p>${esc(q.q)}</p></div>
-    <button class="btn sm" data-act="start:one:${id}">解く</button></div>`; }).join("") : `<div class="card empty">${S.tot.n ? "間違いノートは空っぽ。すばらしいぴよ！" : "問題に答えると、間違えた問題がここにたまります。<br>まずはホームの「おまかせ10問」から。"}</div>`}</section>`;
+    <button class="btn sm" data-act="start:one:${id}">解く</button></div>`; }).join("") : `<div class="card empty">${S.tot.n ? "間違いノートは空っぽ。すばらしい" + gobi() + "！" : "問題に答えると、間違えた問題がここにたまります。<br>まずはホームの「おまかせ10問」から。"}</div>`}</section>`;
 }
 
 function viewZukan(){
@@ -1169,6 +1361,8 @@ function viewRecord(){
     <div class="tile"><b class="num">${pct(S.tot.c, S.tot.n)}<small style="font-size:.7rem">%</small></b><span>正答率</span></div>
     <div class="tile"><b class="num">${streakDays()}<small style="font-size:.7rem">日</small></b><span>連続学習</span></div>
   </section>
+
+  ${studyRecordHTML()}
 
   <section class="card">
     <h2 style="font-size:1rem">合格ラインとの距離 <span class="sub small" style="font-family:var(--f-body)">いまの正答率で本番を解いた場合の目安</span></h2>
@@ -1209,6 +1403,7 @@ function viewRecord(){
     <label class="field-set" for="exam-date">試験日<input type="date" id="exam-date" value="${esc(S.set.exam)}"></label>
     <div class="field-set"><span id="snd-l">効果音</span><button class="switch" id="snd" role="switch" aria-checked="${S.set.sound ? "true" : "false"}" aria-labelledby="snd-l" data-act="sound"></button></div>
     <p class="sync small" data-sync data-state="${Sync.state}" style="text-align:left;margin:0">${{local: "この端末に保存中", connecting: "クラウドに接続中…", synced: "クラウドに同期済み", saving: "保存中…"}[Sync.state]}</p>
+    <button class="btn sm block" data-act="acc">アカウント・キャラクター</button>
     <div id="reset-box"><button class="btn sm ghost" data-act="reset-ask">記録をすべてリセット</button></div>
   </section>`;
 }
@@ -1446,6 +1641,571 @@ function quitGame(){
   G = null; closeSheet(); render();
 }
 
+/* ===== 勉強タイマー（開始時刻を保存するので、アプリを閉じても計測が続く） ===== */
+const fmtMin = m => { m = Math.max(0, Math.round(m)); const h = Math.floor(m / 60), r = m % 60; return h ? `${h}時間${r ? r + "分" : ""}` : `${r}分`; };
+const fmtClock = ms => { const t = Math.max(0, Math.floor(ms / 1000)), h = Math.floor(t / 3600), m = Math.floor(t / 60) % 60, s = t % 60; return `${h}:${pad2(m)}:${pad2(s)}`; };
+const studyOn = d => +S.study.days[d] || 0;
+function studyWeek(){ let n = 0; for(let i = 0; i < 7; i++) n += studyOn(fmtD(addDays(new Date(), -i))); return n; }
+function studyTotal(){ return Object.values(S.study.days).reduce((a, b) => a + (+b || 0), 0); }
+function runningMs(){ return S.study.run ? Date.now() - S.study.run.s : 0; }
+function setStudy(d, m){ m = Math.max(0, Math.min(1440, Math.round(m))); if(m) S.study.days[d] = m; else delete S.study.days[d]; }
+
+function startStudy(){
+  if(S.study.run) return;
+  S.study.run = {s: Date.now()};
+  ensureDay(); save(); render(); beep(SND.ok);
+  toast("計測スタート！ アプリを閉じても計測は続きます");
+  if(typeof Net !== "undefined") Net.publishNow();
+}
+function openStopSheet(){
+  if(!S.study.run) return;
+  const ms = runningMs(), min = Math.floor(ms / 60000), long = ms > 12 * 3600000;
+  const sd = new Date(S.study.run.s);
+  openSheet(`<h2>おつかれさま！</h2>
+    <p class="bigscore num" style="font-size:2.4rem">${fmtClock(ms)}</p>
+    <p class="note" style="text-align:center">${sd.getMonth() + 1}/${sd.getDate()} ${pad2(sd.getHours())}:${pad2(sd.getMinutes())} から計測</p>
+    ${long ? '<p class="warn-note" style="margin-top:8px">12時間以上たっています。ストップを押し忘れていたら、下で実際に勉強した時間に直してから記録してください。</p>' : ""}
+    <p class="note" style="margin-top:10px">記録する時間（変更できます）</p>
+    <div class="form-grid"><label class="inp" for="stop-h">時間<input type="number" id="stop-h" min="0" max="24" inputmode="numeric" value="${Math.floor(min / 60)}"></label>
+    <label class="inp" for="stop-m">分<input type="number" id="stop-m" min="0" max="59" inputmode="numeric" value="${min % 60}"></label></div>
+    <div class="row" style="margin-top:14px"><button class="btn grow" data-act="close-sheet">計測をつづける</button><button class="btn pink grow" data-act="study-commit:${min}">記録する</button></div>
+    <button class="btn sm ghost block" style="margin-top:10px" data-act="study-discard">記録せずにリセット</button>`, "study");
+}
+function readHM(hid, mid){
+  const h = Math.max(0, Math.min(24, parseInt(($("#" + hid) || {}).value, 10) || 0));
+  const m = Math.max(0, Math.min(59, parseInt(($("#" + mid) || {}).value, 10) || 0));
+  return Math.min(1440, h * 60 + m);
+}
+function commitStudy(measured){
+  if(!S.study.run) return;
+  const min = readHM("stop-h", "stop-m"), start = S.study.run.s;
+  if(min === measured){
+    /* 日をまたいだ場合は、実際の時刻で日ごとに分ける */
+    let t = start, left = min;
+    while(left > 0){
+      const d = new Date(t), next = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1).getTime();
+      const part = Math.min(left, Math.max(1, Math.ceil((next - t) / 60000)));
+      setStudy(fmtD(d), studyOn(fmtD(d)) + part);
+      left -= part; t = next;
+    }
+  } else {
+    const key = fmtD(new Date(start));
+    setStudy(key, studyOn(key) + min);
+  }
+  S.study.run = null;
+  const xp = Math.min(min, 180);
+  if(xp) addXP(xp);
+  const bd = checkBadges();
+  save(); closeSheet(); render();
+  toast(min ? `${fmtMin(min)}を記録しました（+${xp}XP）` : "0分だったので記録しませんでした");
+  if(bd.length) setTimeout(() => toast("バッジ獲得：" + bd.join("・")), 2700);
+  if(typeof Net !== "undefined") Net.publishNow();
+  afterResult();
+}
+function discardStudy(){
+  S.study.run = null; save(); closeSheet(); render(); toast("計測をリセットしました");
+  if(typeof Net !== "undefined") Net.publishNow();
+}
+
+/* ---------- 手動で記録・修正 ---------- */
+let editDate = "";
+function openStudyEditor(d){
+  editDate = parseD(d) ? d : (parseD(editDate) ? editDate : todayStr());
+  const cur = studyOn(editDate), dd = parseD(editDate);
+  const rows = [];
+  for(let i = 0; i < 21; i++){ const x = addDays(new Date(), -i), k = fmtD(x); rows.push({k, x, m: studyOn(k)}); }
+  Object.keys(S.study.days).filter(k => !rows.some(r => r.k === k)).sort().reverse().slice(0, 30).forEach(k => rows.push({k, x: parseD(k), m: studyOn(k)}));
+  openSheet(`<h2>勉強時間を記録・修正</h2>
+    <p class="note" style="text-align:center;margin-top:4px">スタートを押し忘れた日も、あとから書き込めます</p>
+    <div class="form-grid" style="margin-top:12px">
+      <label class="inp full" for="study-date">日付<input type="date" id="study-date" value="${esc(editDate)}" max="${todayStr()}"></label>
+      <label class="inp" for="study-h">時間<input type="number" id="study-h" min="0" max="24" inputmode="numeric" value="${Math.floor(cur / 60)}"></label>
+      <label class="inp" for="study-m">分<input type="number" id="study-m" min="0" max="59" inputmode="numeric" value="${cur % 60}"></label>
+    </div>
+    <p class="note" style="margin-top:6px">${dd ? `${dd.getMonth() + 1}月${dd.getDate()}日（${"日月火水木金土"[dd.getDay()]}）` : ""}の記録：<b>${cur ? fmtMin(cur) : "なし"}</b></p>
+    <div class="row" style="margin-top:10px"><button class="btn grow" data-act="study-add">＋この時間を足す</button><button class="btn mint grow" data-act="study-set">この時間に修正</button></div>
+    <p class="note" style="margin-top:6px">「修正」はその日の合計を入力した時間に置きかえます。0時間0分にすると記録を消せます。</p>
+    <div class="day-list">${rows.map(r => `<div class="day-row${r.k === editDate ? " on" : ""}"><span>${r.x.getMonth() + 1}/${r.x.getDate()}（${"日月火水木金土"[r.x.getDay()]}）</span><span class="num">${r.m ? fmtMin(r.m) : "−"}</span><button class="btn sm" data-act="study-edit:${r.k}">編集</button></div>`).join("")}</div>
+    <button class="btn block" style="margin-top:12px" data-act="close-sheet">とじる</button>`, "editor");
+}
+function saveStudyEdit(mode){
+  const di = $("#study-date"), d = di && parseD(di.value) ? di.value : editDate;
+  if(d > todayStr()){ toast("未来の日付には記録できません"); return; }
+  const m = readHM("study-h", "study-m");
+  const before = studyOn(d);
+  setStudy(d, mode === "add" ? before + m : m);
+  editDate = d;
+  checkBadges(); save();
+  toast(mode === "add" ? `${fmtMin(m)}を足しました（合計${fmtMin(studyOn(d))}）` : `${fmtMin(studyOn(d))}に修正しました`);
+  render(); openStudyEditor(d);
+  if(typeof Net !== "undefined") Net.publishSoon();
+}
+
+/* ---------- 画面パーツ ---------- */
+function studyCardHTML(){
+  const run = S.study.run, today = studyOn(todayStr());
+  return `<section class="card timer-card${run ? " running" : ""}" aria-label="勉強タイマー">
+    <div style="min-width:0">
+      <p class="tt">${run ? '<span class="livedot"></span>勉強中' : "勉強タイマー"}</p>
+      <p class="clock" ${run ? `data-since="${run.s}"` : ""}>${run ? fmtClock(runningMs()) : fmtMin(today)}</p>
+      <p class="meta">${run ? `今日の記録 ${fmtMin(today)}・アプリを閉じても計測中` : `今日の勉強時間・今週 ${fmtMin(studyWeek())}`}</p>
+    </div>
+    ${run ? '<button class="btn pink go" data-act="study-stop">ストップ<small>記録する</small></button>' : '<button class="btn mint go" data-act="study-start">スタート<small>計測する</small></button>'}
+    <div class="links"><button class="btn sm ghost" data-act="study-edit:">時間を記録・修正</button></div>
+  </section>`;
+}
+function studyRecordHTML(){
+  const days = []; for(let i = 6; i >= 0; i--){ const d = addDays(new Date(), -i); days.push({l: "日月火水木金土"[d.getDay()], m: studyOn(fmtD(d)), today: i === 0}); }
+  const maxM = Math.max(60, ...days.map(d => d.m));
+  return `<section class="card">
+    <div class="row"><h2 style="font-size:1rem" class="grow">勉強時間</h2><button class="btn sm" data-act="study-edit:">記録・修正</button></div>
+    <div class="tiles" style="margin-top:10px">
+      <div class="tile"><b class="num" style="font-size:1.05rem">${fmtMin(studyOn(todayStr()))}</b><span>今日</span></div>
+      <div class="tile"><b class="num" style="font-size:1.05rem">${fmtMin(studyWeek())}</b><span>この7日間</span></div>
+      <div class="tile"><b class="num" style="font-size:1.05rem">${fmtMin(studyTotal())}</b><span>累計</span></div>
+    </div>
+    <svg viewBox="0 0 280 120" style="width:100%;height:auto;display:block;margin-top:8px" role="img" aria-label="この7日間の勉強時間">
+      <line x1="10" y1="96" x2="270" y2="96" stroke="var(--line)" stroke-width="2"/>
+      ${days.map((d, i) => { const h = Math.round(d.m / maxM * 70), x = 18 + i * 37; return `<rect x="${x}" y="${96 - h}" width="24" height="${h}" rx="6" fill="var(--${d.today ? "peach" : "mint"})" stroke="var(--line)" stroke-width="${h ? 2 : 0}"/><text x="${x + 12}" y="${90 - h}" text-anchor="middle" font-size="10" font-weight="800" fill="var(--ink)">${d.m ? (d.m >= 60 ? (d.m / 60).toFixed(1) + "h" : d.m + "m") : ""}</text><text x="${x + 12}" y="112" text-anchor="middle" font-size="11" font-weight="800" fill="var(--sub)">${d.l}</text>`; }).join("")}
+    </svg>
+  </section>`;
+}
+
+/* ===== ともだち・グループ =====
+   公開の MQTT 中継所に「保持メッセージ」として自分の状態を置き、同じ番号の人がそれを読む。
+   中身はグループ番号／友達番号から作った鍵（AES-GCM）で暗号化するので、番号を知らない人には読めない。 */
+const IN_ARTIFACT = !!(window.claude && typeof window.claude.use === "function");
+const BROKERS = ["wss://broker.emqx.io:8084/mqtt", "wss://broker.hivemq.com:8884/mqtt"];
+const TROOT = "piyonurse/v1/";
+const APP_URL = /^https?:$/.test(location.protocol) && !/localhost|127\.0\.0\.1/.test(location.hostname) ? location.origin + location.pathname : "https://daichi001100.github.io/piyo-nurse/";
+const fmtCode = c => String(c).replace(/^(\d{4})(\d{4})$/, "$1 $2");
+const cleanCode = v => String(v || "").replace(/[^\d]/g, "");
+const FR_KEY = "piyonurse_fr_v1";
+let FR = {g: {}, u: {}};
+function loadFR(){
+  FR = {g: {}, u: {}};
+  if(!ACC.current) return;
+  try{ const t = localStorage.getItem(FR_KEY + "_" + ACC.current); if(t){ const o = JSON.parse(t); if(o && o.g && o.u) FR = o; } }catch(e){}
+}
+loadFR();
+let frSaveTimer = null;
+function saveFR(){ const key = FR_KEY + "_" + ACC.current, data = JSON.stringify(FR); clearTimeout(frSaveTimer); frSaveTimer = setTimeout(() => { try{ if(ACC.current) localStorage.setItem(key, data); }catch(e){} }, 800); }
+
+/* ---------- 暗号 ---------- */
+const KEYS = {};
+const enc = new TextEncoder();
+async function keyFor(kind, code){
+  const k = kind + ":" + code;
+  if(KEYS[k]) return KEYS[k];
+  const base = await crypto.subtle.importKey("raw", enc.encode(code), "PBKDF2", false, ["deriveKey"]);
+  const key = await crypto.subtle.deriveKey({name: "PBKDF2", salt: enc.encode("piyonurse/v1/" + kind), iterations: 100000, hash: "SHA-256"}, base, {name: "AES-GCM", length: 256}, false, ["encrypt", "decrypt"]);
+  const h = new Uint8Array(await crypto.subtle.digest("SHA-256", enc.encode("piyonurse-topic/" + k)));
+  const hex = Array.from(h.slice(0, 12), b => b.toString(16).padStart(2, "0")).join("");
+  KEYS[k] = {key, topic: TROOT + kind + "/" + hex, kind, code};
+  return KEYS[k];
+}
+function b64(u8){ let s = ""; u8.forEach(b => { s += String.fromCharCode(b); }); return btoa(s); }
+function unb64(s){ const bin = atob(s), a = new Uint8Array(bin.length); for(let i = 0; i < bin.length; i++) a[i] = bin.charCodeAt(i); return a; }
+async function seal(key, obj){
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = new Uint8Array(await crypto.subtle.encrypt({name: "AES-GCM", iv}, key, enc.encode(JSON.stringify(obj))));
+  const out = new Uint8Array(12 + ct.length); out.set(iv, 0); out.set(ct, 12);
+  return b64(out);
+}
+async function unseal(key, str){
+  const buf = unb64(str);
+  const pt = await crypto.subtle.decrypt({name: "AES-GCM", iv: buf.slice(0, 12)}, key, buf.slice(12));
+  return JSON.parse(new TextDecoder().decode(pt));
+}
+
+/* ---------- 自分の状態（見せる項目だけ） ---------- */
+function myStatus(){
+  const sh = S.social.share, st = {v: 1, id: S.social.id, name: S.social.name, ts: Date.now(), d: todayStr()};
+  if(sh.now) st.run = S.study.run ? S.study.run.s : 0;
+  if(sh.study){ const sd = {}; for(let i = 0; i < 7; i++){ const k = fmtD(addDays(new Date(), -i)); if(studyOn(k)) sd[k] = studyOn(k); } st.sd = sd; st.stot = studyTotal(); }
+  if(sh.quiz) st.q = {n: S.tot.n, c: S.tot.c, dn: S.day.d === todayStr() ? S.day.n : 0, mock: S.best.mock, hitsu: S.best.hitsu};
+  if(sh.grow){ st.lv = S.lv; st.st = rankOf(S.lv).st; st.ch = S.char; }
+  if(sh.streak) st.sk = streakDays();
+  if(sh.collect) st.stk = Object.keys(S.stk).length;
+  return st;
+}
+function validStatus(o){ return o && typeof o === "object" && typeof o.id === "string" && typeof o.name === "string" && +o.ts > 0; }
+
+/* ---------- 通信 ---------- */
+function loadScript(src){ return new Promise((ok, ng) => { const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = ng; document.head.appendChild(s); }); }
+const Net = {
+  started: false, clients: [], state: "off", tmap: {}, pubTimer: null, beat: null, lastSig: "", renderTimer: null,
+  enabled(){ return !IN_ARTIFACT && !!ACC.current && !!S.social.on && !!S.social.name && !!window.WebSocket && !!(window.crypto && crypto.subtle); },
+  stop(){
+    clearInterval(this.beat); clearTimeout(this.pubTimer); clearTimeout(this.renderTimer);
+    this.clients.forEach(c => { try{ c.end(true); }catch(e){} });
+    this.clients = []; this.started = false; this.tmap = {}; this.lastSig = ""; this.setState("off");
+  },
+  setState(st){
+    this.state = st;
+    const label = {on: "つながっています", wait: "接続中…", err: "つながりません。電波の良い場所で開き直してください", off: "未接続"}[st];
+    document.querySelectorAll("[data-net]").forEach(el => { el.textContent = label; el.dataset.state = st; });
+  },
+  refreshState(){ this.setState(this.clients.some(c => c.connected) ? "on" : (this.clients.length ? "wait" : "off")); },
+  async start(){
+    if(!this.enabled()) return;
+    if(this.started){ this.sync(); return; }
+    this.started = true; this.setState("wait");
+    if(!window.mqtt){
+      try{ await loadScript("https://unpkg.com/mqtt@5.10.1/dist/mqtt.min.js"); }
+      catch(e){ try{ await loadScript("https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js"); }catch(e2){} }
+    }
+    if(!window.mqtt){ this.started = false; this.setState("err"); return; }
+    await this.wanted();
+    BROKERS.forEach(url => {
+      let cl;
+      try{ cl = mqtt.connect(url, {clientId: "pn_" + S.social.id + "_" + Math.random().toString(16).slice(2, 7), clean: true, connectTimeout: 9000, reconnectPeriod: 6000, keepalive: 50}); }catch(e){ return; }
+      cl.subs = new Set();
+      cl.on("connect", () => { cl.subs = new Set(); this.subscribeAll(cl); this.refreshState(); this.publishNow(true); S.social.groups.forEach(g => { if(g.name) this.publishMeta(g.code, g.name); }); });
+      cl.on("message", (t, p) => this.onMessage(t, p));
+      ["close", "offline", "error"].forEach(ev => cl.on(ev, () => this.refreshState()));
+      this.clients.push(cl);
+    });
+    clearInterval(this.beat);
+    this.beat = setInterval(() => { if(!document.hidden) this.publishNow(true); }, 4 * 60 * 1000);
+  },
+  async wanted(){
+    const list = [];
+    for(const g of S.social.groups){ const k = await keyFor("g", g.code); this.tmap[k.topic] = k; list.push(k.topic + "/#"); }
+    for(const f of S.social.friends){ const k = await keyFor("u", f.code); this.tmap[k.topic] = k; list.push(k.topic); }
+    const me = await keyFor("u", S.social.code); this.tmap[me.topic] = me;
+    return list;
+  },
+  async subscribeAll(cl){
+    const want = await this.wanted();
+    want.forEach(t => { if(!cl.subs.has(t)){ cl.subscribe(t, {qos: 1}); cl.subs.add(t); } });
+    [...cl.subs].forEach(t => { if(!want.includes(t)){ cl.unsubscribe(t); cl.subs.delete(t); } });
+  },
+  sync(){ this.clients.forEach(cl => { if(cl.connected) this.subscribeAll(cl); }); this.publishNow(true); },
+  publishSoon(){ if(!this.started) return; clearTimeout(this.pubTimer); this.pubTimer = setTimeout(() => this.publishNow(false), 2500); },
+  async publishNow(force){
+    if(!this.started || !this.enabled()) return;
+    const st = myStatus();
+    const sig = JSON.stringify(Object.assign({}, st, {ts: 0})) + "|" + S.social.groups.map(g => g.code).join(",");
+    if(!force && sig === this.lastSig) return;
+    const live = this.clients.filter(c => c.connected);
+    if(!live.length) return;
+    this.lastSig = sig;
+    try{
+      const me = await keyFor("u", S.social.code);
+      const msgs = [[me.topic, await seal(me.key, st)]];
+      for(const g of S.social.groups){ const k = await keyFor("g", g.code); msgs.push([k.topic + "/m/" + S.social.id, await seal(k.key, st)]); }
+      live.forEach(cl => msgs.forEach(([t, m]) => cl.publish(t, m, {qos: 1, retain: true})));
+    }catch(e){}
+  },
+  async publishMeta(code, name){
+    const k = await keyFor("g", code), m = await seal(k.key, {t: "meta", name, ts: Date.now()});
+    this.clients.filter(c => c.connected).forEach(cl => cl.publish(k.topic + "/meta", m, {qos: 1, retain: true}));
+  },
+  async clearMember(code){
+    const k = await keyFor("g", code);
+    this.clients.filter(c => c.connected).forEach(cl => cl.publish(k.topic + "/m/" + S.social.id, "", {qos: 1, retain: true}));
+  },
+  async onMessage(topic, payload){
+    const str = payload ? payload.toString() : "";
+    let base = topic, sub = "";
+    const m = /^(.*\/g\/[0-9a-f]+)\/(meta|m\/([A-Za-z0-9]+))$/.exec(topic);
+    if(m){ base = m[1]; sub = m[2]; }
+    const k = this.tmap[base];
+    if(!k) return;
+    if(k.kind === "g"){
+      const g = FR.g[k.code] || (FR.g[k.code] = {meta: null, members: {}});
+      if(sub === "meta"){
+        if(!str) return;
+        try{ const o = await unseal(k.key, str); if(o && o.t === "meta" && typeof o.name === "string" && (!g.meta || o.ts >= g.meta.ts)) g.meta = {name: o.name.slice(0, 20), ts: o.ts}; }catch(e){ return; }
+      } else if(m && m[3]){
+        const id = m[3];
+        if(id === S.social.id) return;
+        if(!str){ delete g.members[id]; }
+        else { try{ const o = await unseal(k.key, str); if(validStatus(o) && o.id === id && (!g.members[id] || o.ts >= g.members[id].ts)) g.members[id] = o; }catch(e){ return; } }
+      } else return;
+    } else {
+      if(!str || k.code === S.social.code) return;
+      try{ const o = await unseal(k.key, str); if(validStatus(o) && (!FR.u[k.code] || o.ts >= FR.u[k.code].ts)) FR.u[k.code] = o; }catch(e){ return; }
+    }
+    saveFR(); this.softRender();
+  },
+  softRender(){
+    clearTimeout(this.renderTimer);
+    this.renderTimer = setTimeout(() => {
+      if(G && !G.done) return;
+      if($("#overlay")) return;
+      const ae = document.activeElement;
+      if(ae && /INPUT|TEXTAREA|SELECT/.test(ae.tagName)) return;
+      if(UI.tab === "friends" || UI.tab === "home"){ const y = window.scrollY; render(); window.scrollTo(0, y); }
+    }, 700);
+  }
+};
+
+/* ---------- 表示用 ---------- */
+const STALE_MS = 30 * 86400000;
+function allPeople(){
+  const map = {};
+  S.social.groups.forEach(g => { const fg = FR.g[g.code]; if(fg) Object.values(fg.members).forEach(st => { if(Date.now() - st.ts < STALE_MS && (!map[st.id] || st.ts > map[st.id].ts)) map[st.id] = st; }); });
+  S.social.friends.forEach(f => { const st = FR.u[f.code]; if(st && (!map[st.id] || st.ts > map[st.id].ts)) map[st.id] = st; });
+  return Object.values(map);
+}
+const isStudying = st => st && +st.run > 0 && Date.now() - st.run < 16 * 3600000;
+function studyingFriends(){ return S.social.name && !IN_ARTIFACT ? allPeople().filter(isStudying) : []; }
+function agoText(ts){
+  const s = Math.max(0, (Date.now() - ts) / 1000);
+  if(s < 90) return "たった今"; if(s < 3600) return Math.round(s / 60) + "分前"; if(s < 86400) return Math.round(s / 3600) + "時間前";
+  return Math.round(s / 86400) + "日前";
+}
+function peopleWeek(st){ let n = 0; if(st.sd) for(let i = 0; i < 7; i++){ n += +st.sd[fmtD(addDays(new Date(), -i))] || 0; } return n; }
+function memberHTML(st, opt){
+  opt = opt || {};
+  const sh = S.social.show, items = [];
+  if(!st) return `<div class="member"><span class="av"><b>?</b></span><div style="min-width:0"><div class="nm">${esc(opt.label || "")}${opt.del ? `<button class="btn sm ghost" style="margin-left:auto" data-act="${opt.del}">外す</button>` : ""}</div><p class="st">まだデータが届いていません（相手がアプリを開くと表示されます）</p></div></div>`;
+  if(sh.grow && st.lv) items.push(`Lv.<b>${st.lv}</b> ${esc(rankOf(st.lv).n)}`);
+  if(sh.study && st.sd){ items.push(`今日 <b>${fmtMin(+st.sd[todayStr()] || 0)}</b>`); items.push(`今週 <b>${fmtMin(peopleWeek(st))}</b>`); }
+  if(sh.quiz && st.q){ items.push(`今日 <b>${st.d === todayStr() ? st.q.dn : 0}</b>問`); items.push(`累計 <b>${st.q.n}</b>問・正答率 <b>${pct(st.q.c, st.q.n)}%</b>`); if(st.q.mock) items.push(`模試ベスト <b>${st.q.mock}</b>点`); }
+  if(sh.streak && st.sk != null) items.push(`連続 <b>${st.sk}</b>日`);
+  if(sh.collect && st.stk != null) items.push(`シール <b>${st.stk}</b>種`);
+  let live = "";
+  if(sh.now && st.run !== undefined){
+    if(isStudying(st)) live = `<span class="badge-live"><span class="livedot"></span>勉強中 <span data-since="${st.run}" style="margin-left:4px">${fmtClock(Date.now() - st.run)}</span></span>`;
+    else if(+st.run > 0) live = '<span class="badge-off">計測中のまま（押し忘れかも）</span>';
+  }
+  const seen = opt.me ? "" : `<span class="badge-off">更新 ${agoText(st.ts)}</span>`;
+  const av = sh.grow && st.st != null ? charSVG(st.ch || "piyo", st.st) : `<b>${esc((st.name || "?").slice(0, 1))}</b>`;
+  return `<div class="member${opt.me ? " me" : ""}"><span class="av">${av}</span><div style="min-width:0">
+    <div class="nm">${esc(st.name || "なまえ未設定")}${opt.me ? '<span class="tag">あなた</span>' : ""}${live}${seen}${opt.del ? `<button class="btn sm ghost" style="margin-left:auto" data-act="${opt.del}">外す</button>` : ""}</div>
+    <p class="st">${items.length ? items.map(x => `<span>${x}</span>`).join("") : "表示する項目がありません"}</p></div></div>`;
+}
+function friendsHomeHTML(){
+  const list = studyingFriends();
+  if(!list.length) return "";
+  return `<button class="card tint-peach" style="text-align:left;cursor:pointer;display:block;width:100%" data-act="tab:friends">
+    <p class="pop" style="font-size:.92rem"><span class="livedot"></span>いま勉強中の友達 ${list.length}人</p>
+    <div class="studying-strip" style="margin-top:6px">${list.slice(0, 6).map(st => `<span class="tag">${esc(st.name)} <span data-since="${st.run}">${fmtClock(Date.now() - st.run)}</span></span>`).join("")}</div></button>`;
+}
+
+function viewFriends(){
+  if(IN_ARTIFACT) return `<section class="card tint-sky stack" style="gap:8px"><h2 style="font-size:1.1rem">友達・グループ機能について</h2>
+    <p class="note">友達機能は、GitHub で公開したページ（だれでも開けるリンク）で使えます。この Claude 上の画面からは外部の中継所に接続できないためです。</p>
+    <p class="note">公開ページ：<b>${esc(APP_URL)}</b></p></section>`;
+  if(!S.social.on) return `<section class="card tint-lemon stack" style="gap:10px">
+    <h2 style="font-size:1.15rem">友達といっしょに勉強しよう</h2>
+    <p class="note">グループ番号や友達番号を交換すると、お互いの勉強時間・いま勉強中か・問題の成績・キャラの成長が見られます。見せる項目は自分で選べます。</p>
+    <p class="note">友達に表示される名前：<b>${esc(S.social.name)}</b>（アカウントの名前）</p>
+    <button class="btn big pink block" data-act="soc-start">友達機能をはじめる</button>
+    <p class="note">送る内容はグループ番号・友達番号から作った鍵で暗号化され、番号を知らない人には読めません。はじめるまでは何も送信しません。</p></section>`;
+  const sh = S.social;
+  const studying = studyingFriends();
+  const groups = sh.groups.map(g => {
+    const fg = FR.g[g.code] || {members: {}, meta: null};
+    const others = Object.values(fg.members).filter(st => Date.now() - st.ts < STALE_MS).sort((a, b) => (isStudying(b) - isStudying(a)) || (b.ts - a.ts));
+    const name = g.name || (fg.meta && fg.meta.name) || "グループ";
+    return `<section class="card">
+      <div class="group-head"><div style="min-width:0"><h3>${esc(name)}</h3><p class="group-code">グループ番号 ${fmtCode(g.code)}・${others.length + 1}人</p></div>
+      <div class="row" style="gap:6px"><button class="btn sm" data-act="copy:g:${g.code}">招待</button><button class="btn sm ghost" data-act="soc-gleave:${g.code}">退出</button></div></div>
+      <div class="members">${memberHTML(myStatus(), {me: true})}${others.map(st => memberHTML(st)).join("")}</div>
+      ${others.length ? "" : '<p class="note" style="margin-top:8px">まだあなただけです。「招待」で番号をコピーして、友達に送ってみよう。</p>'}
+    </section>`;
+  }).join("");
+  const friends = sh.friends.map(f => memberHTML(FR.u[f.code], {label: f.memo || "友達番号 " + fmtCode(f.code), del: "soc-fdel:" + f.code})).join("");
+  return `
+  <section class="card tint-lemon">
+    <div class="row"><div class="grow" style="min-width:0"><p class="small sub" style="font-weight:800">${esc(sh.name)} さんの友達番号</p><p class="mycode">${fmtCode(sh.code)}</p></div>
+    <button class="btn sm" data-act="copy:u">コピー</button></div>
+    <div class="row" style="margin-top:6px"><p class="net grow" data-net data-state="${Net.state}">${{on: "つながっています", wait: "接続中…", err: "つながりません。電波の良い場所で開き直してください", off: "未接続"}[Net.state]}</p><button class="btn sm ghost" data-act="soc-rename">名前を変える</button></div>
+  </section>
+  ${studying.length ? `<section class="card tint-peach"><p class="pop" style="font-size:.92rem"><span class="livedot"></span>いま勉強中</p><div class="studying-strip" style="margin-top:6px">${studying.map(st => `<span class="tag">${esc(st.name)} <span data-since="${st.run}">${fmtClock(Date.now() - st.run)}</span></span>`).join("")}</div></section>` : ""}
+  <h2 class="sec-t">グループ <span class="sub">番号を知っている人だけが入れる</span></h2>
+  <div class="row"><button class="btn pink grow" data-act="soc-gnew">グループを作る</button><button class="btn grow" data-act="soc-gjoin">番号で参加</button></div>
+  ${groups || '<div class="card empty">まだグループに入っていません。作るか、友達からもらった番号で参加しよう。</div>'}
+  <h2 class="sec-t">友達 <span class="sub">相手の友達番号で追加</span></h2>
+  <button class="btn grape block" data-act="soc-fadd">友達を追加</button>
+  <section class="stack" style="gap:8px">${friends || '<div class="card empty">友達を追加すると、ここにその人の様子が表示されます。</div>'}</section>
+  <section class="card stack" style="gap:10px">
+    <h2 style="font-size:1rem">表示する項目</h2>
+    <div class="toggles">${SOC_KEYS.map(k => `<button data-act="soc-show:${k[0]}" aria-pressed="${sh.show[k[0]] ? "true" : "false"}">${k[1]}</button>`).join("")}</div>
+    <h2 style="font-size:1rem;margin-top:4px">友達に見せる項目</h2>
+    <div class="toggles">${SOC_KEYS.map(k => `<button data-act="soc-share:${k[0]}" aria-pressed="${sh.share[k[0]] ? "true" : "false"}">${k[1]}</button>`).join("")}</div>
+    <p class="note">名前と最終更新の時刻は常に表示されます。友達追加は一方通行なので、お互いに見るにはお互いの番号を追加するか、同じグループに入ってください。</p>
+  </section>`;
+}
+
+/* ---------- 操作 ---------- */
+function copyText(text, done){
+  const ok = () => toast(done || "コピーしました");
+  const fallback = () => openSheet(`<h2>コピーして送ってね</h2><textarea id="copy-area" readonly style="width:100%;height:120px;margin-top:10px;font:inherit;border:2.5px solid var(--line);border-radius:12px;padding:8px;background:var(--card);color:var(--ink)">${esc(text)}</textarea><button class="btn block" style="margin-top:10px" data-act="close-sheet">とじる</button>`, "copy");
+  try{ navigator.clipboard.writeText(text).then(ok, () => { fallback(); setTimeout(() => { const a = $("#copy-area"); if(a){ a.focus(); a.select(); } }, 50); }); }
+  catch(e){ fallback(); }
+}
+let pendingGroup = "";
+function socAct(a, b){
+  const sh = S.social;
+  if(a === "soc-start"){
+    sh.on = true; save(); render(); Net.start(); Net.publishNow(true);
+    toast("準備ができました。グループを作るか、友達を追加しよう"); return true;
+  }
+  if(a === "soc-rename-do"){
+    const v = (($("#nick") || {}).value || "").trim().slice(0, 16);
+    if(!v){ toast("名前を入れてください"); return true; }
+    sh.name = v; save(); closeSheet(); render(); Net.publishNow(true);
+    toast("名前を変えました"); return true;
+  }
+  if(a === "soc-rename"){ openSheet(`<h2>名前を変える</h2><label class="inp" for="nick" style="margin-top:10px">名前（友達にも表示されます）<input type="text" id="nick" maxlength="16" value="${esc(sh.name)}"></label><div class="row" style="margin-top:12px"><button class="btn grow" data-act="close-sheet">やめる</button><button class="btn pink grow" data-act="soc-rename-do">変える</button></div>`, "soc"); return true; }
+  if(a === "soc-gnew"){
+    pendingGroup = randDigits(8);
+    openSheet(`<h2>グループを作る</h2><label class="inp" for="gname" style="margin-top:10px">グループ名<input type="text" id="gname" maxlength="20" value="国試がんばり隊"></label>
+      <p class="note" style="margin-top:8px">グループ番号</p><div class="codebox"><span class="mycode">${fmtCode(pendingGroup)}</span></div>
+      <p class="note" style="margin-top:6px">作ったあと「招待」で番号をコピーして、LINEなどで友達に送れます。</p>
+      <div class="row" style="margin-top:12px"><button class="btn grow" data-act="close-sheet">やめる</button><button class="btn pink grow" data-act="soc-gcreate">作成する</button></div>`, "soc");
+    return true;
+  }
+  if(a === "soc-gcreate"){
+    const name = (($("#gname") || {}).value || "").trim().slice(0, 20) || "勉強グループ";
+    if(!pendingGroup) return true;
+    sh.groups.push({code: pendingGroup, name}); const code = pendingGroup; pendingGroup = "";
+    checkBadges(); save(); closeSheet(); render(); Net.start(); Net.sync(); Net.publishMeta(code, name);
+    openSheet(`<h2>グループができました</h2><div class="codebox"><span class="mycode">${fmtCode(code)}</span></div><p class="note" style="text-align:center;margin-top:6px">この番号を友達に送って「番号で参加」から入ってもらおう</p>
+      <div class="row" style="margin-top:12px"><button class="btn grow" data-act="close-sheet">とじる</button><button class="btn pink grow" data-act="copy:g:${code}">招待文をコピー</button></div>`, "soc");
+    return true;
+  }
+  if(a === "soc-gjoin"){ openSheet(`<h2>番号でグループに参加</h2><label class="inp" for="gcode" style="margin-top:10px">グループ番号（8けた）<input type="text" id="gcode" inputmode="numeric" maxlength="11" placeholder="1234 5678"></label><div class="row" style="margin-top:12px"><button class="btn grow" data-act="close-sheet">やめる</button><button class="btn pink grow" data-act="soc-gjoin-do">参加する</button></div>`, "soc"); return true; }
+  if(a === "soc-gjoin-do"){
+    const c = cleanCode(($("#gcode") || {}).value);
+    if(c.length !== 8){ toast("8けたの番号を入れてください"); return true; }
+    if(sh.groups.some(g => g.code === c)){ toast("このグループにはもう入っています"); return true; }
+    sh.groups.push({code: c, name: ""}); checkBadges(); save(); closeSheet(); render(); Net.start(); Net.sync();
+    toast("グループに参加しました。メンバーの様子が届くまで少し待ってね"); return true;
+  }
+  if(a === "soc-gleave"){ const g = sh.groups.find(x => x.code === b); openSheet(`<h2>グループを退出する？</h2><p class="note" style="text-align:center;margin-top:6px">「${esc((g && g.name) || (FR.g[b] && FR.g[b].meta && FR.g[b].meta.name) || "グループ")}」（${fmtCode(b)}）から抜けます。番号があればまた参加できます。</p><div class="row" style="margin-top:12px"><button class="btn grow" data-act="close-sheet">やめる</button><button class="btn pink grow" data-act="soc-gleave-do:${b}">退出する</button></div>`, "soc"); return true; }
+  if(a === "soc-gleave-do"){ Net.clearMember(b); sh.groups = sh.groups.filter(g => g.code !== b); delete FR.g[b]; saveFR(); save(); closeSheet(); render(); Net.sync(); toast("グループから退出しました"); return true; }
+  if(a === "soc-fadd"){ openSheet(`<h2>友達を追加</h2><label class="inp" for="fcode" style="margin-top:10px">友達番号（8けた）<input type="text" id="fcode" inputmode="numeric" maxlength="11" placeholder="1234 5678"></label><label class="inp" for="fmemo" style="margin-top:8px">メモ（データが届くまでの表示名・任意）<input type="text" id="fmemo" maxlength="16"></label><p class="note" style="margin-top:6px">友達番号は相手の「ともだち」タブの一番上に出ています。</p><div class="row" style="margin-top:12px"><button class="btn grow" data-act="close-sheet">やめる</button><button class="btn grape grow" data-act="soc-fadd-do">追加する</button></div>`, "soc"); return true; }
+  if(a === "soc-fadd-do"){
+    const c = cleanCode(($("#fcode") || {}).value), memo = (($("#fmemo") || {}).value || "").trim().slice(0, 16);
+    if(c.length !== 8){ toast("8けたの番号を入れてください"); return true; }
+    if(c === sh.code){ toast("それはあなた自身の番号です"); return true; }
+    if(sh.friends.some(f => f.code === c)){ toast("もう追加しています"); return true; }
+    sh.friends.push({code: c, memo}); checkBadges(); save(); closeSheet(); render(); Net.start(); Net.sync();
+    toast("友達を追加しました"); return true;
+  }
+  if(a === "soc-fdel"){ openSheet(`<h2>友達を外す？</h2><p class="note" style="text-align:center;margin-top:6px">番号 ${fmtCode(b)} を一覧から外します。</p><div class="row" style="margin-top:12px"><button class="btn grow" data-act="close-sheet">やめる</button><button class="btn pink grow" data-act="soc-fdel-do:${b}">外す</button></div>`, "soc"); return true; }
+  if(a === "soc-fdel-do"){ sh.friends = sh.friends.filter(f => f.code !== b); delete FR.u[b]; saveFR(); save(); closeSheet(); render(); Net.sync(); return true; }
+  if(a === "soc-show"){ sh.show[b] = !sh.show[b]; save(); render(); return true; }
+  if(a === "soc-share"){ sh.share[b] = !sh.share[b]; save(); render(); Net.publishNow(true); return true; }
+  if(a === "copy"){
+    if(b === "u") copyText(`ぴよナース国試クエストで友達になろう！\n友達番号：${fmtCode(sh.code)}\n${APP_URL}`, "友達番号をコピーしました");
+    else if(b === "g"){ const code = arguments[2]; const g = sh.groups.find(x => x.code === code); copyText(`ぴよナース国試クエストのグループ「${(g && g.name) || "勉強グループ"}」に入ってね！\n「ともだち」→「番号で参加」\nグループ番号：${fmtCode(code)}\n${APP_URL}`, "招待文をコピーしました"); }
+    return true;
+  }
+  return false;
+}
+
+/* ===== はじめての画面（キャラ選び→名前→アカウント作成）とアカウント管理 ===== */
+const OB = {active: false, step: 1, char: "piyo", name: ""};
+function obHead(){ return `<div class="ob-head"><span class="logo"><span class="cross">${SVGI.cross}</span><span>ぴよナース<small>看護師国試クエスト</small></span></span><span class="ob-steps"><i class="${OB.step === 1 ? "on" : ""}"></i><i class="${OB.step === 2 ? "on" : ""}"></i></span></div>`; }
+function viewOnboard(){
+  const first = !ACC.list.length, c = CHARS[OB.char];
+  if(OB.step === 1) return `<section class="ob stack">
+    ${obHead()}
+    <div class="card tint-lemon" style="text-align:center">
+      <p class="pop" style="font-size:1.2rem">${first ? "ようこそ！" : "新しいアカウントを作ろう"}</p>
+      <p class="note" style="margin-top:4px">いっしょに看護師国試をめざす相棒をえらんでね。<br>たまごから、レジェンドナースまで育てよう。</p>
+    </div>
+    <h2 class="sec-t">キャラクターをえらぶ <span class="sub">あとから変えられます</span></h2>
+    <div class="ob-chars">${CHAR_KEYS.map(k => `<button class="ob-char${OB.char === k ? " on" : ""}" data-act="ob-char:${k}" aria-pressed="${OB.char === k}"><span class="ob-pic">${charSVG(k, 3)}</span><b>${CHARS[k].n}</b><span>${CHARS[k].sp}</span></button>`).join("")}</div>
+    <section class="card ob-preview">
+      <div class="ob-big">${charSVG(OB.char, 3, "happy")}</div>
+      <div style="min-width:0"><p class="pop" style="font-size:1.05rem">${c.n}</p><p class="note">${c.d}</p><p class="bubble" style="margin-top:8px">よろしく${c.e}！ たまごから育ててね</p></div>
+    </section>
+    <button class="btn big pink block" data-act="ob-next">この子にする</button>
+    ${first ? "" : '<button class="btn block ghost" data-act="ob-cancel">やめてもどる</button>'}
+  </section>`;
+  return `<section class="ob stack">
+    ${obHead()}
+    <div class="card tint-lemon" style="text-align:center"><div class="ob-big" style="margin:0 auto">${charSVG(OB.char, 0)}</div><p class="pop" style="margin-top:4px">${c.n}のたまご</p><p class="note">問題に正解すると、たまごがかえって育っていきます</p></div>
+    <h2 class="sec-t">あなたの名前を教えてね</h2>
+    <section class="card stack" style="gap:10px">
+      <label class="inp" for="ob-name">名前（ニックネームでOK・友達にも表示されます）<input type="text" id="ob-name" maxlength="16" value="${esc(OB.name)}" placeholder="例：みさき" autocomplete="nickname"></label>
+      ${first && LEGACY && LEGACY.tot.n ? `<p class="note">この端末にあるこれまでの記録（Lv.${LEGACY.lv}・解いた問題${LEGACY.tot.n}問）を、このアカウントに引き継ぎます。</p>` : ""}
+    </section>
+    <div class="row"><button class="btn grow" data-act="ob-back">もどる</button><button class="btn big pink grow" data-act="ob-create">アカウントをつくる</button></div>
+  </section>`;
+}
+function createAccount(){
+  const name = (($("#ob-name") || {}).value || "").trim().slice(0, 16);
+  if(!name){ toast("名前を入れてください"); const i = $("#ob-name"); if(i) i.focus(); return; }
+  if(ACC.current) saveLocal();
+  const useLegacy = !ACC.list.length && !!LEGACY;
+  const s = useLegacy ? normalize(JSON.parse(JSON.stringify(LEGACY))) : defaultState();
+  s.char = OB.char; s.social.name = name;
+  while(ACC.list.some(a => a.id === s.social.id)) s.social.id = randId();
+  ACC.list.push({id: s.social.id, name, char: s.char, lv: s.lv, created: Date.now()});
+  ACC.current = s.social.id;
+  if(useLegacy){ try{ const f = localStorage.getItem(FR_KEY); if(f) localStorage.setItem(FR_KEY + "_" + s.social.id, f); }catch(e){} }
+  Net.stop();
+  S = s; ensureDay(); saveAcc(); save();
+  OB.active = false; OB.step = 1; OB.name = "";
+  G = null; UI.tab = "home"; saveUI(); loadFR();
+  render(); window.scrollTo(0, 0);
+  Net.start(); Sync.init();
+  openSheet(`<div class="lvup-pet">${charSVG(S.char, rankOf(S.lv).st, "happy")}</div><h2>${esc(name)}さんのアカウントができました！</h2>
+    <p class="small" style="text-align:center;margin-top:6px;font-weight:700">${useLegacy && S.tot.n ? "これまでの記録も引き継いだ" + gobi() + "。" : "まずはホームの「おまかせ10問」で、たまごをかえしてみよう。"}</p>
+    <button class="btn big pink block" style="margin-top:14px" data-act="close-sheet">はじめる</button>`, "welcome");
+  confetti(); beep(SND.lv);
+}
+function switchAccount(id){
+  if(id === ACC.current || !ACC.list.some(a => a.id === id)) return;
+  saveLocal(); if(G) clearInterval(G.timerId);
+  Net.stop();
+  ACC.current = id; saveAcc();
+  S = loadAccountState(id); ensureDay();
+  G = null; closeSheet(); UI.tab = "home"; saveUI(); loadFR();
+  render(); window.scrollTo(0, 0);
+  Net.start(); Sync.init();
+  toast(`${S.social.name || "アカウント"}さんに切り替えました`);
+}
+function deleteAccount(id){
+  if(id === ACC.current) return;
+  ACC.list = ACC.list.filter(a => a.id !== id); saveAcc();
+  try{ localStorage.removeItem(stateKey(id)); localStorage.removeItem(FR_KEY + "_" + id); }catch(e){}
+}
+function openAccountSheet(){
+  openSheet(`<h2>アカウント</h2>
+    <div class="acc-list">${ACC.list.map(a => {
+      const cur = a.id === ACC.current, lv = cur ? S.lv : (a.lv || 1), ch = cur ? S.char : (CHARS[a.char] ? a.char : "piyo");
+      return `<div class="acc-row${cur ? " on" : ""}"><span class="av">${charSVG(ch, rankOf(lv).st)}</span><div style="min-width:0"><b>${esc((cur ? S.social.name : a.name) || "なまえ未設定")}</b><span>${CHARS[ch].n}・Lv.${lv}</span></div>
+      ${cur ? '<span class="tag" style="background:var(--mint-s)">使用中</span>' : `<div class="row" style="gap:4px"><button class="btn sm" data-act="acc-switch:${a.id}">切り替え</button><button class="btn sm ghost" data-act="acc-del:${a.id}" aria-label="このアカウントを削除">×</button></div>`}</div>`;
+    }).join("")}</div>
+    <div class="stack" style="gap:8px;margin-top:12px">
+      <button class="btn block" data-act="acc-char">キャラクターを変える</button>
+      <button class="btn block" data-act="soc-rename">名前を変える</button>
+      <button class="btn pink block" data-act="acc-new">＋ 新しいアカウントを作る</button>
+      <button class="btn block ghost" data-act="close-sheet">とじる</button>
+    </div>
+    <p class="note" style="margin-top:8px">家族や友達と同じ端末を使うときは、人ごとにアカウントを作ると記録が分かれます。</p>`, "acc");
+}
+function openCharSheet(){
+  openSheet(`<h2>キャラクターを変える</h2><p class="note" style="text-align:center">レベルや記録はそのまま引き継がれます</p>
+    <div class="ob-chars" style="margin-top:10px">${CHAR_KEYS.map(k => `<button class="ob-char${S.char === k ? " on" : ""}" data-act="acc-setchar:${k}" aria-pressed="${S.char === k}"><span class="ob-pic">${charSVG(k, rankOf(S.lv).st)}</span><b>${CHARS[k].n}</b><span>${CHARS[k].sp}</span></button>`).join("")}</div>
+    <button class="btn block" style="margin-top:12px" data-act="acc">もどる</button>`, "acc");
+}
+function accAct(a, b){
+  if(a === "ob-char"){ if(CHARS[b]){ OB.char = b; const y = window.scrollY; render(); window.scrollTo(0, y); } return true; }
+  if(a === "ob-next"){ OB.step = 2; render(); window.scrollTo(0, 0); setTimeout(() => { const i = $("#ob-name"); if(i) i.focus(); }, 60); return true; }
+  if(a === "ob-back"){ const i = $("#ob-name"); if(i) OB.name = i.value; OB.step = 1; render(); return true; }
+  if(a === "ob-create"){ createAccount(); return true; }
+  if(a === "ob-cancel"){ OB.active = false; OB.step = 1; render(); return true; }
+  if(a === "acc"){ openAccountSheet(); return true; }
+  if(a === "acc-new"){ closeSheet(); OB.active = true; OB.step = 1; OB.char = "piyo"; OB.name = ""; render(); window.scrollTo(0, 0); return true; }
+  if(a === "acc-switch"){ switchAccount(b); return true; }
+  if(a === "acc-del"){ const t = ACC.list.find(x => x.id === b); openSheet(`<h2>アカウントを削除する？</h2><p class="note" style="text-align:center;margin-top:6px">「${esc((t && t.name) || "")}」の記録（レベル・解答・勉強時間・シール）がこの端末から消えます。元に戻せません。</p><div class="row" style="margin-top:12px"><button class="btn grow" data-act="acc">やめる</button><button class="btn pink grow" data-act="acc-del-do:${b}">削除する</button></div>`, "acc"); return true; }
+  if(a === "acc-del-do"){ deleteAccount(b); openAccountSheet(); toast("アカウントを削除しました"); return true; }
+  if(a === "acc-char"){ openCharSheet(); return true; }
+  if(a === "acc-setchar"){ if(CHARS[b] && b !== S.char){ S.char = b; save(); render(); Net.publishNow(true); toast(`${CHARS[b].n}になりました`); } openCharSheet(); return true; }
+  return false;
+}
+
 /* ===== 演出・シート・起動 ===== */
 let AC = null;
 function unlockAudio(){
@@ -1525,7 +2285,7 @@ function afterResult(){
       <h2>${r1.st !== r0.st ? "ランクアップ！" : "レベルアップ！"}</h2>
       <p class="bigscore num" style="font-size:2.2rem">Lv.${lv}</p>
       ${r1.st !== r0.st ? `<span class="verdict pass">「${esc(r1.n)}」になった！</span>` : ""}
-      <p class="small" style="text-align:center;margin-top:8px;font-weight:700">${esc(r1.line)}</p>
+      <p class="small" style="text-align:center;margin-top:8px;font-weight:700">${esc(lineOf(r1))}</p>
       <button class="btn big pink block" style="margin-top:14px" data-act="close-sheet">やったね！</button>`, "lv");
     return true;
   }
@@ -1560,12 +2320,17 @@ function doGacha(){
 function render(){
   const app = $("#app");
   if(!app) return;
+  if(!ACC.current || OB.active){
+    app.innerHTML = viewOnboard();
+    const tb0 = $("#tabbar-slot"); if(tb0) tb0.innerHTML = "";
+    return;
+  }
   if(G && !G.done){
     app.innerHTML = viewGame();
     const tb = $("#tabbar-slot"); if(tb) tb.innerHTML = "";
     return;
   }
-  const views = {home: viewHome, quest: viewQuest, review: viewReview, zukan: viewZukan, record: viewRecord};
+  const views = {home: viewHome, quest: viewQuest, review: viewReview, friends: viewFriends, zukan: viewZukan, record: viewRecord};
   app.innerHTML = headerHTML() + `<main class="stack">${views[UI.tab]()}</main>`;
   const tb = $("#tabbar-slot"); if(tb) tb.innerHTML = tabbarHTML();
 }
@@ -1575,6 +2340,14 @@ function onAct(act, el){
   const [a, b, c] = act.split(":");
   if(a === "tab"){ UI.tab = b; saveUI(); render(); window.scrollTo(0, 0); return; }
   if(a === "start"){ closeSheet(); startGame(b, c); return; }
+  if(a === "study-start"){ startStudy(); return; }
+  if(a === "study-stop"){ openStopSheet(); return; }
+  if(a === "study-commit"){ commitStudy(+b); return; }
+  if(a === "study-discard"){ discardStudy(); return; }
+  if(a === "study-edit"){ openStudyEditor(b || todayStr()); return; }
+  if(a === "study-add" || a === "study-set"){ saveStudyEdit(a === "study-add" ? "add" : "set"); return; }
+  if((a.startsWith("soc-") || a === "copy") && socAct(a, b, c)) return;
+  if((a.startsWith("ob-") || a.startsWith("acc")) && accAct(a, b)) return;
   if(a === "rv"){ UI.rv = b; saveUI(); render(); return; }
   if(a === "choose"){ choose(+b); return; }
   if(a === "submit"){ if(G && G.sel.length === 2) answer(); return; }
@@ -1606,7 +2379,7 @@ function onAct(act, el){
   if(a === "sound"){ S.set.sound = !S.set.sound; save(); render(); if(S.set.sound) beep(SND.ok); return; }
   if(a === "reset-ask"){ const bx = $("#reset-box"); if(bx) bx.innerHTML = `<p class="small" style="font-weight:800;color:var(--ng)">レベル・コイン・シール・解答記録がすべて消えます。元に戻せません。</p><div class="row" style="margin-top:8px"><button class="btn sm" data-act="reset-no">やめる</button><button class="btn sm pink" data-act="reset-yes">すべて消す</button></div>`; return; }
   if(a === "reset-no"){ render(); return; }
-  if(a === "reset-yes"){ const keepExam = S.set.exam; S = defaultState(); S.set.exam = keepExam; save(); render(); toast("記録をリセットしました"); return; }
+  if(a === "reset-yes"){ const keepExam = S.set.exam, keepSoc = S.social, keepChar = S.char; S = defaultState(); S.set.exam = keepExam; S.social = keepSoc; S.char = keepChar; save(); render(); toast("記録をリセットしました（友達のつながりは残しています）"); return; }
 }
 let pendingAgain = null;
 
@@ -1618,11 +2391,14 @@ document.addEventListener("click", e => {
   onAct(act, el);
 });
 document.addEventListener("change", e => {
+  if(e.target && e.target.id === "study-date"){ if(parseD(e.target.value)) openStudyEditor(e.target.value); return; }
   if(e.target && e.target.id === "exam-date"){
     if(parseD(e.target.value)){ S.set.exam = e.target.value; save(); render(); toast("試験日を変更しました"); }
   }
 });
 document.addEventListener("keydown", e => {
+  if(e.key === "Enter" && e.target && e.target.id === "nick"){ socAct("soc-rename-do"); e.preventDefault(); return; }
+  if(e.key === "Enter" && e.target && e.target.id === "ob-name" && !e.isComposing){ createAccount(); e.preventDefault(); return; }
   if(!G || G.done || $("#overlay")) return;
   if(e.target && /INPUT|SELECT|TEXTAREA/.test(e.target.tagName)) return;
   const it = curItem();
@@ -1654,8 +2430,19 @@ function start(data){
   if(data && data.ui) Object.assign(UI, data.ui);
   if(data && data.g) restoreG(data.g);
   render();
-  Sync.init();
+  Sync.boot().then(changed => { if(changed){ loadFR(); render(); Net.stop(); Net.start(); } Sync.init(); });
+  Net.start();
 }
+setInterval(() => {
+  const now = Date.now();
+  document.querySelectorAll("[data-since]").forEach(el => { el.textContent = fmtClock(now - +el.dataset.since); });
+}, 1000);
+document.addEventListener("visibilitychange", () => {
+  if(document.hidden) return;
+  ensureDay();
+  if(!G && !$("#overlay")) render();
+  Net.publishNow(true);
+});
 try{ window.claude?.hot?.snapshot?.(() => ({ui: UI, g: snapshotG()})); }catch(e){}
 if(window.claude?.hot?.ready) window.claude.hot.ready(start); else start(window.claude?.hot?.data ?? {});
 
